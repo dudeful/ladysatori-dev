@@ -1,0 +1,186 @@
+.home-container{
+    margin: auto 5%;
+}
+
+.home .card.welcome{
+    margin: 5rem auto 7rem;
+    padding: 2rem 0;
+    background-color: #c8d5b9ce;
+}
+
+/* --------------info section---------------- */
+
+.home-info-blocks img{
+    object-fit: cover;
+    object-position: 100% 25%;
+    width: auto;
+    height: 10rem;
+    display: block;
+    margin: auto;
+    border-radius: 1%;
+    opacity: 85%;
+}
+
+/* ---------------yoga style----------------- */
+
+.home-yoga-style{
+    background-color: #8fc0a9ad;
+    margin: 7rem auto;
+}
+
+.home-yoga-style .home-container{
+    margin: 3rem 5%;
+}
+
+.home-yoga-style img{
+    opacity: 70%;
+}
+
+/* ---------------about me------------------ */
+
+.home-sensei-profile{
+    margin: 9rem 0;
+    background-color: #c8d5b9ce;
+}
+
+.home-sensei-profile .img1{
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    border-radius: 0% 70% 70% 0%;
+}
+@media only screen and (max-width: 768px) {
+    .home-sensei-profile .img1{
+      width: 65%;
+    }
+}
+
+.home-about-me{
+    margin: auto;
+}
+@media only screen and (max-width: 768px) {
+    .home-about-me{
+      margin: 2rem auto auto;
+    }
+}
+
+.home-sensei-profile .img2{
+    width: 100%;
+    height: auto;
+}
+@media only screen and (max-width: 768px) {
+    .home-sensei-profile .img2{
+        width: 20%;
+        margin: 2rem auto;
+    }
+}
+
+/* --------------Q&A section----------------- */
+
+.home-QA{
+    margin: 9rem 5%;
+    opacity: 90%;
+}
+@media only screen and (max-width: 768px) {
+    .home-QA{
+        margin: 9rem 0;
+    }
+}
+
+.home-QA .answer{
+    margin-top: 5rem;
+}
+
+/* ---------------contact------------------ */
+
+#get-in-touch{
+    text-align: center;
+    margin: 10rem auto 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    background-color: #8fc0a9c7;
+    box-shadow: 1px 1px 3px 0px #888888;
+}
+
+.home-contact{
+    margin: 0 0 12rem;
+}
+
+.contact-form{
+    padding: 1.5rem;
+    border-radius: 0.2rem;
+    background-color: #8fc0a9b2;
+    box-shadow: 0px 0px 10px 0px #88888885;
+}
+
+.home-contact p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.home-contact .whatsapp-icon{
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-contact .contact-profile-pic{
+    width: 100%;
+    height: auto;
+    margin: auto;
+    border-radius: 50%;
+}
+@media only screen and (max-width: 768px) {
+    .home-contact .contact-profile-pic{
+        width: 50%;
+        margin-top: 3rem;
+    }
+}
+
+
+/* ---------------footer------------------ */
+
+.home-footer{
+    height: auto;
+    background-color: #c8d5b9;
+}
+
+.home-footer .brand{
+    font-family: 'testOnly', 'Nothing You Could Do', cursive;
+    font-size: 3rem;
+    text-align: center;
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.home-footer .footer-container{
+    margin: auto 5%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+}
+
+.home-footer .social-icons{
+    text-align: right;
+}
+@media only screen and (max-width: 768px) {
+    .home-footer .social-icons{
+        text-align: center;
+        margin: 2rem auto;
+    }
+}
+
+.home-footer .social-icons a{
+    color: #464646;
+    font-size: 1.5rem;
+    margin: auto 2rem;
+}
+@media only screen and (max-width: 768px) {
+    .home-footer .social-icons a{
+        margin: auto 1.5rem;
+    }
+}
