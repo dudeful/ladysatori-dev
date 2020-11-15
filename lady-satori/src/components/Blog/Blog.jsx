@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import Header from './Header';
+import Header from '../Header';
 import BlogHeadline from './BlogHeadline';
 import Cards from './Cards';
 

@@ -12,18 +12,18 @@ function Home() {
       current={'home'}
     />
 
-    <div class="card welcome">
+    <div className="card welcome">
       <div className="home-container">
-        <div class="row no-gutters">
-          <div class="col-md-8">
-            <div class="card-body p-0">
-              <h5 class="display-4 mb-3">Yoga que liberta</h5>
-              <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi doloremque exercitationem, amet voluptatibus adipisci, iste tempore voluptatum soluta illo eius similique qui? Aliquam alias quas ratione sed nihil eos quibusdam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dolore suscipit magnam, aut possimus sed non ducimus accusamus ex!</p>
+        <div className="row no-gutters">
+          <div className="col-md-8">
+            <div className="card-body p-0">
+              <h5 className="display-4 mb-3">Yoga que liberta</h5>
+              <p className="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi doloremque exercitationem, amet voluptatibus adipisci, iste tempore voluptatum soluta illo eius similique qui? Aliquam alias quas ratione sed nihil eos quibusdam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dolore suscipit magnam, aut possimus sed non ducimus accusamus ex!</p>
             </div>
           </div>
           <div className="col-md-1" />
-          <div class="col-md-3">
-            <img src="/images/yoga-1.1.png" class="card-img" alt="..."/>
+          <div className="col-md-3">
+            <img src="/images/yoga-1.1.png" className="card-img" alt="..."/>
           </div>
         </div>
       </div>
@@ -49,17 +49,17 @@ function Home() {
       </div>
     </div>
 
-    <div class="card home-yoga-style">
+    <div className="card home-yoga-style">
       <div className="home-container">
-        <div class="row no-gutters">
-          <div class="col-md-3">
-            <img src="/images/yoga-8.png" class="card-img" alt="..."/>
+        <div className="row no-gutters">
+          <div className="col-md-3">
+            <img src="/images/yoga-8.png" className="card-img" alt="..."/>
           </div>
           <div className="col-md-1" />
-          <div class="col-md-8 mt-auto">
-            <div class="card-body p-0 mt-4">
-              <h5 class="display-4 mb-3">meu estilo</h5>
-              <p class="lead mb-0">Repellat nemo accusantium quod hic, pariatur magni enim possimus perferendis quia. Veniam distinctio quos, eveniet commodi culpa sapiente quae velit voluptatibus, a consequuntur est accusantium vel, repudiandae enim in magni tenetur quibusdam. Maxime? Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore at, quaerat veritatis quia quam quo accusamus perferendis, sint assumenda praesentium vel reiciendis provident dolorem laborum, ut dignissimos voluptas unde incidunt?</p>
+          <div className="col-md-8 mt-auto">
+            <div className="card-body p-0 mt-4">
+              <h5 className="display-4 mb-3">meu estilo</h5>
+              <p className="lead mb-0">Repellat nemo accusantium quod hic, pariatur magni enim possimus perferendis quia. Veniam distinctio quos, eveniet commodi culpa sapiente quae velit voluptatibus, a consequuntur est accusantium vel, repudiandae enim in magni tenetur quibusdam. Maxime? Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore at, quaerat veritatis quia quam quo accusamus perferendis, sint assumenda praesentium vel reiciendis provident dolorem laborum, ut dignissimos voluptas unde incidunt?</p>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ function Home() {
       <div className="col-md-3 p-0">
         <img src="/images/dwight.jpg" className="img1" alt="..." />
       </div>
-      <div class="col-md-6 home-about-me">
+      <div className="col-md-6 home-about-me">
         <h1>Sobre mim</h1>
         <p className="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis, ipsam? Temporibus sed, cupiditate harum, quae id voluptate facilis mollitia natus nisi aperiam, est culpa quod minima repellat. Dignissimos, saepe ipsa. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus quisquam molestiae, fugit pariatur voluptas facere. Voluptates, nisi. Nostrum aperiam veniam dolorem in asperiores? Quibusdam voluptatem ea doloremque eligendi ipsa facilis.</p>
       </div>

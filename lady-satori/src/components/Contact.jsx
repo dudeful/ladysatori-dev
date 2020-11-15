@@ -58,20 +58,20 @@ function Contact() {
             <form onSubmit={sendEmail}>
                 <h3 className="mb-2"><span>Olá,</span> {register.name}</h3>
                 <h5 className="text-muted mb-3">{register.email}</h5>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Nome</label>
-                    <input type="text" onChange={handleChange} class="form-control" id="contact-name" name="name" value={register.name} placeholder="John Doe" required />
+                <div className="form-group">
+                    <label htmlFor="exampleFormControlInput1">Nome</label>
+                    <input type="text" onChange={handleChange} className="form-control" id="contact-name" name="name" value={register.name} placeholder="John Doe" required />
                 </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Endereço de E-mail</label>
-                    <input type="email" onChange={handleChange} class="form-control" id="contact-email" name="email" value={register.email} placeholder="nome@exemplo.com" required />
+                <div className="form-group">
+                    <label htmlFor="exampleFormControlInput1">Endereço de E-mail</label>
+                    <input type="email" onChange={handleChange} className="form-control" id="contact-email" name="email" value={register.email} placeholder="nome@exemplo.com" required />
                 </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Mensagem</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message" placeholder="Olá! Adoraria saber mais sobre..." required></textarea>
+                <div className="form-group">
+                    <label htmlFor="exampleFormControlTextarea1">Mensagem</label>
+                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="message" placeholder="Olá! Adoraria saber mais sobre..." required></textarea>
                 </div>
                 {messageSent === '' ? '' : messageSent}
-                <button type="submit" class="btn btn-outline-info btn-block">Enviar</button>
+                <button type="submit" className="btn btn-outline-info btn-block">Enviar</button>
                 <div>
                 <p>ou entre em contato pelo whatsapp</p>
                 <a href="https://wa.me/5521995165858" target="_blank" rel="noreferrer"><img className="whatsapp-icon" src="/images/whatsapp.png" alt="..." /></a>
