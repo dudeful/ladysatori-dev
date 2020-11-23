@@ -1,27 +1,31 @@
-body{
-    background-color: #faf3dd3f;
-}
+/* 
+#373a40
+#68b0ab
+#8fc0a9
+#c8d5b9
+#faf3dd
+ */
 
 @font-face {
-    font-family: 'testOnly';
-    src: url('/src/testonly-webfont.woff2') format('woff2'),
-         url('/src/testonly-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "testOnly";
+  src: url("/src/testonly-webfont.woff2") format("woff2"),
+    url("/src/testonly-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-.navbar{
-    margin: auto 5%;
-    width: auto;
+.navbar {
+  margin: auto 5%;
+  width: auto;
 }
 @media only screen and (max-width: 768px) {
-    .navbar{
-        margin: auto;
-    }
+  .navbar {
+    margin: auto;
+  }
 }
 
-.navbar-brand{
-    font-family: 'testOnly', 'Nothing You Could Do', cursive;
-    font-size: 3.2rem;
-    font-style: italic;
+.navbar-brand {
+  font-family: "testOnly", "Nothing You Could Do", cursive;
+  font-size: 3.2rem;
+  font-style: italic;
 }
