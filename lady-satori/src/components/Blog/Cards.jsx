@@ -27,9 +27,8 @@ function Cards(props) {
                   <div className="card-body">
                     <h4>{card.title}</h4>
                     <p className="card-text">
-                      {card.body.blocks[0].text.slice(0, 100) + "..." ||
-                        card.body.blocks[1].text.slice(0, 100) + "..." ||
-                        card.body.blocks[2].text.slice(0, 100) + "..."}
+                      {JSON.parse(card.body).blocks[0].text.slice(0, 100) +
+                        "..."}
                     </p>
                   </div>
                   <p className="card-text ml-auto p-3">

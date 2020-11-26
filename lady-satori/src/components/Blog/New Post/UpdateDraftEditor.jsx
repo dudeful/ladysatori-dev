@@ -1,5 +1,5 @@
 import React from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
@@ -19,10 +19,13 @@ DOMPurify.addHook("afterSanitizeAttributes", function (node) {
 const getHtml = (editorState) =>
   draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-function DraftEditor(props) {
+function UpdateDraftEditor(props) {
   //
+
   const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
+    EditorState.createWithContent(
+      convertFromRaw(JSON.parse(props.postData.body))
+    )
   );
 
   const onEditorStateChange = (editorState) => {
@@ -56,10 +59,10 @@ function DraftEditor(props) {
   // --------------------- handle inputs ---------------------
 
   const [postInput, setPostInput] = React.useState({
-    coverImg: "",
-    tag: "",
-    title: "",
-    body: "",
+    coverImg: props.postData.coverImg,
+    tag: props.postData.tag,
+    title: props.postData.title,
+    body: JSON.parse(props.postData.body),
   });
 
   const handleInputChange = (event) => {
@@ -75,12 +78,15 @@ function DraftEditor(props) {
 
   // --------------------- confirm alert ---------------------
 
-  window.addEventListener("beforeunload", (event) => {
+  function beforeUnload(event) {
     // Cancel the event as stated by the standard.
     event.preventDefault();
     // Older browsers supported custom message
     event.returnValue = false;
-  });
+  }
+
+  window.addEventListener("beforeunload", beforeUnload);
+
   // --------------------- get canvas ------------------------
 
   const myRef = React.useRef(null);
@@ -99,7 +105,6 @@ function DraftEditor(props) {
   // --------------------- check inputs ----------------------
 
   const checkInputs = () => {
-    console.log("triggered");
     if (
       postInput.coverImg === "" ||
       postInput.tag === "" ||
@@ -333,4 +338,4 @@ function DraftEditor(props) {
   );
 }
 
-export default DraftEditor;
+export default UpdateDraftEditor;

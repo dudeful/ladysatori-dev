@@ -5,6 +5,7 @@ import Header from "../Header";
 import BlogHeadline from "./BlogHeadline";
 import Cards from "./Cards";
 import useAxios from "axios-hooks";
+import Error400 from "../Errors/Error400";
 
 function Blog() {
   //gets the cards object on the server which will be rendered on the page.
@@ -19,7 +20,7 @@ function Blog() {
         alt="..."
       />
     );
-  if (error) return <p />;
+  if (error) return <Error400 />;
 
   return (
     <div>

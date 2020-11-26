@@ -4,6 +4,7 @@
 #8fc0a9
 #c8d5b9
 #faf3dd
+#faf3dd3b
  */
 
 .loading-infinity {
@@ -81,11 +82,16 @@
 
 /* ----------------------------blog post---------------------------- */
 
+.blogPost-body {
+  background-color: #faf3dd33;
+}
+
 .blog-post .post-container {
   font-family: "Montserrat", sans-serif;
   margin: 0 15% 5rem;
   box-shadow: 0px 1px 10px 1px #c8d5b962;
   padding: 0 1.5rem 1rem;
+  background-color: white;
 }
 @media only screen and (max-width: 1200px) {
   .blog-post .post-container {
@@ -134,7 +140,25 @@
   font-size: 0.9rem;
 }
 
+/* --------------------blog post - main content--------------------- */
+
+.blog-post .main-content {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  line-height: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.blog-post .main-content a {
+  word-break: break-all;
+}
+
 /* --------------------blog post - share icons------------------------ */
+
+.blog-post .share-buttons {
+  margin-bottom: 1.5rem;
+}
 
 .blog-post .social-icons {
   font-size: 1.5rem;
@@ -168,33 +192,23 @@
   margin-left: 2rem;
 }
 
-/* ------------------------blog post - main content--------------------- */
-
-.blog-post .main-content {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  line-height: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  word-break: break-all;
-}
-
 /* --------------------------recent posts------------------------------- */
 
 .blog-post .recent-posts-title {
-  margin-top: 5rem;
+  margin: 5rem 5% 1.5rem;
   width: 65%;
   color: #555555;
+  border-radius: 1px;
   background-image: linear-gradient(to right, #8fc0a9b7, #8fc0a931, #8fc0a900);
   padding: 0.5rem;
 }
 
 .blog-post .recent-posts {
-  margin: 1rem 0 2rem;
+  margin: 1rem 5% 7rem;
 }
 
 .blog-post .recent-posts .card {
-  box-shadow: 0px 0px 6px 0px #c8d5b95e;
+  box-shadow: 0px 0px 6px 0px #c8d5b981;
   border: 0;
 }
 
@@ -218,6 +232,9 @@
   border-radius: 4px 0 0 4px;
 }
 @media only screen and (max-width: 768px) {
+  .blog-post .recent-posts {
+    margin: 1rem 0 4rem;
+  }
   .blog-post .recent-posts .card-img {
     border-radius: 0;
   }
@@ -231,20 +248,8 @@
     margin-bottom: 6rem;
   }
   .blog-post .recent-posts-title {
-    margin-top: 7rem;
+    margin: 7rem 0 auto;
     width: 100%;
-  }
-}
-
-.blog-post .mobile-recent-posts {
-  display: none;
-}
-@media only screen and (max-width: 768px) {
-  .blog-post .mobile-recent-posts {
-    display: initial;
-  }
-  .blog-post .desktop-recent-posts {
-    display: none;
   }
 }
 
@@ -299,10 +304,6 @@
 
 .rich-editor .DraftEditor-editorContainer {
   padding: 1.2rem;
-}
-
-.public-DraftStyleDefault-block {
-  min-height: 30vh;
 }
 
 .rich-editor .DraftEditor-editorContainer img {
@@ -384,7 +385,6 @@
 
 #previewModal .modal-body {
   font-weight: 400;
-  font-size: 1.2rem;
   line-height: 1.8rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -393,4 +393,6 @@
 #previewModal .modal-body img {
   max-width: 100%;
   object-fit: contain;
+  display: block;
+  margin: auto;
 }

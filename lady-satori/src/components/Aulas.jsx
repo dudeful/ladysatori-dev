@@ -1,17 +1,14 @@
-import Header from './Header';
+import Header from "./Header";
+import Login from "./Login/Login";
 
 function Aulas() {
-  
   return (
     <div>
+      <Header current={"aulas"} />
 
-    <Header 
-      current={'aulas'}
-    />
-
-
+      <Login />
     </div>
-  
-  )};
+  );
+}
 
 export default Aulas;

@@ -16,9 +16,7 @@ function BlogHeadline(props) {
         <div className="col-md-6">
           <p className="headline-title">{data.title}</p>
           <p className="headline-briefing">
-            {data.body.blocks[0].text.slice(0, 180) + "..." ||
-              data.body.blocks[1].text.slice(0, 180) + "..." ||
-              data.body.blocks[2].text.slice(0, 180) + "..."}
+            {JSON.parse(data.body).blocks[0].text.slice(0, 180) + "..."}
           </p>
           <Link
             to={"/post/" + data._id + "/" + _.kebabCase(data.title)}

@@ -11,6 +11,9 @@ import Aulas from "./components/Aulas";
 import Sobre from "./components/Sobre";
 import BlogPost from "./components/Blog/BlogPost";
 import AddNewPost from "./components/Blog/New Post/AddNewPost";
+import UpdatePost from "./components/Blog/New Post/UpdatePost";
+import Error404 from "./components/Errors/Error404";
+import Error400 from "./components/Errors/Error400";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,7 +36,10 @@ function App() {
           <Route path="/aulas-yoga" component={Aulas} exact />
           <Route path="/sobre" component={Sobre} exact />
           <Route path="/new-post" component={AddNewPost} exact />
+          <Route path="/update-post/:id/:title" component={UpdatePost} exact />
           <Route path="/post/:id/:title" component={BlogPost} exact />
+          <Route path="/error400" component={Error400} exact />
+          <Route component={Error404} />
         </Switch>
       </Router>
     </div>

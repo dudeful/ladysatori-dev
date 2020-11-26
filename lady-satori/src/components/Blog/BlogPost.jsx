@@ -1,11 +1,16 @@
+import React from "react";
 import { InlineShareButtons } from "sharethis-reactjs";
-import Header from "../Header";
-import RecentPosts from "./RecentPosts";
-import Footer from "../Footer";
-// import MainContent from "./MainContent";
 import useAxios from "axios-hooks";
 import DOMPurify from "dompurify";
 import draftToHtml from "draftjs-to-html";
+import { Link } from "react-router-dom";
+import Header from "../Header";
+import RecentPosts from "./RecentPosts";
+import Footer from "../Footer";
+import Error400 from "../Errors/Error400";
+// import MainContent from "./MainContent";
+import axios from "axios";
+const _ = require("lodash");
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
   // set all elements owning target to target=_blank
@@ -18,8 +23,14 @@ DOMPurify.addHook("afterSanitizeAttributes", function (node) {
 function BlogPost() {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "http://localhost:5000/posts/" + window.location.pathname
+    "http://localhost:5000/posts" + window.location.pathname
   );
+
+  // const [data, setData] = React.useState();
+
+  // axios
+  //   .get("http://localhost:5000/posts" + window.location.pathname)
+  //   .then((res) => setData(res.data));
 
   //handles loading delay and bad requests (400) errors.
   if (loading)
@@ -30,12 +41,43 @@ function BlogPost() {
         alt="..."
       />
     );
-  if (error) return <h3> </h3>;
+  if (error) return <Error400 />;
+
+  // if (!data) {
+  //   return (
+  //     <img
+  //       src="/images/Infinity-2s-200px.svg"
+  //       className="loading-infinity"
+  //       alt="..."
+  //     />
+  //   );
+  // }
+
+  const deletePost = () => {
+    axios
+      .delete("http://localhost:5000/posts/delete-post/" + data._id)
+      .then((res) => {
+        console.log(res.data);
+        window.location.assign("http://localhost:3000/blog");
+      });
+  };
 
   return (
-    <div>
+    <div className="blogPost-body">
       <Header current={"blog"} />
       <div className="blog-post">
+        <button
+          onClick={deletePost}
+          className="m-2 btn btn-outline-danger lead"
+        >
+          DELETE
+        </button>
+        <Link
+          to={"/update-post/" + data._id + "/" + _.kebabCase(data.title)}
+          className="btn btn-outline-warning lead text-decoration-none"
+        >
+          UPDATE
+        </Link>
         <img
           className="cover-img"
           //   src="https://besthqwallpapers.com/img/original/19526/yoga-woman-sunset-meditation-yoga-poses.jpg"
@@ -109,7 +151,7 @@ function BlogPost() {
           <div className="main-content">
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(draftToHtml(data.body)),
+                __html: DOMPurify.sanitize(draftToHtml(JSON.parse(data.body))),
               }}
             />
           </div>
@@ -141,15 +183,8 @@ function BlogPost() {
               }}
             />
           </div>
-
-          <div className="desktop-recent-posts">
-            <RecentPosts />
-          </div>
         </div>
-
-        <div className="mobile-recent-posts">
-          <RecentPosts />
-        </div>
+        <RecentPosts />
       </div>
       <Footer />
     </div>

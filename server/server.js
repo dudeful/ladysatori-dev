@@ -14,6 +14,7 @@ mongoose.connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 const connection = mongoose.connection;
 connection.once("open", () => {
