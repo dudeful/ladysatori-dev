@@ -32,8 +32,8 @@ function App() {
         <ScrollToTop />
         <Switch>
           <Route path="/" component={Home} exact />
-          <Route path="/blog" component={Blog} exact />
           <Route path="/aulas-yoga" component={Aulas} exact />
+          <Route path="/blog" component={Blog} exact />
           <Route path="/sobre" component={Sobre} exact />
           <Route path="/new-post" component={AddNewPost} exact />
           <Route path="/update-post/:id/:title" component={UpdatePost} exact />

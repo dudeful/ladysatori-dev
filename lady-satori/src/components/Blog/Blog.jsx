@@ -23,7 +23,7 @@ function Blog() {
   if (error) return <Error400 />;
 
   return (
-    <div>
+    <div className="blogBody">
       <Header current={"blog"} />
 
       <BlogHeadline data={data} />

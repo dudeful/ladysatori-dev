@@ -9,6 +9,8 @@ https://medium.com/@towfiqu/react-image-upload-with-cloudinary-nodejs-and-mongod
 https://github.com/vutoan266/React-images-uploading
 https://mongoosejs.com/docs/tutorials/findoneandupdate.html
 https://reactrouter.com/web/api/Redirect
+https://www.glo.com/
+https://atomiks.github.io/tippyjs/v6/all-props/
 
 Olafur Eliasson
 

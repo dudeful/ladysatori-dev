@@ -1,117 +1,201 @@
+import Tippy from "@tippyjs/react";
+
 function RegisterFrame(props) {
   return (
-    <div className="email-login ml-auto col-lg-4 mr-4">
-      <h3>
-        <span>Olá,</span> {props.register.fName} {props.register.lName}
-      </h3>
-      <p>{props.register.email}</p>
-      <form>
-        <div className="form-group" style={props.regStyle.userFNameInput}>
-          <label htmlFor="InputFName1" className="mb-0">
-            Nome
-          </label>
+    <div className="login-form register-block" id="register-block">
+      <p className="heading">registrar</p>
+      <div style={props.fForm}>
+        <input
+          className="userInput"
+          onChange={props.registerHandler}
+          type="text"
+          name="fName"
+          value={props.register.fName}
+          id="fName"
+          aria-describedby="fNameHelp"
+          placeholder="nome"
+        />
+        <hr className="input-bottom-border" />
+
+        <input
+          className="userInput"
+          onChange={props.registerHandler}
+          type="text"
+          name="lName"
+          value={props.register.lName}
+          id="lName"
+          aria-describedby="lNameHelp"
+          placeholder="sobrenome"
+        />
+        <hr className="input-bottom-border" />
+        <Tippy
+          theme="material"
+          visible={props.emailTooltip}
+          content={
+            <span className="text-light">
+              hmm.. este não parece um email válido &#129488;
+            </span>
+          }
+        >
           <input
-            onChange={props.handleChange}
-            type="text"
-            className="form-control"
-            id="InputFName1"
-            name="fName"
-            value={props.register.fName}
-            required
-          />
-          {props.register.fName === "" ? props.emptyError : ""}
-        </div>
-        <div className="form-group" style={props.regStyle.userLNameInput}>
-          <label htmlFor="InputLName1" className="mb-0">
-            Sobrenome
-          </label>
-          <input
-            onChange={props.handleChange}
-            type="text"
-            className="form-control"
-            id="InputLName1"
-            name="lName"
-            value={props.register.lName}
-            required
-          />
-          {props.register.lName === "" ? props.emptyError : ""}
-        </div>
-        <div className="form-group" style={props.regStyle.userEmailInput}>
-          <label htmlFor="InputEmail1" className="mb-0">
-            Email
-          </label>
-          <input
-            onChange={props.registerEmailHandler}
-            type="e-mail"
-            className="form-control"
+            className="userInput"
+            onChange={props.registerHandler}
+            onBlur={props.emailTooltipHandler}
+            type="email"
             name="email"
             value={props.register.email}
             id="InputEmail1"
             aria-describedby="emailHelp"
-            required
+            placeholder="endereço de email"
           />
-          {props.userExists}
-          {props.register.email === "" ? props.emptyError : ""}
-          <small id="registerEmail-validation" style={{ color: "red" }}>
-            {props.registerError}
-          </small>
-          <small id="emailHelp" className="form-text text-muted">
-            Seu email está seguro conosco.
-          </small>
-        </div>
-        <div className="form-group" style={props.regStyle.userPasswordInput}>
-          <label htmlFor="InputPassword2">Senha</label>
+        </Tippy>
+        <hr className="input-bottom-border" />
+      </div>
+
+      <div style={props.lForm}>
+        <Tippy
+          interactive={true}
+          allowHTML={true}
+          theme="material"
+          visible={props.passwordTooltip}
+          content={
+            <span className="text-light">
+              &#x274C; {props.passwordError}
+              <a
+                className="text-decoration-none text-warning"
+                href="https://www.security.org/how-secure-is-my-password/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                teste sua senha
+              </a>
+            </span>
+          }
+        >
           <input
-            onChange={props.passwordHandler}
+            onChange={props.registerHandler}
+            onBlur={props.passwordTooltipHandler}
             type="password"
-            className="form-control"
+            className="userInput"
             name="newUserPassword"
             id="InputPassword2"
             value={props.register.newUserPassword}
+            placeholder="senha"
             required
           />
-          {props.register.newUserPassword === "" ? props.emptyError2 : ""}
-          <small id="password-validation" style={{ color: "red" }}>
-            {props.passwordError}
-          </small>
-        </div>
-        <div className="form-group" style={props.regStyle.userPasswordInput2}>
-          <label htmlFor="InputPassword3">Confirmar Senha</label>
+        </Tippy>
+        <hr className="input-bottom-border" />
+
+        <Tippy
+          theme="material"
+          visible={props.passwordTooltip2}
+          content={
+            <span className="text-light">
+              ei ei ei! as duas senhas precisam ser iguais &#129488;
+            </span>
+          }
+        >
           <input
-            onChange={props.passwordHandler}
+            onChange={props.registerHandler}
+            onBlur={props.passwordTooltipHandler2}
             type="password"
-            className="form-control"
+            className="userInput"
             name="newUserPassword2"
             id="InputPassword3"
             value={props.register.newUserPassword2}
+            placeholder="confirmar senha"
             required
           />
-          {props.register.newUserPassword2 === "" ? props.emptyError2 : ""}
-          <small
-            className="form-text"
-            id="confirm-password"
-            style={{ color: "red" }}
-          >
-            {props.register.newUserPassword !== props.register.newUserPassword2
-              ? "As duas senhas precisam ser iguais!"
-              : ""}
+        </Tippy>
+        <hr className="input-bottom-border" />
+      </div>
+      <div className="form-check">
+        <input
+          onChange={props.checkboxHandler}
+          className="form-check-input mt-2 pt-0"
+          type="checkbox"
+          name="keepLogged"
+          id="defaultCheck1"
+          value={props.checkbox}
+          style={props.lForm}
+        />
+        <label className="form-check-label" htmlFor="defaultCheck1">
+          <small className="checkbox" style={props.lForm}>
+            lembrar
+          </small>
+        </label>
+        <div className="not-registered-link">
+          <small>
+            <button className="btn p-0 border-0" onClick={props.switchForms2}>
+              <u>já é registrado?</u>
+            </button>
           </small>
         </div>
-      </form>
-      <button
-        onClick={props.handleClickRegister}
-        className="btn btn-sm btn-primary btn-block"
-        style={props.regStyle.btnStyle1}
+      </div>
+
+      <Tippy
+        theme="material"
+        visible={props.userExists}
+        content={
+          <span className="text-light">
+            ahá! este email já está cadastrado &#129488;
+          </span>
+        }
       >
-        Registrar
-      </button>
-      <button
-        onClick={props.handleClickRegister2}
-        className="btn btn-sm btn-primary btn-block"
-        style={props.regStyle.btnStyle2}
+        <Tippy
+          theme="material"
+          visible={props.emptyFields}
+          content={
+            <span className="text-light">
+              oops! parece que existem campos vazios &#129488;
+            </span>
+          }
+        >
+          <button
+            onClick={props.handleEmailCheck}
+            className="register-button btn btn-sm w-50 fForm"
+            style={props.fForm}
+          >
+            Registrar
+          </button>
+        </Tippy>
+      </Tippy>
+
+      <Tippy
+        theme="material"
+        visible={props.emptyFields2}
+        content={
+          <span className="text-light">
+            oops! parece que existem campos vazios &#129488;
+          </span>
+        }
       >
-        Finalizar Cadastro
-      </button>
+        <button
+          onClick={props.handleRegisterClick}
+          className="register-button btn btn-sm w-50 lForm"
+          style={props.lForm}
+        >
+          Registrar
+        </button>
+      </Tippy>
+
+      <div className="row">
+        <hr className="col-7 p-0 ml-0" />
+        <p className="ou col-1 p-0"> ou </p>
+        <hr className="col-3 p-0 mr-0" />
+      </div>
+
+      <div className="row login-social-icons mt-3">
+        <div className="col-4">
+          <p>registre</p>
+          <p className="ml-5">com</p>
+        </div>
+        <div className="col-7 mt-auto ml-auto mr-0 p-0 row">
+          <i className="col-4 fab fa-google"></i>
+          <i className="col-4 fab fa-facebook-f"></i>
+          <i className="col-4 fab fa-twitter"></i>
+        </div>
+      </div>
     </div>
   );
 }

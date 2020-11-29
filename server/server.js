@@ -27,8 +27,18 @@ app.use(
   cors({ origin: "http://localhost:3000" }),
   require("./routes/posts")
 );
+app.use(
+  "/auth",
+  cors({ origin: "http://localhost:3000" }),
+  require("./routes/auth")
+);
+app.use(
+  "/users",
+  cors({ origin: "http://localhost:3000" }),
+  require("./routes/users")
+);
 
-app.get("/", function (req, res, next) {
+app.get("/", function (req, res) {
   res.send("hello friend");
 });
 

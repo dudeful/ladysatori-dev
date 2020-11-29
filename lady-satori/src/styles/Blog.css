@@ -7,6 +7,10 @@
 #faf3dd3b
  */
 
+.blogBody {
+  background-color: #faf3dd3b;
+}
+
 .loading-infinity {
   width: 200px;
   display: block;
@@ -61,7 +65,7 @@
 /* ----------------------------blog cards--------------------------- */
 
 .blog-cards {
-  margin: 7rem 0;
+  padding: 7rem 0;
 }
 
 .blog-cards .card {
