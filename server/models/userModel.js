@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
     lName: String,
     email: String,
     password: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
   },
   { timestamps: true }
 );

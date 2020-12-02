@@ -1,6 +1,7 @@
 import "../../styles/Login.css";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/material.css";
+import "tippy.js/themes/light.css";
 import React from "react";
 import axios from "axios";
 // import Error400 from "../Errors/Error400";
@@ -11,8 +12,12 @@ import passwordValidator from "password-validator";
 import passwordBlacklist from "./passwordBlacklist";
 
 function Login() {
-  const [recoveryTooltip, setRecoveryTooltip] = React.useState(false);
-  const [recoveryInput, setRecoveryInput] = React.useState("");
+  const [resetTooltip, setResetTooltip] = React.useState({
+    notRegistered: false,
+    invalid: false,
+    emailSent: false,
+  });
+  const [resetInput, setResetInput] = React.useState("");
 
   const [login, setLogin] = React.useState({
     email: "",
@@ -29,6 +34,7 @@ function Login() {
 
   const [registerTooltip, setRegisterTooltip] = React.useState({
     email: false,
+    email2: false,
     password: false,
     password2: false,
     userExists: false,
@@ -59,11 +65,19 @@ function Login() {
     setLForm({ display: "none" });
     setRegisterTooltip({
       email: false,
+      email2: false,
       password: false,
       password2: false,
       userExists: false,
       emptyFields: false,
       emptyFields2: false,
+    });
+    setRegister((prevValue) => {
+      return {
+        ...prevValue,
+        newUserPassword: "",
+        newUserPassword2: "",
+      };
     });
     alreadyRegistered();
   };
@@ -110,33 +124,60 @@ function Login() {
     .not()
     .oneOf(passwordBlacklist(register)); // Blacklist these values
 
-  //-----------------PASSWORD RECOVERY--------------------------
+  //-----------------PASSWORD RESET--------------------------
+
   const removeTooltip = () => {
-    setRecoveryTooltip(false);
+    setResetTooltip({
+      notRegistered: false,
+      invalid: false,
+      emailSent: false,
+    });
   };
 
-  const recoveryHandler = (event) => {
-    setRecoveryInput(event.target.value);
-    setRecoveryTooltip(false);
+  const resetHandler = (event) => {
+    setResetInput(event.target.value);
+    removeTooltip();
   };
 
-  const passwordRecovery = () => {
-    if (recoveryInput) {
+  const passwordReset = () => {
+    if (emailValidator.validate(resetInput)) {
       axios
-        .post("http://localhost:5000/users/checkEmail", {
-          email: recoveryInput,
+        .post("http://localhost:5000/users/password-reset", {
+          email: resetInput,
         })
         .then((res) => {
-          if (res.data.userExists === true) {
-            console.log("mail chimp");
-            setRecoveryTooltip(false);
+          if (res.data.validEmail === false) {
+            alert("endereço de email inválido");
+            setResetTooltip({
+              notRegistered: false,
+              invalid: true,
+              emailSent: false,
+            });
+          } else if (res.data.userExists === false) {
+            setResetTooltip({
+              notRegistered: true,
+              invalid: false,
+              emailSent: false,
+            });
           } else {
+            console.log(res.data);
+            setResetTooltip({
+              notRegistered: false,
+              invalid: false,
+              emailSent: true,
+            });
             //send email through emailing provider
-            setRecoveryTooltip(true);
           }
         });
+    } else {
+      setResetTooltip({
+        notRegistered: false,
+        invalid: true,
+        emailSent: false,
+      });
     }
   };
+
   //-----------------HANDLING LOGIN INPUTS----------------------
 
   const loginHandler = (event) => {
@@ -216,6 +257,7 @@ function Login() {
 
     setRegisterTooltip({
       email: false,
+      email2: false,
       password: false,
       password2: false,
       userExists: false,
@@ -269,22 +311,26 @@ function Login() {
         });
         switch (passwordError[0]) {
           case "min":
-            setRegPasswordError("deve conter pelo menos 8 dígitos");
+            setRegPasswordError("deve conter pelo menos 8 dígitos; ");
             break;
           case "max":
-            setRegPasswordError("deve conter no máximo 50 dígitos");
+            setRegPasswordError("deve conter no máximo 50 dígitos; ");
             break;
           case "uppercase":
-            setRegPasswordError("deve conter pelo menos 1 caracter maiúsculo");
+            setRegPasswordError(
+              "deve conter pelo menos 1 caracter maiúsculo; "
+            );
             break;
           case "lowercase":
-            setRegPasswordError("deve conter pelo menos 1 caracter minúsculo");
+            setRegPasswordError(
+              "deve conter pelo menos 1 caracter minúsculo; "
+            );
             break;
           case "digits":
-            setRegPasswordError("deve conter pelo menos 1 número");
+            setRegPasswordError("deve conter pelo menos 1 número; ");
             break;
           case "spaces":
-            setRegPasswordError("não deve conter espaços");
+            setRegPasswordError("não deve conter espaços; ");
             break;
           case "oneOf":
             setRegPasswordError(
@@ -414,20 +460,94 @@ function Login() {
       axios
         .post("http://localhost:5000/users/registration", newUser)
         .then((res) => {
+          //
+          //checks if the email is already registered
           if (res.data.exists === true) {
-            console.log("user already exists");
+            console.log("este email já está cadastrado!");
+            alert(
+              "Este email já está cadastrado! Caso não lembre sua senha, click em 'recuperar' na página de Login."
+            );
+            window.location.reload();
+
+            //performs server-side validation and checks if the middleware validator found any issues
+          } else if (res.data.validation) {
+            //
+            //check if the email is a valid email
+            if (!res.data.validation.validEmail) {
+              console.log("endereço de email inválido");
+
+              //sets the Tippy visibility on RegisterFrame component to true
+              setRegisterTooltip((prevValue) => {
+                return {
+                  ...prevValue,
+                  email2: true,
+                };
+              });
+              alert("endereço de email inválido");
+              setTimeout(() => {
+                window.location.reload();
+              }, 4000);
+
+              //check if the password fits the requirements
+            } else if (res.data.validation.passwordError[0]) {
+              //
+              //check which requirements the password fails to fit and creates a custom message
+              switch (res.data.validation.passwordError[0]) {
+                case "min":
+                  setRegPasswordError("deve conter pelo menos 8 dígitos; ");
+                  alert("senha deve conter pelo menos 8 dígitos");
+                  break;
+                case "max":
+                  setRegPasswordError("deve conter no máximo 50 dígitos; ");
+                  alert("senha deve conter no máximo 50 dígitos");
+                  break;
+                case "uppercase":
+                  setRegPasswordError(
+                    "deve conter pelo menos 1 caracter maiúsculo; "
+                  );
+                  alert("senha deve conter pelo menos 1 caracter maiúsculo");
+                  break;
+                case "lowercase":
+                  setRegPasswordError(
+                    "deve conter pelo menos 1 caracter minúsculo; "
+                  );
+                  alert("senha deve conter pelo menos 1 caracter minúsculo");
+                  break;
+                case "digits":
+                  setRegPasswordError("deve conter pelo menos 1 número; ");
+                  alert("senha deve conter pelo menos 1 número");
+                  break;
+                case "spaces":
+                  setRegPasswordError("não deve conter espaços; ");
+                  alert("senha não deve conter espaços");
+                  break;
+                case "oneOf":
+                  setRegPasswordError(
+                    "não utilize senhas fáceis como: seu email, seu nome, 'Senha123', 'Passw0rd', etc... "
+                  );
+                  alert(
+                    "não utilize senhas fáceis como: seu email, seu nome, 'Senha123', 'Passw0rd', etc..."
+                  );
+                  break;
+                default:
+                  setRegPasswordError(null);
+              }
+
+              //sets the Tippy visibility on RegisterFrame component to true
+              setRegisterTooltip((prevValue) => {
+                return {
+                  ...prevValue,
+                  password: true,
+                };
+              });
+            }
+
+            //if any issue has been found, sets a cookie on local-storage
           } else {
             localStorage.setItem("auth-token", res.data.token);
             window.location.reload();
           }
         });
-
-      setRegisterTooltip((prevValue) => {
-        return {
-          ...prevValue,
-          emptyFields2: false,
-        };
-      });
     }
   };
 
@@ -440,25 +560,26 @@ function Login() {
         <div className="horizontal-top-line" />
         <div className="horizontal-bottom-line" id="horizontal-bottom-line" />
         <LoginFrame
-          recoveryTooltip={recoveryTooltip}
-          recoveryInput={recoveryInput}
           login={login}
           checkbox={loginCheckbox}
           emailTooltip={loginTooltip.email}
           passwordTooltip={loginTooltip.password}
           emptyFields={loginTooltip.emptyFields}
+          resetTooltip={resetTooltip}
+          resetInput={resetInput}
+          removeTooltip={removeTooltip}
+          resetHandler={resetHandler}
+          passwordReset={passwordReset}
           loginHandler={loginHandler}
           checkboxHandler={loginCheckboxHandler}
           handleLoginClick={handleLoginClick}
           notRegistered={notRegistered}
-          passwordRecovery={passwordRecovery}
-          recoveryHandler={recoveryHandler}
-          setRecoveryTooltip={removeTooltip}
         />
         <RegisterFrame
           fForm={fForm}
           lForm={lForm}
           emailTooltip={registerTooltip.email}
+          emailTooltip2={registerTooltip.email2}
           passwordTooltip={registerTooltip.password}
           passwordTooltip2={registerTooltip.password2}
           userExists={registerTooltip.userExists}

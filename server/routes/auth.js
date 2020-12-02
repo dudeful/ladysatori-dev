@@ -12,8 +12,8 @@ require("dotenv").config();
 
 router.route("/login").post((req, res) => {
   const { email, password, remember } = req.body;
-  let expiration = "1h";
 
+  let expiration = "1h";
   if (remember === true) {
     expiration = "365d";
   }

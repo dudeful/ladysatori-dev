@@ -176,7 +176,7 @@
 }
 
 .login-form .userInput,
-::placeholder {
+.login-form ::placeholder {
   width: 100%;
   margin-top: 30px;
   text-align: left;
@@ -236,18 +236,18 @@
   background-color: rgb(92, 139, 155);
 }
 
-.recovery-password {
+.reset-password {
   color: rgba(92, 139, 155, 0.6);
   background: none;
   border: none;
   padding: 0;
 }
 
-.recovery-password:focus {
+.reset-password:focus {
   outline: 0;
 }
 
-.recovery-password:hover {
+.reset-password:hover {
   color: rgba(92, 139, 155);
 }
 
@@ -311,4 +311,87 @@
 .show-block {
   position: initial;
   opacity: 1;
+}
+
+/* ------------------------password reset----------------------- */
+
+@font-face {
+  font-family: "testOnly";
+  src: url("/src/testonly-webfont.woff2") format("woff2"),
+    url("/src/testonly-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.reset-container {
+  width: 70%;
+  margin: 50px auto auto;
+}
+@media only screen and (max-width: 1140px) {
+  .reset-container {
+    width: 100%;
+  }
+}
+
+.reset-form {
+  margin-top: 75px;
+  box-shadow: 0px 2px 70px 0px rgb(55, 58, 64, 0.25);
+  padding: 25px;
+  width: 50%;
+  height: auto;
+  margin: auto;
+}
+@media only screen and (max-width: 768px) {
+  .reset-form {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .reset-form {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .reset-form {
+    width: 100%;
+  }
+}
+.reset-form a.reset-home-link {
+  text-decoration: none;
+}
+
+.reset-form .reset-home-link {
+  font-family: "testOnly", "Montserrat", "sans-serif";
+  font-size: 2rem;
+  text-align: center;
+  color: rgb(55, 58, 64, 0.5);
+  margin: 0;
+}
+
+.reset-form .heading {
+  font-family: "Montserrat";
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 10px 30px;
+}
+@media only screen and (max-width: 768px) {
+  .reset-form .heading {
+    font-size: 1.5rem;
+  }
+}
+
+.reset-form img {
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+
+.reset-input {
+  width: 85%;
+  margin: auto auto 30px;
+  text-align: right;
+}
+
+.reset-input span {
+  font-size: 0.8rem;
 }

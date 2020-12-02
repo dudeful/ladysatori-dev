@@ -170,13 +170,23 @@ function RegisterFrame(props) {
           </span>
         }
       >
-        <button
-          onClick={props.handleRegisterClick}
-          className="register-button btn btn-sm w-50 lForm"
-          style={props.lForm}
+        <Tippy
+          theme="material"
+          visible={props.emailTooltip2}
+          content={
+            <span className="text-light">
+              hmm.. este não parece um email válido &#129488;
+            </span>
+          }
         >
-          Registrar
-        </button>
+          <button
+            onClick={props.handleRegisterClick}
+            className="register-button btn btn-sm w-50 lForm"
+            style={props.lForm}
+          >
+            Registrar
+          </button>
+        </Tippy>
       </Tippy>
 
       <div className="row">

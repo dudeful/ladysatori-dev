@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { PasswordRecovery } from "./PasswordRecovery";
+import { PasswordResetModal } from "./PasswordResetModal";
 
 function LoginFrame(props) {
   return (
@@ -31,10 +31,9 @@ function LoginFrame(props) {
 
       <div className="text-right aaq">
         <button
-          className="recovery-password"
+          className="reset-password"
           data-toggle="modal"
-          data-target="#passwordRecovery"
-          href="#0"
+          data-target="#passwordResetModal"
         >
           <small>recuperar</small>
         </button>
@@ -111,12 +110,12 @@ function LoginFrame(props) {
           <i className="col-4 fab fa-twitter"></i>
         </div>
       </div>
-      <PasswordRecovery
-        passwordRecovery={props.passwordRecovery}
-        recoveryTooltip={props.recoveryTooltip}
-        recoveryInput={props.recoveryInput}
-        recoveryHandler={props.recoveryHandler}
-        setRecoveryTooltip={props.setRecoveryTooltip}
+      <PasswordResetModal
+        passwordReset={props.passwordReset}
+        resetTooltip={props.resetTooltip}
+        resetInput={props.resetInput}
+        resetHandler={props.resetHandler}
+        removeTooltip={props.removeTooltip}
       />
     </div>
   );

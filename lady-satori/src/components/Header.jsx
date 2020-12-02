@@ -4,7 +4,7 @@ function Header(props) {
   return (
     <nav className="navbar navbar-expand-md navbar-light pt-3">
       <Link to={"/"} className="navbar-brand">
-        Lady Satori
+        lady Satori
       </Link>
       <button
         className="navbar-toggler border-0"

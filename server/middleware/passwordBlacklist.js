@@ -70,4 +70,4 @@ const passwordBlacklist = (user) => {
   ];
 };
 
-export default passwordBlacklist;
+module.exports = passwordBlacklist;
