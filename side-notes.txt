@@ -11,6 +11,13 @@ https://mongoosejs.com/docs/tutorials/findoneandupdate.html
 https://reactrouter.com/web/api/Redirect
 https://www.glo.com/
 https://atomiks.github.io/tippyjs/v6/all-props/
+https://joi.dev/
+https://www.npmjs.com/package/limiter
+https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/
+https://www.youtube.com/watch?v=HkNdG7d_LAI&list=PLP91MtCof9kmVVHhgCy7GUJbZEWypC_I-
+https://www.npmjs.com/package/connect-mongo
+https://www.npmjs.com/package/connect-redis
+https://www.tutorialspoint.com/expressjs/expressjs_static_files.htm
 
 Olafur Eliasson
 

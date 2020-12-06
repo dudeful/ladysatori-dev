@@ -110,15 +110,24 @@ function RegisterFrame(props) {
         <hr className="input-bottom-border" />
       </div>
       <div className="form-check">
-        <input
-          onChange={props.checkboxHandler}
-          className="form-check-input mt-2 pt-0"
-          type="checkbox"
-          name="keepLogged"
-          id="defaultCheck1"
-          value={props.checkbox}
-          style={props.lForm}
-        />
+        <Tippy
+          theme="light"
+          content={
+            <span className="text-info">
+              sua sessão só encerrará quando selecionar <b>"sair"</b>
+            </span>
+          }
+        >
+          <input
+            onChange={props.checkboxHandler}
+            className="form-check-input mt-2 pt-0"
+            type="checkbox"
+            name="keepLogged"
+            id="defaultCheck1"
+            value={props.checkbox}
+            style={props.lForm}
+          />
+        </Tippy>
         <label className="form-check-label" htmlFor="defaultCheck1">
           <small className="checkbox" style={props.lForm}>
             lembrar
@@ -201,9 +210,15 @@ function RegisterFrame(props) {
           <p className="ml-5">com</p>
         </div>
         <div className="col-7 mt-auto ml-auto mr-0 p-0 row">
-          <i className="col-4 fab fa-google"></i>
-          <i className="col-4 fab fa-facebook-f"></i>
-          <i className="col-4 fab fa-twitter"></i>
+          <a href="http://localhost:5000/auth/google">
+            <i className="col-4 fab fa-google"></i>
+          </a>
+          <a href="http://localhost:5000/auth/facebook">
+            <i className="col-4 fab fa-facebook-f"></i>
+          </a>
+          <a href="http://localhost:5000/auth/twitter">
+            <i className="col-4 fab fa-twitter"></i>
+          </a>
         </div>
       </div>
     </div>

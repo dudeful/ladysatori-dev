@@ -1,14 +1,17 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
-const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middleware/validator");
-var async = require("async");
-var crypto = require("crypto");
+const saltRounds = 12;
+const tokenSaltRounds = 10;
 const sgMail = require("@sendgrid/mail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const saltRounds = 10;
+const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middleware/validator");
+let async = require("async");
+let crypto = require("crypto");
+let http = require("https");
+const { getDefaultSettings } = require("http2");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-var http = require("https");
+
 // router.route("/").get((req, res) => {
 //   User.find()
 //     .then((users) => res.json(users))
@@ -43,8 +46,7 @@ router.post("/registration", validate, (req, res) => {
       password: req.body.password,
     });
 
-    let expiration = "1h";
-
+    let expiration = "8h";
     if (remember === true) {
       expiration = "365d";
     }
@@ -91,8 +93,10 @@ router.route("/password-reset").post(validateOnlyEmail, (req, res, next) => {
             return res.json({ userExists: false });
           }
 
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 1200000; // 15min
+          const tokenHash = crypto.createHash("sha512").update(token).digest("hex");
+
+          user.resetPasswordToken = tokenHash;
+          user.resetPasswordExpires = Date.now() + 1200000; // 20min
 
           user.save(function (err) {
             done(err, token, user);
@@ -136,7 +140,7 @@ router.route("/password-reset").post(validateOnlyEmail, (req, res, next) => {
             ],
             from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
             reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
-            template_id: process.env.EMAIL_TEMPLATE_ID,
+            template_id: process.env.EMAIL_PASSWORD_RESET_LINK,
           })
         );
         request.end();
@@ -152,7 +156,9 @@ router.route("/password-reset").post(validateOnlyEmail, (req, res, next) => {
 });
 
 router.route("/reset/:token").get((req, res) => {
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+  const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
+
+  User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (user) {
       return res.json({ user: { fName: user.fName, lName: user.lName, email: user.email } });
     } else {
@@ -165,40 +171,39 @@ router.route("/reset/:token").patch(validateOnlyPassword, (req, res) => {
   async.waterfall(
     [
       function (done) {
-        User.findOne(
-          { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } },
-          (err, user) => {
-            if (!user) {
-              return res.json({ user: false });
-            }
+        const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
 
-            user.password = req.body.newPassword.password;
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
-
-            //Create salt & hash
-            bcrypt.hash(user.password, saltRounds, (err, hash) => {
-              if (err) throw err;
-              user.password = hash;
-              user.save().then((user, err) => {
-                jwt.sign(
-                  {
-                    id: user._id,
-                    fName: user.fName,
-                    lName: user.lName,
-                    email: user.email,
-                  },
-                  process.env.JWT_SECRET,
-                  { expiresIn: "1d" },
-                  (err, token) => {
-                    if (err) throw err;
-                    done(err, token, user);
-                  }
-                );
-              });
-            });
+        User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+          if (!user) {
+            return res.json({ user: false });
           }
-        );
+
+          user.password = req.body.newPassword.password;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+          //Create salt & hash
+          bcrypt.hash(user.password, saltRounds, (err, hash) => {
+            if (err) throw err;
+            user.password = hash;
+            user.save().then((user, err) => {
+              jwt.sign(
+                {
+                  id: user._id,
+                  fName: user.fName,
+                  lName: user.lName,
+                  email: user.email,
+                },
+                process.env.JWT_SECRET,
+                { expiresIn: "1d" },
+                (err, token) => {
+                  if (err) throw err;
+                  done(err, token, user);
+                }
+              );
+            });
+          });
+        });
       },
       function (token, user, done) {
         let options = {
@@ -230,14 +235,14 @@ router.route("/reset/:token").patch(validateOnlyPassword, (req, res) => {
               {
                 to: [{ email: user.email }],
                 dynamic_template_data: {
-                  recovery_link: "http://localhost:3000/",
+                  login_page_link: "http://localhost:3000/login",
                   home_link: "http://localhost:3000/",
                 },
               },
             ],
             from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
             reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
-            template_id: process.env.EMAIL_TEMPLATE_ID,
+            template_id: process.env.EMAIL_PASSWORD_RESET_CONFIRMATION,
           })
         );
         request.end();

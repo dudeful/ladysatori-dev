@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Post = require("../models/postModel");
-// const verifyToken = require("../middleware/verifyToken");
 
 router.route("/").get((req, res) => {
   Post.find()
@@ -39,8 +38,7 @@ router.route("/admin/new-post").post((req, res) => {
     "Novembro",
     "Dezembro",
   ];
-  const date =
-    d.getDate() + " de " + months[d.getMonth()] + ", " + d.getFullYear();
+  const date = d.getDate() + " de " + months[d.getMonth()] + ", " + d.getFullYear();
 
   const bodyBlocks = req.body.body.blocks;
 

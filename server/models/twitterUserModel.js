@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const userGoogleSchema = new mongoose.Schema(
+const userTwitterSchema = new mongoose.Schema(
   {
-    googleID: String,
+    twitterID: String,
     username: String,
     fName: String,
     lName: String,
@@ -14,4 +14,4 @@ const userGoogleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("googleUser", userGoogleSchema);
+module.exports = mongoose.model("twitterUser", userTwitterSchema);

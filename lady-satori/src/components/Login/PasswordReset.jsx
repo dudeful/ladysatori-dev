@@ -30,6 +30,7 @@ const PasswordReset = () => {
   if (loading) return <div />;
   if (error) return <Error400 />;
   if (!data.user) return <LinkExpired />;
+  // if (linkExpired) return <LinkExpired />;
 
   //handling inputs
   const inputHandler = (event) => {
@@ -159,8 +160,6 @@ const PasswordReset = () => {
   const reset = () => {
     const resetData = { user: data.user, newPassword };
 
-    if (!data.user) return window.location.reload();
-
     setPasswordTooltip({
       password: false,
       confirmPassword: false,
@@ -195,7 +194,9 @@ const PasswordReset = () => {
           resetData
         )
         .then((res) => {
-          if (res.data.passwordError) {
+          if (res.data.user === false) {
+            window.location.reload();
+          } else if (res.data.passwordError) {
             //check which requirements the password fails to fit and creates a custom message
             switch (res.data.passwordError[0]) {
               case "min":

@@ -11,7 +11,7 @@ import emailValidator from "email-validator";
 import passwordValidator from "password-validator";
 import passwordBlacklist from "./passwordBlacklist";
 
-function Login() {
+function LoginComponent() {
   const [resetTooltip, setResetTooltip] = React.useState({
     notRegistered: false,
     invalid: false,
@@ -110,7 +110,7 @@ function Login() {
     .is()
     .min(8) // Minimum length 8
     .is()
-    .max(50) // Maximum length 100
+    .max(50) // Maximum length 50
     .has()
     .uppercase() // Must have uppercase letters
     .has()
@@ -166,6 +166,9 @@ function Login() {
               invalid: false,
               emailSent: true,
             });
+            setTimeout(() => {
+              window.location.reload();
+            }, 4000);
             //send email through emailing provider
           }
         });
@@ -230,14 +233,22 @@ function Login() {
           });
           console.log("wrong password");
         } else {
+          if (loginCheckbox) {
+            localStorage.setItem("auth-token", res.data.token);
+            sessionStorage.removeItem("auth-token");
+            console.log("you're logged");
+            window.location = "/aulas-yoga";
+          } else {
+            sessionStorage.setItem("auth-token", res.data.token);
+            localStorage.removeItem("auth-token");
+            console.log("you're logged");
+            window.location = "/aulas-yoga";
+          }
           setLoginTooltip({
             email: false,
             password: false,
             emptyFields: false,
           });
-          localStorage.setItem("auth-token", res.data.token);
-          console.log("you're logged");
-          window.location.reload();
         }
       });
     }
@@ -544,8 +555,17 @@ function Login() {
 
             //if any issue has been found, sets a cookie on local-storage
           } else {
-            localStorage.setItem("auth-token", res.data.token);
-            window.location.reload();
+            if (registerCheckbox) {
+              sessionStorage.removeItem("auth-token");
+              localStorage.setItem("auth-token", res.data.token);
+              console.log("you're logged");
+              window.location = "/aulas-yoga";
+            } else {
+              localStorage.removeItem("auth-token");
+              sessionStorage.setItem("auth-token", res.data.token);
+              console.log("you're logged");
+              window.location = "/aulas-yoga";
+            }
           }
         });
     }
@@ -603,4 +623,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginComponent;

@@ -120,11 +120,11 @@
 
 #get-in-touch {
   text-align: center;
-  margin: 10rem auto 2.5rem;
+  margin: 10rem auto 6rem;
   font-family: "Montserrat", sans-serif;
   font-size: 2rem;
-  background-color: #8fc0a9c7;
-  box-shadow: 1px 1px 3px 0px #888888;
+  background-color: #8fc0a91f;
+  box-shadow: 0px -1px 3px 0px rgb(55, 58, 64, 0.2);
 }
 
 .home-contact {
@@ -133,9 +133,14 @@
 
 .contact-form {
   padding: 1.5rem;
-  border-radius: 0.2rem;
-  background-color: #8fc0a9b2;
-  box-shadow: 0px 0px 10px 0px #88888885;
+  border-radius: 2px;
+  background-color: #8fc0a91f;
+  box-shadow: 0px 2px 70px 0px rgb(55, 58, 64, 0.25);
+}
+@media only screen and (max-width: 540px) {
+  .contact-form {
+    box-shadow: 0px 2px 35px 0px rgb(55, 58, 64, 0.25);
+  }
 }
 
 .home-contact p {

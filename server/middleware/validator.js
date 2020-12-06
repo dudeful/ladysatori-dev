@@ -11,7 +11,7 @@ const validate = (req, res, next) => {
     .is()
     .min(8) // Minimum length 8
     .is()
-    .max(50) // Maximum length 100
+    .max(50) // Maximum length 50
     .has()
     .uppercase() // Must have uppercase letters
     .has()

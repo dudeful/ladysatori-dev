@@ -6,7 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./components/Home";
-import Login from "./components/Login/Login";
+import Login from "./components/Login";
+import SocialAuth from "./components/SocialAuth";
 import Blog from "./components/Blog/Blog";
 import Aulas from "./components/Aulas";
 import Sobre from "./components/Sobre";
@@ -35,6 +36,7 @@ function App() {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/login" component={Login} exact />
+          <Route path="/SocialAuth/:social/:id" component={SocialAuth} exact />
           <Route path="/aulas-yoga" component={Aulas} exact />
           <Route path="/blog" component={Blog} exact />
           <Route path="/sobre" component={Sobre} exact />

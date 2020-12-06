@@ -1,11 +1,4 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
-
-mongoose.connect(process.env.ATLAS_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
 
 const userFacebookSchema = new mongoose.Schema(
   {

@@ -144,8 +144,6 @@ function Home() {
 
       <Contact />
 
-      <hr />
-
       <Footer />
     </div>
   );

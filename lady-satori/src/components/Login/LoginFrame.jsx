@@ -39,14 +39,23 @@ function LoginFrame(props) {
         </button>
       </div>
       <div className="form-check">
-        <input
-          onChange={props.checkboxHandler}
-          className="form-check-input mt-2 pt-0"
-          type="checkbox"
-          name="checkbox"
-          id="defaultCheck1"
-          value={props.checkbox}
-        />
+        <Tippy
+          theme="light"
+          content={
+            <span className="text-info">
+              sua sessão só encerrará quando selecionar <b>"sair"</b>
+            </span>
+          }
+        >
+          <input
+            onChange={props.checkboxHandler}
+            className="form-check-input mt-2 pt-0"
+            type="checkbox"
+            name="checkbox"
+            id="defaultCheck1"
+            value={props.checkbox}
+          />
+        </Tippy>
         <label className="form-check-label" htmlFor="defaultCheck1">
           <small className="checkbox">lembrar</small>
         </label>
@@ -104,10 +113,16 @@ function LoginFrame(props) {
           <p>entre</p>
           <p className="ml-4">com</p>
         </div>
-        <div className="text-center col-8 mt-auto ml-0 mr-0 p-0 row">
-          <i className="col-4 fab fa-google"></i>
-          <i className="col-4 fab fa-facebook-f"></i>
-          <i className="col-4 fab fa-twitter"></i>
+        <div className="text-center col-8 m-auto p-0 row">
+          <a href="http://localhost:5000/auth/google">
+            <i className="col-4 fab fa-google"></i>
+          </a>
+          <a href="http://localhost:5000/auth/facebook">
+            <i className="col-4 fab fa-facebook-f"></i>
+          </a>
+          <a href="http://localhost:5000/auth/twitter">
+            <i className="col-4 fab fa-twitter"></i>
+          </a>
         </div>
       </div>
       <PasswordResetModal

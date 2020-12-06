@@ -1,12 +1,57 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 function verifyToken(req, res, next) {
-  //Get auth header value
-  const userToken = req.headers["authorization"];
-  if (userToken) {
-    //Verify if the Token is valid
-    jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+  const getToken = () => {
+    //Get auth header value
+    let localToken;
+    let sessionToken;
+
+    switch (req.headers.localtoken) {
+      case "null":
+        localToken = false;
+        break;
+      case "undefined":
+        localToken = false;
+        break;
+      case "false":
+        localToken = false;
+        break;
+      default:
+        localToken = req.headers.localtoken;
+    }
+
+    switch (req.headers.sessiontoken) {
+      case "null":
+        sessionToken = false;
+        break;
+      case "undefined":
+        sessionToken = false;
+        break;
+      case "false":
+        sessionToken = false;
+        break;
+      default:
+        sessionToken = req.headers.sessiontoken;
+    }
+    return { localToken, sessionToken };
+  };
+
+  if (getToken().localToken) {
+    //Verify if the localStorage token is valid
+
+    jwt.verify(getToken().localToken, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        res.json({ isTokenOk: false });
+      } else {
+        //Next middleware
+        req.user = decoded;
+        next();
+      }
+    });
+  } else if (getToken().sessionToken) {
+    //Verify if the sessionStorage token is valid
+
+    jwt.verify(getToken().sessionToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         res.json({ isTokenOk: false });
       } else {

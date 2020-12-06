@@ -1,13 +1,25 @@
 const express = require("express");
+const session = require("express-session");
+const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const app = express();
+const passport = require("passport");
 const port = process.env.PORT || 5000;
 
 require("dotenv").config();
 
 app.use(express.json({ limit: "25mb" }));
 app.use(cors());
+app.use(
+  session({
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, httpOnly: true },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // bellow is the mongoose connection
 mongoose.connect(process.env.ATLAS_URI, {
@@ -22,28 +34,16 @@ connection.once("open", () => {
 });
 
 // requiring and using routes
-app.use(
-  "/posts",
-  cors({ origin: "http://localhost:3000" }),
-  require("./routes/posts")
-);
-app.use(
-  "/auth",
-  cors({ origin: "http://localhost:3000" }),
-  require("./routes/auth")
-);
-app.use(
-  "/users",
-  cors({ origin: "http://localhost:3000" }),
-  require("./routes/users")
-);
+app.use("/posts", cors({ origin: "http://localhost:3000" }), require("./routes/posts"));
 
-app.get("/", function (req, res) {
+app.use("/auth", cors({ origin: "http://localhost:3000" }), require("./routes/auth"));
+
+app.use("/users", cors({ origin: "http://localhost:3000" }), require("./routes/users"));
+
+app.get("/", (req, res) => {
   res.send("hello friend");
 });
 
 app.listen(port, () => {
-  console.log(
-    `OMG! This is the best server I have ever seen! Oh, it is running on Port ${port} BTW.`
-  );
+  console.log(`OMG! This is the best server I have ever seen! Oh, it is running on Port ${port} BTW.`);
 });

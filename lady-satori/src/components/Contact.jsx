@@ -1,13 +1,13 @@
-import { useState } from "react";
+import React from "react";
 import emailjs from "emailjs-com";
 
 function Contact() {
-  const [register, setRegister] = useState({
+  const [register, setRegister] = React.useState({
     name: "",
     email: "",
   });
 
-  const [messageSent, setMessageSent] = useState("");
+  const [messageSent, setMessageSent] = React.useState("");
 
   function messageHandler(ok) {
     if (ok) {
@@ -118,7 +118,10 @@ function Contact() {
               ></textarea>
             </div>
             {messageSent === "" ? "" : messageSent}
-            <button type="submit" className="btn btn-outline-info btn-block">
+            <button
+              type="submit"
+              className="btn btn-sm btn-outline-info btn-block"
+            >
               Enviar
             </button>
             <div>
