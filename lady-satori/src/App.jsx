@@ -17,6 +17,7 @@ import UpdatePost from "./components/Blog/New Post/UpdatePost";
 import Error404 from "./components/Errors/Error404";
 import Error400 from "./components/Errors/Error400";
 import PasswordReset from "./components/Login/PasswordReset";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,15 +36,20 @@ function App() {
         <ScrollToTop />
         <Switch>
           <Route path="/" component={Home} exact />
+          <Route path="/reset/:token" component={PasswordReset} exact />
           <Route path="/login" component={Login} exact />
-          <Route path="/SocialAuth/:social/:id" component={SocialAuth} exact />
-          <Route path="/aulas-yoga" component={Aulas} exact />
-          <Route path="/blog" component={Blog} exact />
+          <Route
+            path="/SocialAuth/:original_url/:auth_token"
+            component={SocialAuth}
+            exact
+          />
           <Route path="/sobre" component={Sobre} exact />
+
+          <Route path="/blog" component={Blog} exact />
+          <Route path="/post/:id/:title" component={BlogPost} exact />
           <Route path="/new-post" component={AddNewPost} exact />
           <Route path="/update-post/:id/:title" component={UpdatePost} exact />
-          <Route path="/reset/:token" component={PasswordReset} exact />
-          <Route path="/post/:id/:title" component={BlogPost} exact />
+          <Route path="/yoga-class" component={ProtectedRoutes(Aulas)} exact />
           <Route path="/error400" component={Error400} exact />
           <Route component={Error404} />
         </Switch>

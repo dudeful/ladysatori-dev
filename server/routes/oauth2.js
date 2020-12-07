@@ -35,13 +35,13 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/redirect",
+      // passReqToCallback: true, // allows us to pass in the req from our route
     },
     (accessToken, refreshToken, profile, done) => {
       //Check existing user
       googleUser.findOne({ googleID: profile.id }, (err, user) => {
         if (user) {
           //User already exists
-          // console.log("user already exists: " + user);
           return done(err, user);
         } else {
           //User does not exists, therefore create user
@@ -57,7 +57,6 @@ passport.use(
           })
             .save()
             .then((user) => {
-              // console.log("User created: " + user);
               return done(err, user);
             });
         }
@@ -77,11 +76,9 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       //Check existing user
-      //console.log(profile._json);
       facebookUser.findOne({ facebookID: profile.id }, (err, user) => {
         if (user) {
           //User already exists
-          //console.log("user already exists: " + user);
           return done(err, user);
         } else {
           //User does not exists, therefore create user
@@ -95,7 +92,6 @@ passport.use(
           })
             .save()
             .then((user) => {
-              //console.log("User created: " + user);
               return done(err, user);
             });
         }

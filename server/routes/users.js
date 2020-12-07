@@ -1,15 +1,14 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
 const saltRounds = 12;
-const tokenSaltRounds = 10;
 const sgMail = require("@sendgrid/mail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middleware/validator");
 let async = require("async");
 let crypto = require("crypto");
+const CryptoJS = require("crypto-js");
 let http = require("https");
-const { getDefaultSettings } = require("http2");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // router.route("/").get((req, res) => {
@@ -58,20 +57,23 @@ router.post("/registration", validate, (req, res) => {
       newUser
         .save()
         .then((user) => {
-          jwt.sign(
-            {
-              id: user.id,
-              fName: user.fName,
-              lName: user.lName,
-              email: user.email,
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: expiration },
-            (err, token) => {
-              if (err) throw err;
-              res.json({ token });
-            }
-          );
+          const payload = {
+            id: user.id,
+            fName: user.fName,
+            lName: user.lName,
+            email: user.email,
+          };
+
+          // Encrypt
+          const ciphertext = CryptoJS.AES.encrypt(
+            JSON.stringify(payload),
+            process.env.JWT_PAYLOAD_ENCRYPTION_KEY
+          ).toString();
+
+          jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: expiration }, (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+          });
         })
         .catch((err) => res.status(400).json({ error: err }));
     });

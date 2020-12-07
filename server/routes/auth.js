@@ -7,6 +7,7 @@ const twitterUser = require("../models/twitterUserModel");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const CryptoJS = require("crypto-js");
 const verifyToken = require("../middleware/verifyToken");
 
 require("./oauth2");
@@ -28,34 +29,38 @@ router.route("/login").post((req, res) => {
       bcrypt.compare(password, user.password).then((isMatch) => {
         if (!isMatch) return res.json(false);
 
-        jwt.sign(
-          {
-            id: user.id,
-            fName: user.fName,
-            lName: user.lName,
-            email: user.email,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: expiration },
-          (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-          }
-        );
+        const payload = {
+          authMethod: "Email",
+          id: user.id,
+          fName: user.fName,
+          lName: user.lName,
+          email: user.email,
+        };
+
+        // Encrypt
+        const ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(payload),
+          process.env.JWT_PAYLOAD_ENCRYPTION_KEY
+        ).toString();
+
+        jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: expiration }, (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        });
       });
     })
     .catch((err) => res.status(400).json({ error: err }));
 });
 
 router.route("/isLoggedIn").get(verifyToken, (req, res) => {
-  const decoded = req.user;
+  const decoded = req.user.payload;
   const email = decoded.email;
   if (decoded.googleID) {
     googleUser.findOne({ email }).then((user) => {
       if (!user) {
         res.json({ isLoggedIn: false });
       } else {
-        res.json({ isLoggedIn: true, loginType: "Google", decoded });
+        res.json({ isLoggedIn: true, loginType: "Google" });
       }
     });
   } else if (decoded.facebookID) {
@@ -63,7 +68,7 @@ router.route("/isLoggedIn").get(verifyToken, (req, res) => {
       if (!user) {
         res.json({ isLoggedIn: false });
       } else {
-        res.json({ isLoggedIn: true, loginType: "Facebook", decoded });
+        res.json({ isLoggedIn: true, loginType: "Facebook" });
       }
     });
   } else if (decoded.twitterID) {
@@ -71,7 +76,7 @@ router.route("/isLoggedIn").get(verifyToken, (req, res) => {
       if (!user) {
         res.json({ isLoggedIn: false });
       } else {
-        res.json({ isLoggedIn: true, loginType: "Twitter", decoded });
+        res.json({ isLoggedIn: true, loginType: "Twitter" });
       }
     });
   } else {
@@ -79,17 +84,18 @@ router.route("/isLoggedIn").get(verifyToken, (req, res) => {
       if (!user) {
         res.json({ isLoggedIn: false });
       } else {
-        res.json({ isLoggedIn: true, loginType: "Email", decoded });
+        res.json({ isLoggedIn: true, loginType: "Email" });
       }
     });
   }
 });
 
-router.route("/google").get(
+router.route("/oauth2-google/:original_url").get(function (req, res, next) {
   passport.authenticate("google", {
     scope: ["profile", "email"],
-  })
-);
+    state: req.params.original_url,
+  })(req, res, next);
+});
 
 router.route("/google/redirect").get(
   passport.authenticate("google", {
@@ -97,31 +103,43 @@ router.route("/google/redirect").get(
   }),
   (req, res) => {
     const user = req.user;
+    const original_url = req.query.state;
     googleUser
       .findById(user._id)
       .then((user) => {
-        jwt.sign(
-          {
-            id: user._id,
-            googleID: user.googleID,
-            fName: user.fName,
-            lName: user.lName,
-            email: user.email,
-            picture: user.picture,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: "90d" },
-          (err, token) => {
-            if (err) throw err;
-            res.redirect("http://localhost:3000/SocialAuth/Google/" + token);
-          }
-        );
+        const payload = {
+          authMethod: "Google",
+          id: user._id,
+          googleID: user.googleID,
+          fName: user.fName,
+          lName: user.lName,
+          email: user.email,
+          picture: user.picture,
+        };
+
+        // Encrypt
+        const ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(payload),
+          process.env.JWT_PAYLOAD_ENCRYPTION_KEY
+        ).toString();
+
+        jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
+          if (err) throw err;
+          // req.session.token = token;
+          // console.log(req.session);
+          res.redirect("http://localhost:3000/SocialAuth/" + original_url + "/" + token);
+        });
       })
       .catch((err) => res.redirect("http://localhost:3000/error400"));
   }
 );
 
-router.route("/facebook").get(passport.authenticate("facebook", { scope: ["email"] }));
+router.route("/oauth2-facebook/:original_url").get(function (req, res, next) {
+  passport.authenticate("facebook", {
+    scope: ["email"],
+    state: req.params.original_url,
+  })(req, res, next);
+});
 
 router.route("/facebook/redirect").get(
   passport.authenticate("facebook", {
@@ -129,32 +147,44 @@ router.route("/facebook/redirect").get(
   }),
   (req, res) => {
     const user = req.user;
+    const original_url = req.query.state;
     facebookUser
       .findById(user._id)
       .then((user) => {
-        jwt.sign(
-          {
-            id: user._id,
-            facebookID: user.facebookID,
-            fName: user.fName,
-            lName: user.lName,
-            username: user.username,
-            email: user.email,
-            picture: user.picture,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: "90d" },
-          (err, token) => {
-            if (err) throw err;
-            res.redirect("http://localhost:3000/SocialAuth/Facebook/" + token);
-          }
-        );
+        const payload = {
+          authMethod: "Facebook",
+          id: user._id,
+          facebookID: user.facebookID,
+          fName: user.fName,
+          lName: user.lName,
+          username: user.username,
+          email: user.email,
+          picture: user.picture,
+        };
+
+        // Encrypt
+        const ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(payload),
+          process.env.JWT_PAYLOAD_ENCRYPTION_KEY
+        ).toString();
+
+        jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
+          if (err) throw err;
+          res.redirect("http://localhost:3000/SocialAuth/" + original_url + "/" + token);
+        });
       })
       .catch((err) => res.redirect("http://localhost:3000/Error400"));
   }
 );
 
-router.route("/twitter").get(passport.authenticate("twitter"));
+router.route("/oauth2-twitter/:original_url").get(function (req, res, next) {
+  //twitter oauth doesn't allow you to pass the url in the request, so you need to pass it to the callback using the session object
+  req.session.state = req.params.original_url;
+
+  passport.authenticate("twitter", {
+    scope: ["email"],
+  })(req, res, next);
+});
 
 router.route("/twitter/redirect").get(
   passport.authenticate("twitter", {
@@ -162,26 +192,31 @@ router.route("/twitter/redirect").get(
   }),
   (req, res) => {
     const user = req.user;
+    const original_url = req.session.state;
     twitterUser
       .findById(user._id)
       .then((user) => {
-        jwt.sign(
-          {
-            id: user._id,
-            twitterID: user.twitterID,
-            fName: user.fName,
-            lName: user.lName,
-            username: user.username,
-            email: user.email,
-            picture: user.picture,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: "90d" },
-          (err, token) => {
-            if (err) throw err;
-            res.redirect("http://localhost:3000/SocialAuth/Twitter/" + token);
-          }
-        );
+        const payload = {
+          authMethod: "Twitter",
+          id: user._id,
+          twitterID: user.twitterID,
+          fName: user.fName,
+          lName: user.lName,
+          username: user.username,
+          email: user.email,
+          picture: user.picture,
+        };
+
+        // Encrypt
+        const ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(payload),
+          process.env.JWT_PAYLOAD_ENCRYPTION_KEY
+        ).toString();
+
+        jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
+          if (err) throw err;
+          res.redirect("http://localhost:3000/SocialAuth/" + original_url + "/" + token);
+        });
       })
       .catch((err) => res.redirect("http://localhost:3000/Error400"));
   }

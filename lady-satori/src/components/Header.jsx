@@ -33,7 +33,7 @@ function Header(props) {
               props.current === "aulas" ? "nav-item active" : "nav-item"
             }
           >
-            <Link to={"/aulas-yoga"} className="nav-link">
+            <Link to={"/yoga-class"} className="nav-link">
               Aulas de Yoga{" "}
             </Link>
           </li>

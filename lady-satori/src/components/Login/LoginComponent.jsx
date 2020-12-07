@@ -3,7 +3,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/material.css";
 import "tippy.js/themes/light.css";
 import React from "react";
-import axios from "axios";
+import Axios from "axios";
 // import Error400 from "../Errors/Error400";
 import LoginFrame from "./LoginFrame";
 import RegisterFrame from "./RegisterFrame";
@@ -11,7 +11,7 @@ import emailValidator from "email-validator";
 import passwordValidator from "password-validator";
 import passwordBlacklist from "./passwordBlacklist";
 
-function LoginComponent() {
+function LoginComponent(props) {
   const [resetTooltip, setResetTooltip] = React.useState({
     notRegistered: false,
     invalid: false,
@@ -141,37 +141,35 @@ function LoginComponent() {
 
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
-      axios
-        .post("http://localhost:5000/users/password-reset", {
-          email: resetInput,
-        })
-        .then((res) => {
-          if (res.data.validEmail === false) {
-            alert("endereço de email inválido");
-            setResetTooltip({
-              notRegistered: false,
-              invalid: true,
-              emailSent: false,
-            });
-          } else if (res.data.userExists === false) {
-            setResetTooltip({
-              notRegistered: true,
-              invalid: false,
-              emailSent: false,
-            });
-          } else {
-            console.log(res.data);
-            setResetTooltip({
-              notRegistered: false,
-              invalid: false,
-              emailSent: true,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 4000);
-            //send email through emailing provider
-          }
-        });
+      Axios.post("http://localhost:5000/users/password-reset", {
+        email: resetInput,
+      }).then((res) => {
+        if (res.data.validEmail === false) {
+          alert("endereço de email inválido");
+          setResetTooltip({
+            notRegistered: false,
+            invalid: true,
+            emailSent: false,
+          });
+        } else if (res.data.userExists === false) {
+          setResetTooltip({
+            notRegistered: true,
+            invalid: false,
+            emailSent: false,
+          });
+        } else {
+          console.log(res.data);
+          setResetTooltip({
+            notRegistered: false,
+            invalid: false,
+            emailSent: true,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 4000);
+          //send email through emailing provider
+        }
+      });
     } else {
       setResetTooltip({
         notRegistered: false,
@@ -215,7 +213,7 @@ function LoginComponent() {
         };
       });
     } else {
-      axios.post("http://localhost:5000/auth/login", User).then((res) => {
+      Axios.post("http://localhost:5000/auth/login", User).then((res) => {
         if (res.data.state === false) {
           setLoginTooltip((prevValue) => {
             return {
@@ -237,12 +235,12 @@ function LoginComponent() {
             localStorage.setItem("auth-token", res.data.token);
             sessionStorage.removeItem("auth-token");
             console.log("you're logged");
-            window.location = "/aulas-yoga";
+            window.location.reload();
           } else {
             sessionStorage.setItem("auth-token", res.data.token);
             localStorage.removeItem("auth-token");
             console.log("you're logged");
-            window.location = "/aulas-yoga";
+            window.location.reload();
           }
           setLoginTooltip({
             email: false,
@@ -413,9 +411,8 @@ function LoginComponent() {
         };
       });
     } else {
-      axios
-        .post("http://localhost:5000/users/checkEmail", { email })
-        .then((res) => {
+      Axios.post("http://localhost:5000/users/checkEmail", { email }).then(
+        (res) => {
           if (res.data.userExists === true) {
             setRegisterTooltip((prevValue) => {
               return {
@@ -426,7 +423,8 @@ function LoginComponent() {
           } else {
             switchForms();
           }
-        });
+        }
+      );
 
       setRegisterTooltip((prevValue) => {
         return {
@@ -468,9 +466,8 @@ function LoginComponent() {
         };
       });
     } else {
-      axios
-        .post("http://localhost:5000/users/registration", newUser)
-        .then((res) => {
+      Axios.post("http://localhost:5000/users/registration", newUser).then(
+        (res) => {
           //
           //checks if the email is already registered
           if (res.data.exists === true) {
@@ -559,15 +556,16 @@ function LoginComponent() {
               sessionStorage.removeItem("auth-token");
               localStorage.setItem("auth-token", res.data.token);
               console.log("you're logged");
-              window.location = "/aulas-yoga";
+              window.location.reload();
             } else {
               localStorage.removeItem("auth-token");
               sessionStorage.setItem("auth-token", res.data.token);
               console.log("you're logged");
-              window.location = "/aulas-yoga";
+              window.location.reload();
             }
           }
-        });
+        }
+      );
     }
   };
 

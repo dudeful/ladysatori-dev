@@ -1,3 +1,4 @@
+const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
@@ -44,6 +45,13 @@ function verifyToken(req, res, next) {
         res.json({ isTokenOk: false });
       } else {
         //Next middleware
+
+        // Decrypt
+        const bytes = CryptoJS.AES.decrypt(decoded.ciphertext, process.env.JWT_PAYLOAD_ENCRYPTION_KEY);
+        const decryptedPayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        decoded.ciphertext = undefined;
+        decoded.payload = decryptedPayload;
+
         req.user = decoded;
         next();
       }
@@ -56,6 +64,13 @@ function verifyToken(req, res, next) {
         res.json({ isTokenOk: false });
       } else {
         //Next middleware
+
+        // Decrypt
+        const bytes = CryptoJS.AES.decrypt(decoded.ciphertext, process.env.JWT_PAYLOAD_ENCRYPTION_KEY);
+        const decryptedPayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        decoded.ciphertext = undefined;
+        decoded.payload = decryptedPayload;
+
         req.user = decoded;
         next();
       }

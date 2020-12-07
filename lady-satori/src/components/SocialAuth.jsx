@@ -1,18 +1,13 @@
 import { Redirect } from "react-router-dom";
 
-function SocialAuth() {
-  if (window.location.pathname.slice(12, 13) === "G") {
-    sessionStorage.removeItem("auth-token");
-    localStorage.setItem("auth-token", window.location.pathname.slice(19));
-  } else if (window.location.pathname.slice(12, 13) === "F") {
-    sessionStorage.removeItem("auth-token");
-    localStorage.setItem("auth-token", window.location.pathname.slice(21));
-  } else if (window.location.pathname.slice(12, 13) === "T") {
-    sessionStorage.removeItem("auth-token");
-    localStorage.setItem("auth-token", window.location.pathname.slice(20));
-  }
+const { pathname } = window.location;
+const auth_token = pathname.split("/").slice(-1);
 
-  return <Redirect to={"/aulas-yoga"} />;
-}
+const SocialAuth = () => {
+  localStorage.removeItem("auth-token");
+  sessionStorage.setItem("auth-token", auth_token);
+
+  return <Redirect to={pathname.split("/")[2].replace(/@fSlash@/g, "/")} />;
+};
 
 export default SocialAuth;

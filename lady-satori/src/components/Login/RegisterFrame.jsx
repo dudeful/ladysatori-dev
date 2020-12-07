@@ -210,13 +210,31 @@ function RegisterFrame(props) {
           <p className="ml-5">com</p>
         </div>
         <div className="col-7 mt-auto ml-auto mr-0 p-0 row">
-          <a href="http://localhost:5000/auth/google">
+          <a
+            href={
+              "http://localhost:5000/auth/oauth2-google/" +
+              //make all the url path (no matter how many paths) a single string for a single route parameter
+              window.location.pathname.replace(/\//g, "@fSlash@")
+            }
+          >
             <i className="col-4 fab fa-google"></i>
           </a>
-          <a href="http://localhost:5000/auth/facebook">
+          <a
+            href={
+              "http://localhost:5000/auth/oauth2-facebook/" +
+              //make all the url path (no matter how many paths) a single string for a single route parameter
+              window.location.pathname.replace(/\//g, "@fSlash@")
+            }
+          >
             <i className="col-4 fab fa-facebook-f"></i>
           </a>
-          <a href="http://localhost:5000/auth/twitter">
+          <a
+            href={
+              "http://localhost:5000/auth/oauth2-twitter/" +
+              //make all the url path (no matter how many paths) a single string for a single route parameter
+              window.location.pathname.replace(/\//g, "@fSlash@")
+            }
+          >
             <i className="col-4 fab fa-twitter"></i>
           </a>
         </div>

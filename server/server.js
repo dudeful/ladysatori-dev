@@ -1,9 +1,9 @@
 const express = require("express");
 const session = require("express-session");
-const app = express();
-const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cors = require("cors");
+const app = express();
 const port = process.env.PORT || 5000;
 
 require("dotenv").config();
@@ -15,7 +15,7 @@ app.use(
     secret: process.env.EXPRESS_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false, httpOnly: true },
+    cookie: { secure: false, httpOnly: true, maxAge: 60000 },
   })
 );
 app.use(passport.initialize());
