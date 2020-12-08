@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useAxios from "axios-hooks";
 import Error400 from "../Errors/Error400";
+import Loading from "../Errors/Loading";
 const _ = require("lodash");
 
 function RecentPosts() {
@@ -9,14 +10,8 @@ function RecentPosts() {
   );
 
   //handles loading delay and bad requests (400) errors.
-  if (loading)
-    return (
-      <img
-        src="/images/Infinity-2s-200px.svg"
-        className="loading-infinity mb-5"
-        alt="..."
-      />
-    );
+  if (loading) return <Loading />;
+
   if (error) return <Error400 />;
 
   return (

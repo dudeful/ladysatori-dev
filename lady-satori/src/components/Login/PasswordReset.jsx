@@ -3,6 +3,8 @@ import axios from "axios";
 import useAxios from "axios-hooks";
 import Tippy from "@tippyjs/react";
 import Error400 from "../Errors/Error400";
+import Error429 from "../Errors/Error429";
+import Loading from "../Errors/Loading";
 import { LinkExpired } from "../Errors/LinkExpired";
 import passwordValidator from "password-validator";
 import passwordBlacklist from "./passwordBlacklist";
@@ -27,8 +29,18 @@ const PasswordReset = () => {
   );
 
   //handling loading delay and bad requests (400) errors.
-  if (loading) return <div />;
-  if (error) return <Error400 />;
+  if (loading) return <Loading />;
+
+  if (error) {
+    //check if it is an rate-limiting error
+    if (error.toJSON().message.split(" ").slice(-1)[0] === "429") {
+      //if afirmative, send custom "too many requests" error message
+      return <Error429 />;
+    } else {
+      return <Error400 />;
+    }
+  }
+
   if (!data.user) return <LinkExpired />;
   // if (linkExpired) return <LinkExpired />;
 

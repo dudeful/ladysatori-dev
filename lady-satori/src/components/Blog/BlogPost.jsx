@@ -1,5 +1,6 @@
 import React from "react";
 import { InlineShareButtons } from "sharethis-reactjs";
+import axios from "axios";
 import useAxios from "axios-hooks";
 import DOMPurify from "dompurify";
 import draftToHtml from "draftjs-to-html";
@@ -8,8 +9,8 @@ import Header from "../Header";
 import RecentPosts from "./RecentPosts";
 import Footer from "../Footer";
 import Error400 from "../Errors/Error400";
-// import MainContent from "./MainContent";
-import axios from "axios";
+import Error429 from "../Errors/Error429";
+import Loading from "../Errors/Loading";
 const _ = require("lodash");
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
@@ -33,15 +34,17 @@ function BlogPost() {
   //   .then((res) => setData(res.data));
 
   //handles loading delay and bad requests (400) errors.
-  if (loading)
-    return (
-      <img
-        src="/images/Infinity-2s-200px.svg"
-        className="loading-infinity"
-        alt="..."
-      />
-    );
-  if (error) return <Error400 />;
+  if (loading) return <Loading />;
+
+  if (error) {
+    //check if it is an rate-limiting error
+    if (error.toJSON().message.split(" ").slice(-1)[0] === "429") {
+      //if afirmative, send custom "too many requests" error message
+      return <Error429 />;
+    } else {
+      return <Error400 />;
+    }
+  }
 
   // if (!data) {
   //   return (

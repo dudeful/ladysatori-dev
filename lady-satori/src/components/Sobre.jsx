@@ -1,5 +1,7 @@
 // import Login from "./Login";
 // import Error400 from "./Errors/Error400";
+// import Error429 from "./Errors/Error429";
+// import Loading from "./Errors/Loading";
 // import useAxios from "axios-hooks";
 
 function About() {
@@ -19,7 +21,15 @@ function About() {
   //       alt="..."
   //     />
   //   );
-  // if (error) return <Error400 />;
+  // if (error) {
+  //   //check if it is an rate-limiting error
+  //   if (error.toJSON().message.split(" ").slice(-1)[0] === "429") {
+  //     //if afirmative, send custom "too many requests" error message
+  //     return <Error429 />;
+  //   } else {
+  //     return <Error400 />;
+  //   }
+  // }
 
   // if (data.isLoggedIn === false || data.isTokenOk === false) {
   //   return (

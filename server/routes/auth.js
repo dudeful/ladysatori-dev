@@ -9,10 +9,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CryptoJS = require("crypto-js");
 const verifyToken = require("../middleware/verifyToken");
+const rateLimiter = require("../middleware/rateLimiter");
 
 require("./oauth2");
 
-router.route("/login").post((req, res) => {
+router.route("/login").post(rateLimiter.loginSpeedLimiter, rateLimiter.loginLimiter, (req, res) => {
   const { email, password, remember } = req.body;
 
   let expiration = "8h";
@@ -52,52 +53,58 @@ router.route("/login").post((req, res) => {
     .catch((err) => res.status(400).json({ error: err }));
 });
 
-router.route("/isLoggedIn").get(verifyToken, (req, res) => {
-  const decoded = req.user.payload;
-  const email = decoded.email;
-  if (decoded.googleID) {
-    googleUser.findOne({ email }).then((user) => {
-      if (!user) {
-        res.json({ isLoggedIn: false });
-      } else {
-        res.json({ isLoggedIn: true, loginType: "Google" });
-      }
-    });
-  } else if (decoded.facebookID) {
-    facebookUser.findOne({ email }).then((user) => {
-      if (!user) {
-        res.json({ isLoggedIn: false });
-      } else {
-        res.json({ isLoggedIn: true, loginType: "Facebook" });
-      }
-    });
-  } else if (decoded.twitterID) {
-    twitterUser.findOne({ email }).then((user) => {
-      if (!user) {
-        res.json({ isLoggedIn: false });
-      } else {
-        res.json({ isLoggedIn: true, loginType: "Twitter" });
-      }
-    });
-  } else {
-    User.findOne({ email }).then((user) => {
-      if (!user) {
-        res.json({ isLoggedIn: false });
-      } else {
-        res.json({ isLoggedIn: true, loginType: "Email" });
-      }
-    });
-  }
-});
+router
+  .route("/isLoggedIn")
+  .get(rateLimiter.isLoggedInSpeedLimiter, rateLimiter.isLoggedInLimiter, verifyToken, (req, res) => {
+    const decoded = req.user.payload;
+    const email = decoded.email;
+    if (decoded.googleID) {
+      googleUser.findOne({ email }).then((user) => {
+        if (!user) {
+          res.json({ isLoggedIn: false });
+        } else {
+          res.json({ isLoggedIn: true, loginType: "Google" });
+        }
+      });
+    } else if (decoded.facebookID) {
+      facebookUser.findOne({ email }).then((user) => {
+        if (!user) {
+          res.json({ isLoggedIn: false });
+        } else {
+          res.json({ isLoggedIn: true, loginType: "Facebook" });
+        }
+      });
+    } else if (decoded.twitterID) {
+      twitterUser.findOne({ email }).then((user) => {
+        if (!user) {
+          res.json({ isLoggedIn: false });
+        } else {
+          res.json({ isLoggedIn: true, loginType: "Twitter" });
+        }
+      });
+    } else {
+      User.findOne({ email }).then((user) => {
+        if (!user) {
+          res.json({ isLoggedIn: false });
+        } else {
+          res.json({ isLoggedIn: true, loginType: "Email" });
+        }
+      });
+    }
+  });
 
-router.route("/oauth2-google/:original_url").get(function (req, res, next) {
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    state: req.params.original_url,
-  })(req, res, next);
-});
+router
+  .route("/oauth2-google/:original_url")
+  .get(rateLimiter.oAuth2SpeedLimiter, rateLimiter.oAuth2Limiter, (req, res, next) => {
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+      state: req.params.original_url,
+    })(req, res, next);
+  });
 
 router.route("/google/redirect").get(
+  rateLimiter.oAuth2RedirectSpeedLimiter,
+  rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("google", {
     failureRedirect: "http://localhost:3000/login",
   }),
@@ -134,14 +141,18 @@ router.route("/google/redirect").get(
   }
 );
 
-router.route("/oauth2-facebook/:original_url").get(function (req, res, next) {
-  passport.authenticate("facebook", {
-    scope: ["email"],
-    state: req.params.original_url,
-  })(req, res, next);
-});
+router
+  .route("/oauth2-facebook/:original_url")
+  .get(rateLimiter.oAuth2SpeedLimiter, rateLimiter.oAuth2Limiter, (req, res, next) => {
+    passport.authenticate("facebook", {
+      scope: ["email"],
+      state: req.params.original_url,
+    })(req, res, next);
+  });
 
 router.route("/facebook/redirect").get(
+  rateLimiter.oAuth2RedirectSpeedLimiter,
+  rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("facebook", {
     failureRedirect: "http://localhost:3000/login",
   }),
@@ -177,16 +188,20 @@ router.route("/facebook/redirect").get(
   }
 );
 
-router.route("/oauth2-twitter/:original_url").get(function (req, res, next) {
-  //twitter oauth doesn't allow you to pass the url in the request, so you need to pass it to the callback using the session object
-  req.session.state = req.params.original_url;
+router
+  .route("/oauth2-twitter/:original_url")
+  .get(rateLimiter.oAuth2SpeedLimiter, rateLimiter.oAuth2Limiter, (req, res, next) => {
+    //twitter oauth doesn't allow you to pass the url in the request, so you need to pass it to the callback using the session object
+    req.session.state = req.params.original_url;
 
-  passport.authenticate("twitter", {
-    scope: ["email"],
-  })(req, res, next);
-});
+    passport.authenticate("twitter", {
+      scope: ["email"],
+    })(req, res, next);
+  });
 
 router.route("/twitter/redirect").get(
+  rateLimiter.oAuth2RedirectSpeedLimiter,
+  rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("twitter", {
     failureRedirect: "http://localhost:3000/login",
   }),

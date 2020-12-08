@@ -4,6 +4,7 @@ const saltRounds = 12;
 const sgMail = require("@sendgrid/mail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const rateLimiter = require("../middleware/rateLimiter");
 const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middleware/validator");
 let async = require("async");
 let crypto = require("crypto");
@@ -17,7 +18,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 //     .catch((err) => res.status(400).json("Error: " + err));
 // });
 
-router.route("/checkEmail").post((req, res) => {
+router.route("/checkEmail").post(rateLimiter.checkEmailSpeedLimiter, rateLimiter.checkEmailLimiter, (req, res) => {
   //check for existing user
   const email = req.body.email;
   User.findOne({ email })
@@ -31,7 +32,7 @@ router.route("/checkEmail").post((req, res) => {
     .catch((err) => res.json({ error: err, type: "400" }));
 });
 
-router.post("/registration", validate, (req, res) => {
+router.route("/registration").post(rateLimiter.loginSpeedLimiter, rateLimiter.loginLimiter, validate, (req, res) => {
   //check for existing user
   const { email, remember } = req.body;
 
@@ -80,84 +81,91 @@ router.post("/registration", validate, (req, res) => {
   });
 });
 
-router.route("/password-reset").post(validateOnlyEmail, (req, res, next) => {
-  async.waterfall(
-    [
-      function (done) {
-        crypto.randomBytes(20, function (err, buf) {
-          var token = buf.toString("hex");
-          done(err, token);
-        });
-      },
-      function (token, done) {
-        User.findOne({ email: req.body.email }, function (err, user) {
-          if (!user) {
-            return res.json({ userExists: false });
-          }
-
-          const tokenHash = crypto.createHash("sha512").update(token).digest("hex");
-
-          user.resetPasswordToken = tokenHash;
-          user.resetPasswordExpires = Date.now() + 1200000; // 20min
-
-          user.save(function (err) {
-            done(err, token, user);
-          });
-        });
-      },
-      function (token, user, done) {
-        let options = {
-          method: "POST",
-          hostname: "api.sendgrid.com",
-          port: null,
-          path: "/v3/mail/send",
-          headers: {
-            authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
-            "content-type": "application/json",
+router
+  .route("/password-reset")
+  .post(
+    rateLimiter.resetPasswordEmailSpeedLimiter,
+    rateLimiter.resetPasswordEmailLimiter,
+    validateOnlyEmail,
+    (req, res, next) => {
+      async.waterfall(
+        [
+          function (done) {
+            crypto.randomBytes(20, function (err, buf) {
+              var token = buf.toString("hex");
+              done(err, token);
+            });
           },
-        };
+          function (token, done) {
+            User.findOne({ email: req.body.email }, function (err, user) {
+              if (!user) {
+                return res.json({ userExists: false });
+              }
 
-        let request = http.request(options, function (res) {
-          let chunks = [];
+              const tokenHash = crypto.createHash("sha512").update(token).digest("hex");
 
-          res.on("data", function (chunk) {
-            chunks.push(chunk);
-          });
+              user.resetPasswordToken = tokenHash;
+              user.resetPasswordExpires = Date.now() + 1200000; // 20min
 
-          res.on("end", function () {
-            let body = Buffer.concat(chunks);
-          });
-        });
-
-        request.write(
-          JSON.stringify({
-            personalizations: [
-              {
-                to: [{ email: user.email }],
-                dynamic_template_data: {
-                  recovery_link: "http://localhost:3000/reset/" + token,
-                  home_link: "http://localhost:3000/",
-                },
+              user.save(function (err) {
+                done(err, token, user);
+              });
+            });
+          },
+          function (token, user, done) {
+            let options = {
+              method: "POST",
+              hostname: "api.sendgrid.com",
+              port: null,
+              path: "/v3/mail/send",
+              headers: {
+                authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                "content-type": "application/json",
               },
-            ],
-            from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
-            reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
-            template_id: process.env.EMAIL_PASSWORD_RESET_LINK,
-          })
-        );
-        request.end();
+            };
 
-        res.json({ emailSent: true });
-      },
-    ],
-    function (err) {
-      if (err) return next(err);
-      res.json({ emailSent: true });
+            let request = http.request(options, function (res) {
+              let chunks = [];
+
+              res.on("data", function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on("end", function () {
+                let body = Buffer.concat(chunks);
+              });
+            });
+
+            request.write(
+              JSON.stringify({
+                personalizations: [
+                  {
+                    to: [{ email: user.email }],
+                    dynamic_template_data: {
+                      recovery_link: "http://localhost:3000/reset/" + token,
+                      home_link: "http://localhost:3000/",
+                    },
+                  },
+                ],
+                from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
+                reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
+                template_id: process.env.EMAIL_PASSWORD_RESET_LINK,
+              })
+            );
+            request.end();
+
+            res.json({ emailSent: true });
+          },
+        ],
+        function (err) {
+          if (err) return next(err);
+          res.json({ emailSent: true });
+        }
+      );
     }
   );
-});
 
-router.route("/reset/:token").get((req, res) => {
+router.route("/reset/:token").get(rateLimiter.tokenHashSpeedLimiter, rateLimiter.tokenHashLimiter, (req, res) => {
   const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
 
   User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
@@ -169,95 +177,98 @@ router.route("/reset/:token").get((req, res) => {
   });
 });
 
-router.route("/reset/:token").patch(validateOnlyPassword, (req, res) => {
-  async.waterfall(
-    [
-      function (done) {
-        const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
+router
+  .route("/reset/:token")
+  .patch(rateLimiter.resetPasswordSpeedLimiter, rateLimiter.resetPasswordLimiter, validateOnlyPassword, (req, res) => {
+    async.waterfall(
+      [
+        function (done) {
+          const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
 
-        User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
-          if (!user) {
-            return res.json({ user: false });
-          }
+          User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+            if (!user) {
+              return res.json({ user: false });
+            }
 
-          user.password = req.body.newPassword.password;
-          user.resetPasswordToken = undefined;
-          user.resetPasswordExpires = undefined;
+            user.password = req.body.newPassword.password;
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            user.lastPasswordReset = Date.now();
 
-          //Create salt & hash
-          bcrypt.hash(user.password, saltRounds, (err, hash) => {
-            if (err) throw err;
-            user.password = hash;
-            user.save().then((user, err) => {
-              jwt.sign(
-                {
-                  id: user._id,
-                  fName: user.fName,
-                  lName: user.lName,
-                  email: user.email,
-                },
-                process.env.JWT_SECRET,
-                { expiresIn: "1d" },
-                (err, token) => {
-                  if (err) throw err;
-                  done(err, token, user);
-                }
-              );
+            //Create salt & hash
+            bcrypt.hash(user.password, saltRounds, (err, hash) => {
+              if (err) throw err;
+              user.password = hash;
+              user.save().then((user, err) => {
+                jwt.sign(
+                  {
+                    id: user._id,
+                    fName: user.fName,
+                    lName: user.lName,
+                    email: user.email,
+                  },
+                  process.env.JWT_SECRET,
+                  { expiresIn: "1d" },
+                  (err, token) => {
+                    if (err) throw err;
+                    done(err, token, user);
+                  }
+                );
+              });
             });
           });
-        });
-      },
-      function (token, user, done) {
-        let options = {
-          method: "POST",
-          hostname: "api.sendgrid.com",
-          port: null,
-          path: "/v3/mail/send",
-          headers: {
-            authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
-            "content-type": "application/json",
-          },
-        };
+        },
+        function (token, user, done) {
+          let options = {
+            method: "POST",
+            hostname: "api.sendgrid.com",
+            port: null,
+            path: "/v3/mail/send",
+            headers: {
+              authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+              "content-type": "application/json",
+            },
+          };
 
-        let request = http.request(options, function (res) {
-          let chunks = [];
+          let request = http.request(options, function (res) {
+            let chunks = [];
 
-          res.on("data", function (chunk) {
-            chunks.push(chunk);
+            res.on("data", function (chunk) {
+              chunks.push(chunk);
+            });
+
+            res.on("end", function () {
+              let body = Buffer.concat(chunks);
+            });
           });
 
-          res.on("end", function () {
-            let body = Buffer.concat(chunks);
-          });
-        });
-
-        request.write(
-          JSON.stringify({
-            personalizations: [
-              {
-                to: [{ email: user.email }],
-                dynamic_template_data: {
-                  login_page_link: "http://localhost:3000/login",
-                  home_link: "http://localhost:3000/",
+          request.write(
+            JSON.stringify({
+              personalizations: [
+                {
+                  to: [{ email: user.email }],
+                  dynamic_template_data: {
+                    login_page_link: "http://localhost:3000/login",
+                    home_link: "http://localhost:3000/",
+                  },
                 },
-              },
-            ],
-            from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
-            reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
-            template_id: process.env.EMAIL_PASSWORD_RESET_CONFIRMATION,
-          })
-        );
-        request.end();
+              ],
+              from: { email: "rellumnyar@gmail.com", name: "Lady Satori" },
+              reply_to: { email: "rellumnyar@gmail.com", name: "John Doe" },
+              template_id: process.env.EMAIL_PASSWORD_RESET_CONFIRMATION,
+            })
+          );
+          request.end();
 
-        res.json({ token });
-      },
-    ],
-    function (err) {
-      if (err) return next(err);
-      res.json({ err });
-    }
-  );
-});
+          res.json({ token });
+        },
+      ],
+      function (err) {
+        if (err) return next(err);
+        res.json({ err });
+      }
+    );
+  });
 
 // router.route("/:id").get((req, res) => {
 //   Users.findById(req.params.id)
