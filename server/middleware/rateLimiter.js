@@ -60,7 +60,7 @@ const isLoggedInLimiter = rateLimit({
 //VERY CAREFUL WITH THESE ONE
 const isLoggedInSpeedLimiter = slowDown({
   windowMs: 5 * 60 * 1000,
-  delayAfter: 50,
+  delayAfter: 60,
   delayMs: 300,
 });
 

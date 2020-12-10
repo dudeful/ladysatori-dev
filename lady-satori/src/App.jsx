@@ -17,9 +17,9 @@ import UpdatePost from "./components/Blog/New Post/UpdatePost";
 import Error404 from "./components/Errors/Error404";
 import Error400 from "./components/Errors/Error400";
 import PasswordReset from "./components/Login/PasswordReset";
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRoute from "./ProtectedRoute";
 
-function ScrollToTop() {
+const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   React.useEffect(() => {
@@ -27,7 +27,7 @@ function ScrollToTop() {
   }, [pathname]);
 
   return null;
-}
+};
 
 function App() {
   return (
@@ -43,13 +43,21 @@ function App() {
             component={SocialAuth}
             exact
           />
+
           <Route path="/sobre" component={Sobre} exact />
 
-          <Route path="/blog" component={Blog} exact />
+          <Route path="/blog" exact>
+            <ProtectedRoute component={<Blog />} />
+          </Route>
+
           <Route path="/post/:id/:title" component={BlogPost} exact />
           <Route path="/new-post" component={AddNewPost} exact />
           <Route path="/update-post/:id/:title" component={UpdatePost} exact />
-          <Route path="/yoga-class" component={ProtectedRoutes(Aulas)} exact />
+
+          <Route path="/yoga-class" exact>
+            <ProtectedRoute component={<Aulas />} />
+          </Route>
+
           <Route path="/error400" component={Error400} exact />
           <Route component={Error404} />
         </Switch>

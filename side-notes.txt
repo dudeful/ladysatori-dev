@@ -7,7 +7,6 @@ https://loadable-components.com/docs/getting-started/
 https://www.npmjs.com/package/react-avatar-editor
 https://medium.com/@towfiqu/react-image-upload-with-cloudinary-nodejs-and-mongodb-baf23e92ba13
 https://github.com/vutoan266/React-images-uploading
-https://mongoosejs.com/docs/tutorials/findoneandupdate.html
 https://reactrouter.com/web/api/Redirect
 https://www.glo.com/
 https://urbanyogissg.com/

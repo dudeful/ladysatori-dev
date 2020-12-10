@@ -143,33 +143,37 @@ function LoginComponent(props) {
     if (emailValidator.validate(resetInput)) {
       Axios.post("http://localhost:5000/users/password-reset", {
         email: resetInput,
-      }).then((res) => {
-        if (res.data.validEmail === false) {
-          alert("endereço de email inválido");
-          setResetTooltip({
-            notRegistered: false,
-            invalid: true,
-            emailSent: false,
-          });
-        } else if (res.data.userExists === false) {
-          setResetTooltip({
-            notRegistered: true,
-            invalid: false,
-            emailSent: false,
-          });
-        } else {
-          console.log(res.data);
-          setResetTooltip({
-            notRegistered: false,
-            invalid: false,
-            emailSent: true,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 4000);
-          //send email through emailing provider
-        }
-      });
+      })
+        .then((res) => {
+          if (res.data.validEmail === false) {
+            alert("endereço de email inválido");
+            setResetTooltip({
+              notRegistered: false,
+              invalid: true,
+              emailSent: false,
+            });
+          } else if (res.data.userExists === false) {
+            setResetTooltip({
+              notRegistered: true,
+              invalid: false,
+              emailSent: false,
+            });
+          } else {
+            console.log(res.data);
+            setResetTooltip({
+              notRegistered: false,
+              invalid: false,
+              emailSent: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 4000);
+            //send email through emailing provider
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setResetTooltip({
         notRegistered: false,
@@ -213,42 +217,46 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/auth/login", User).then((res) => {
-        if (res.data.state === false) {
-          setLoginTooltip((prevValue) => {
-            return {
-              ...prevValue,
-              email: true,
-            };
-          });
-          console.log("user not found");
-        } else if (res.data === false) {
-          setLoginTooltip((prevValue) => {
-            return {
-              ...prevValue,
-              password: true,
-            };
-          });
-          console.log("wrong password");
-        } else {
-          if (loginCheckbox) {
-            localStorage.setItem("auth-token", res.data.token);
-            sessionStorage.removeItem("auth-token");
-            console.log("you're logged");
-            window.location.reload();
+      Axios.post("http://localhost:5000/auth/login", User)
+        .then((res) => {
+          if (res.data.state === false) {
+            setLoginTooltip((prevValue) => {
+              return {
+                ...prevValue,
+                email: true,
+              };
+            });
+            console.log("user not found");
+          } else if (res.data === false) {
+            setLoginTooltip((prevValue) => {
+              return {
+                ...prevValue,
+                password: true,
+              };
+            });
+            console.log("wrong password");
           } else {
-            sessionStorage.setItem("auth-token", res.data.token);
-            localStorage.removeItem("auth-token");
-            console.log("you're logged");
-            window.location.reload();
+            if (loginCheckbox) {
+              localStorage.setItem("auth-token", res.data.token);
+              sessionStorage.removeItem("auth-token");
+              console.log("you're logged");
+              window.location.reload();
+            } else {
+              sessionStorage.setItem("auth-token", res.data.token);
+              localStorage.removeItem("auth-token");
+              console.log("you're logged");
+              window.location.reload();
+            }
+            setLoginTooltip({
+              email: false,
+              password: false,
+              emptyFields: false,
+            });
           }
-          setLoginTooltip({
-            email: false,
-            password: false,
-            emptyFields: false,
-          });
-        }
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -411,8 +419,8 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/users/checkEmail", { email }).then(
-        (res) => {
+      Axios.post("http://localhost:5000/users/checkEmail", { email })
+        .then((res) => {
           if (res.data.userExists === true) {
             setRegisterTooltip((prevValue) => {
               return {
@@ -423,8 +431,10 @@ function LoginComponent(props) {
           } else {
             switchForms();
           }
-        }
-      );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       setRegisterTooltip((prevValue) => {
         return {
@@ -466,8 +476,8 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/users/registration", newUser).then(
-        (res) => {
+      Axios.post("http://localhost:5000/users/registration", newUser)
+        .then((res) => {
           //
           //checks if the email is already registered
           if (res.data.exists === true) {
@@ -564,8 +574,10 @@ function LoginComponent(props) {
               window.location.reload();
             }
           }
-        }
-      );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
