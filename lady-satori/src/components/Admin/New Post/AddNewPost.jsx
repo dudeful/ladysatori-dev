@@ -16,9 +16,13 @@ function AddNewPost() {
 
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
-      .post("http://localhost:5000/admin/blog/new-post", newPost, {
-        headers: { sessionToken },
-      })
+      .post(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/new-post",
+        newPost,
+        {
+          headers: { sessionToken },
+        }
+      )
       .then((res) => {
         window.location.assign(
           "http://localhost:3000/post/" +

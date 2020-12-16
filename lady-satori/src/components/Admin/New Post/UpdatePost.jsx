@@ -26,7 +26,8 @@ function UpdatePost() {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .post(
-        "http://localhost:5000/admin/blog/update-post/" + updatedPost.key,
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/update-post/" +
+          updatedPost.key,
         updatedPost,
         {
           headers: { sessionToken },
@@ -34,7 +35,9 @@ function UpdatePost() {
       )
       .then((res) => {
         console.log(res.data.key);
-        window.location.assign("http://localhost:3000/" + updatedPost.key);
+        window.location.assign(
+          "https://main.d3ieky02gu560k.amplifyapp.com/" + updatedPost.key
+        );
       })
       .catch((err) => {
         console.log(err);
