@@ -6,9 +6,12 @@ import Header from "../Header";
 import BlogHeadline from "../Blog/BlogHeadline";
 import Cards from "../Blog/Cards";
 
+console.log("hey in there!");
+
 const Test = () => {
   const [data, setData] = React.useState([]);
   const [error, setError] = React.useState(false);
+  console.log("hey out there!");
 
   React.useEffect(() => {
     Axios.get(

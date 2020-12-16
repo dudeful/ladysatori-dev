@@ -220,7 +220,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lady-satori/dev/1608135532732-2020-12-16T16:18:52.732Z/lady-satori.zip"
+                "S3Key": "serverless/lady-satori/dev/1608144044019-2020-12-16T18:40:44.019Z/lady-satori.zip"
               },
               "Handler": "s_app.handler",
               "Runtime": "nodejs12.x",
@@ -238,14 +238,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionsLrbdBDPtMaLX5aN8heB5ZoH3oP1alc8bH4jcp3SNow": {
+          "AppLambdaVersionHD4FjY36zZMKsojrz3pU0p9BNh9dDVdOQabTY4kQgiM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "3X/0AhfOC8ddiMiwWczhS5DAX6gniurz/q5MaBqy29U="
+              "CodeSha256": "ETZg6+ljYmgl93ADUOEGT0nH3/7W6JLc6BnXpPBbjl8="
             }
           },
           "ApiGatewayRestApi": {
@@ -457,7 +457,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1608135515171": {
+          "ApiGatewayDeployment1608144027111": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -618,7 +618,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lady-satori/dev/1608135532732-2020-12-16T16:18:52.732Z/custom-resources.zip"
+                "S3Key": "serverless/lady-satori/dev/1608144044019-2020-12-16T18:40:44.019Z/custom-resources.zip"
               },
               "FunctionName": "lady-satori-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -674,7 +674,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionsLrbdBDPtMaLX5aN8heB5ZoH3oP1alc8bH4jcp3SNow"
+              "Ref": "AppLambdaVersionHD4FjY36zZMKsojrz3pU0p9BNh9dDVdOQabTY4kQgiM"
             }
           },
           "ServiceEndpoint": {
@@ -855,7 +855,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionsLrbdBDPtMaLX5aN8heB5ZoH3oP1alc8bH4jcp3SNow"
+        "versionLogicalId": "AppLambdaVersionHD4FjY36zZMKsojrz3pU0p9BNh9dDVdOQabTY4kQgiM"
       }
     },
     "configValidationMode": "warn",
@@ -884,7 +884,7 @@
     "artifact": "C:\\Users\\danub\\OneDrive\\Documentos\\CODING\\ladysatori.com.br\\server\\.serverless\\lady-satori.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/lady-satori/dev/1608135532732-2020-12-16T16:18:52.732Z",
+    "artifactDirectoryName": "serverless/lady-satori/dev/1608144044019-2020-12-16T18:40:44.019Z",
     "artifact": "lady-satori.zip"
   }
 }

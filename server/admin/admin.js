@@ -11,34 +11,34 @@ const verifyAdminToken = require("./verifyAdminToken");
 const verifyToken = require("../middleware/verifyToken");
 const _ = require("lodash/kebabCase");
 
-router
-  .route("/dashboard")
-  .get(rateLimiter.blogPostSpeedLimiter, rateLimiter.blogPostLimiter, verifyToken, (req, res) => {
-    console.log("hello friend>");
+// router
+//   .route("/dashboard")
+//   .get(rateLimiter.blogPostSpeedLimiter, rateLimiter.blogPostLimiter, verifyToken, (req, res) => {
+//     console.log("hello friend>");
 
-    const cfURL = "https://d2x5zciz7allr5.cloudfront.net/";
-    const objectKey = "posts/2020/dezembro/1607761348303@this-is-the-largest-image-so-far";
+//     const cfURL = "https://d2x5zciz7allr5.cloudfront.net/";
+//     const objectKey = "posts/2020/dezembro/1607761348303@this-is-the-largest-image-so-far";
 
-    const signedURL = (cfURL, objectKey) => {
-      const options = {
-        url: cfURL + objectKey,
-        expires: Math.floor((new Date().getTime() + 10000) / 1000), // 30 seconds
-      };
+//     const signedURL = (cfURL, objectKey) => {
+//       const options = {
+//         url: cfURL + objectKey,
+//         expires: Math.floor((new Date().getTime() + 10000) / 1000), // 30 seconds
+//       };
 
-      return new Promise((resolve) => {
-        let url = cfSigner.getSignedUrl(options);
-        resolve(url);
-      });
-    };
+//       return new Promise((resolve) => {
+//         let url = cfSigner.getSignedUrl(options);
+//         resolve(url);
+//       });
+//     };
 
-    console.log("<hello friend");
+//     console.log("<hello friend");
 
-    signedURL(cfURL, objectKey)
-      .then((url) => {
-        res.json(url);
-      })
-      .catch((err) => res.json({ err }));
-  });
+//     signedURL(cfURL, objectKey)
+//       .then((url) => {
+//         res.json(url);
+//       })
+//       .catch((err) => res.json({ err }));
+//   });
 
 router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (req, res) => {
   s3.listObjects({ Bucket: buckets.blog.name }, (err, data) => {
@@ -61,7 +61,7 @@ router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (re
         return "https://dizbkwjzdmgp2.cloudfront.net/" + objectKey;
       });
 
-      res.json(urls);
+      res.json({ urls });
     })
     .catch((err) => {
       res.json({ err });

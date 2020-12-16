@@ -18,7 +18,7 @@ function BlogHeadline(props) {
             {JSON.parse(data.body).blocks[0].text.slice(0, 180) + "..."}
           </p>
           <Link
-            to={data.key}
+            to={"/"}
             className="blog-card-link lead text-dark text-decoration-none"
           >
             <button className="btn btn-outline-light btn-block mb-4">

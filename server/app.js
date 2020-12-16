@@ -35,41 +35,17 @@ connection.once("open", () => {
 });
 
 // requiring and using routes
-app.use(
-  "/admin/aws",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./admin/admin")
-);
+app.use("/admin/aws", require("./admin/admin"));
 
-app.use(
-  "/admin",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./admin/auth")
-);
+app.use("/admin", require("./admin/auth"));
 
-app.use(
-  "/admin/blog",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./admin/blog")
-);
+app.use("/admin/blog", require("./admin/blog"));
 
-app.use(
-  "/posts",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./routes/posts")
-);
+// app.use("/posts", require("./routes/posts"));
 
-app.use(
-  "/auth",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./routes/auth")
-);
+app.use("/auth", require("./routes/auth"));
 
-app.use(
-  "/users",
-  cors({ origin: ["http://localhost:3000", "https://main.d3ieky02gu560k.amplifyapp.com"] }),
-  require("./routes/users")
-);
+app.use("/users", require("./routes/users"));
 
 app.get("/", (req, res) => {
   res.send("hello friend");

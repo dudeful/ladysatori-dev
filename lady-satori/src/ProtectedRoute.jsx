@@ -52,7 +52,7 @@ const AdminRoute = (props) => {
 
   React.useEffect(() => {
     Axios.get(
-      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/isLoggedIn",
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/isLoggedIn",
       {
         headers: { sessionToken },
       }

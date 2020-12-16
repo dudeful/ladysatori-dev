@@ -7,12 +7,12 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import Dashboard from "./components/Admin/Dashboard";
+// import Dashboard from "./components/Admin/Dashboard";
 import SocialAuth from "./components/SocialAuth";
-import Blog from "./components/Blog/Blog";
+// import Blog from "./components/Blog/Blog";
 import Aulas from "./components/Aulas";
 import Sobre from "./components/Sobre";
-import BlogPost from "./components/Blog/BlogPost";
+// import BlogPost from "./components/Blog/BlogPost";
 import AddNewPost from "./components/Admin/New Post/AddNewPost";
 import UpdatePost from "./components/Admin/New Post/UpdatePost";
 import Error404 from "./components/Errors/Error404";
@@ -43,9 +43,9 @@ function App() {
           <Route path="/reset/:token" component={PasswordReset} exact />
           <Route path="/login" component={Login} exact />
 
-          <Route path="/dashboard" exact>
+          {/* <Route path="/dashboard" exact>
             <ProtectedRoute component={<Dashboard />} />
-          </Route>
+          </Route> */}
 
           <Route
             path="/SocialAuth/:original_url/:auth_token"
@@ -63,11 +63,11 @@ function App() {
 
           <Route path="/sobre" component={Sobre} exact />
 
-          <Route path="/blog" exact>
+          {/* <Route path="/blog" exact>
             <ProtectedRoute component={<Blog />} />
-          </Route>
+          </Route> */}
 
-          <Route path="/post/:id/:title" component={BlogPost} exact />
+          {/* <Route path="/post/:id/:title" component={BlogPost} exact /> */}
 
           <Route path="/new-post" exact>
             <AdminRoute component={<AddNewPost />} />

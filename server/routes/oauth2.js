@@ -34,7 +34,7 @@ passport.use(
       //options for the Google Strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/redirect",
+      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/google/redirect",
       // passReqToCallback: true, // allows us to pass in the req from our route
     },
     (accessToken, refreshToken, profile, done) => {
@@ -71,7 +71,7 @@ passport.use(
       //options for the Facebook Strategy
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "/auth/facebook/redirect",
+      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/facebook/redirect",
       profileFields: ["id", "displayName", "photos", "emails"],
     },
     (accessToken, refreshToken, profile, done) => {
@@ -106,7 +106,7 @@ passport.use(
       //options for the Twitter Strategy
       consumerKey: process.env.TWITTER_API_KEY,
       consumerSecret: process.env.TWITTER_API_SECRET_KEY,
-      callbackURL: "/auth/twitter/redirect",
+      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/twitter/redirect",
     },
     (token, tokenSecret, profile, done) => {
       //Check existing user
