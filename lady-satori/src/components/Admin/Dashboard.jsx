@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     Axios.get(
-      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/aws/",
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/aws/",
       {
         headers: { localToken, sessionToken },
       }

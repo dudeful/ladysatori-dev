@@ -23,7 +23,7 @@ DOMPurify.addHook("afterSanitizeAttributes", function (node) {
 function BlogPost() {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/posts" +
+    "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/posts" +
       window.location.pathname
   );
 
@@ -60,7 +60,7 @@ function BlogPost() {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .delete(
-        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/delete-post/" +
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/delete-post/" +
           data._id,
         {
           headers: { sessionToken },

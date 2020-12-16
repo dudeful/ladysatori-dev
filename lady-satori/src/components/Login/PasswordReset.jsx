@@ -25,7 +25,8 @@ const PasswordReset = () => {
 
   //get the user object on the server
   const [{ data, loading, error }] = useAxios(
-    "http://localhost:5000/users" + window.location.pathname
+    "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users" +
+      window.location.pathname
   );
 
   //handling loading delay and bad requests (400) errors.
@@ -202,7 +203,8 @@ const PasswordReset = () => {
     } else {
       axios
         .patch(
-          "http://localhost:5000/users" + window.location.pathname,
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users" +
+            window.location.pathname,
           resetData
         )
         .then((res) => {

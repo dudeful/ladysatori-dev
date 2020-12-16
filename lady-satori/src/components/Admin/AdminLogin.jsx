@@ -44,7 +44,7 @@ function LoginComponent(props) {
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
       Axios.post(
-        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/password-reset",
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/password-reset",
         {
           email: resetInput,
         }
@@ -118,7 +118,7 @@ function LoginComponent(props) {
       });
     } else {
       Axios.post(
-        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/login",
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/login",
         User
       )
         .then((res) => {

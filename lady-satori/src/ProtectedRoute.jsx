@@ -17,7 +17,7 @@ const ProtectedRoute = (props) => {
 
   React.useEffect(() => {
     Axios.get(
-      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
       {
         headers: { localToken, sessionToken },
       }
@@ -52,7 +52,7 @@ const AdminRoute = (props) => {
 
   React.useEffect(() => {
     Axios.get(
-      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/isLoggedIn",
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/isLoggedIn",
       {
         headers: { sessionToken },
       }

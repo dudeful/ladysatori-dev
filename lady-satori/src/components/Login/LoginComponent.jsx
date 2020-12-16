@@ -141,9 +141,12 @@ function LoginComponent(props) {
 
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
-      Axios.post("http://localhost:5000/users/password-reset", {
-        email: resetInput,
-      })
+      Axios.post(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/password-reset",
+        {
+          email: resetInput,
+        }
+      )
         .then((res) => {
           if (res.data.validEmail === false) {
             alert("endereço de email inválido");
@@ -217,7 +220,10 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/auth/login", User)
+      Axios.post(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
+        User
+      )
         .then((res) => {
           if (res.data.state === false) {
             setLoginTooltip((prevValue) => {
@@ -419,7 +425,10 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/users/checkEmail", { email })
+      Axios.post(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/checkEmail",
+        { email }
+      )
         .then((res) => {
           if (res.data.userExists === true) {
             setRegisterTooltip((prevValue) => {
@@ -476,7 +485,10 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/users/registration", newUser)
+      Axios.post(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/registration",
+        newUser
+      )
         .then((res) => {
           //
           //checks if the email is already registered
