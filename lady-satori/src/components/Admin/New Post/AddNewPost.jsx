@@ -30,7 +30,8 @@ function AddNewPost() {
             "/" +
             _.kebabCase(res.data.title)
         );
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

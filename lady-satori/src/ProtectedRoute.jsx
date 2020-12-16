@@ -7,8 +7,6 @@ import Error400 from "./components/Errors/Error400";
 import Loading from "./components/Errors/Loading";
 
 const ProtectedRoute = (props) => {
-  console.log("A PrivateRoute has been called:", props.component.type.name);
-
   const [authStatus, setAuthStatus] = React.useState("");
   const [authError, setAuthError] = React.useState({ data: "", status: "" });
 
@@ -43,8 +41,6 @@ const ProtectedRoute = (props) => {
 };
 
 const AdminRoute = (props) => {
-  console.log("An AdminRoute has been called:", props.component.type.name);
-
   const [authStatus, setAuthStatus] = React.useState("");
   const [authError, setAuthError] = React.useState({ data: "", status: "" });
 

@@ -1,69 +1,53 @@
-// import React from "react";
-// // import { Link } from "react-router-dom";
-// // import { HashLink } from "react-router-hash-link";
-// import Header from "../Header";
-// import BlogHeadline from "./BlogHeadline";
-// import Cards from "./Cards";
-// import useAxios from "axios-hooks";
-// import Error400 from "../Errors/Error400";
-// import Error429 from "../Errors/Error429";
-// import Loading from "../Errors/Loading";
+import React from "react";
+import Axios from "axios";
+import Error400 from "../Errors/Error400";
+import Loading from "../Errors/Loading";
+import Header from "../Header";
+import BlogHeadline from "../Blog/BlogHeadline";
+import Cards from "../Blog/Cards";
 
-// function Blog() {
-//   //gets the cards object on the server which will be rendered on the page.
-//   const [{ data, loading, error }] = useAxios(
-//     "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/posts/"
-//   );
+console.log("hey in there!");
 
-//   //handles loading delay and bad requests (400) errors.
-//   if (loading) return <Loading />;
+const Blog = () => {
+  const [data, setData] = React.useState([]);
+  const [error, setError] = React.useState(false);
+  console.log("hey out there!");
 
-//   if (error) {
-//     //check if it is an rate-limiting error
-//     if (error.toJSON().message.split(" ").slice(-1)[0] === "429") {
-//       //if afirmative, send custom "too many requests" error message
-//       return <Error429 />;
-//     } else {
-//       return <Error400 />;
-//     }
-//   }
+  React.useEffect(() => {
+    Axios.get(
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/aws"
+    )
+      .then((res) => {
+        //
+        const postsArray = res.data.map(async (postURL) => {
+          const res = await Axios.get(postURL);
+          return res.data;
+        });
 
-//   return (
-//     <div className="blogBody">
-//       <Header current={"blog"} />
+        Promise.all(postsArray).then((values) => {
+          setData(values);
+        });
+      })
+      .catch((err) => setError(err));
+  }, []);
 
-//       <BlogHeadline data={data} />
+  if (error) {
+    console.log(error);
+    return <Error400 />;
+  } else if (!data[0]) {
+    return <Loading />;
+  } else {
+    return (
+      <div>
+        <div className="blogBody">
+          <Header current={"blog"} />
 
-//       <Cards data={data} />
+          <BlogHeadline data={data} />
+          <Cards data={data} />
+        </div>
+      </div>
+    );
+  }
+};
 
-//       {/* <div className="row m-0 p-3 bg-secondary">
-//         <Link
-//           to={"/"}
-//           className="col-3 text-center text-light text-decoration-none m-0"
-//         >
-//           Home
-//         </Link>
-//         <Link
-//           to={"/aulas-yoga"}
-//           className="col-3 text-center text-light text-decoration-none"
-//         >
-//           Aulas
-//         </Link>
-//         <HashLink
-//           to="/#get-in-touch"
-//           className="col-3 text-center text-light text-decoration-none"
-//         >
-//           Contato
-//         </HashLink>
-//         <Link
-//           to={"/sobre"}
-//           className="col-3 text-center text-light text-decoration-none"
-//         >
-//           Sobre
-//         </Link>
-//       </div> */}
-//     </div>
-//   );
-// }
-
-// export default Blog;
+export default Blog;
