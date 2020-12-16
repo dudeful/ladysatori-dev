@@ -44,8 +44,6 @@ function verifyToken(req, res, next) {
       if (err) {
         res.json({ isTokenOk: false });
       } else {
-        //Next middleware
-
         // Decrypt
         const bytes = CryptoJS.AES.decrypt(decoded.ciphertext, process.env.JWT_PAYLOAD_ENCRYPTION_KEY);
         const decryptedPayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -53,6 +51,8 @@ function verifyToken(req, res, next) {
         decoded.payload = decryptedPayload;
 
         req.user = decoded;
+
+        //Next middleware
         next();
       }
     });
@@ -61,10 +61,22 @@ function verifyToken(req, res, next) {
 
     jwt.verify(getToken().sessionToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        res.json({ isTokenOk: false });
-      } else {
-        //Next middleware
+        //try again but this time with the ADMIN jwt secrets
+        jwt.verify(getToken().sessionToken, process.env.JWT_ADMIN_SECRET, (err, decoded) => {
+          if (err) {
+            res.json({ isTokenOk: false });
+          } else {
+            // Decrypt
+            const bytes = CryptoJS.AES.decrypt(decoded.ciphertext, process.env.JWT_ADMIN_PAYLOAD_ENCRYPTION_KEY);
+            const decryptedPayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            decoded.ciphertext = undefined;
+            decoded.payload = decryptedPayload;
 
+            req.user = decoded;
+            next();
+          }
+        });
+      } else {
         // Decrypt
         const bytes = CryptoJS.AES.decrypt(decoded.ciphertext, process.env.JWT_PAYLOAD_ENCRYPTION_KEY);
         const decryptedPayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -72,6 +84,8 @@ function verifyToken(req, res, next) {
         decoded.payload = decryptedPayload;
 
         req.user = decoded;
+
+        //Next middleware
         next();
       }
     });

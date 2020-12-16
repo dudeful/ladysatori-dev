@@ -14,10 +14,12 @@ function AddNewPost() {
       body: inputs.body,
     };
 
+    const sessionToken = sessionStorage.getItem("auth-token");
     axios
-      .post("http://localhost:5000/posts/admin/new-post", newPost)
+      .post("http://localhost:5000/admin/blog/new-post", newPost, {
+        headers: { sessionToken },
+      })
       .then((res) => {
-        console.log(res.data.console);
         window.location.assign(
           "http://localhost:3000/post/" +
             res.data.id +

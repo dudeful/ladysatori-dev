@@ -11,7 +11,6 @@ import Footer from "../Footer";
 import Error400 from "../Errors/Error400";
 import Error429 from "../Errors/Error429";
 import Loading from "../Errors/Loading";
-const _ = require("lodash");
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
   // set all elements owning target to target=_blank
@@ -57,10 +56,12 @@ function BlogPost() {
   // }
 
   const deletePost = () => {
+    const sessionToken = sessionStorage.getItem("auth-token");
     axios
-      .delete("http://localhost:5000/posts/delete-post/" + data._id)
-      .then((res) => {
-        console.log(res.data);
+      .delete("http://localhost:5000/admin/blog/delete-post/" + data._id, {
+        headers: { sessionToken },
+      })
+      .then(() => {
         window.location.assign("http://localhost:3000/blog");
       });
   };
@@ -76,7 +77,7 @@ function BlogPost() {
           DELETE
         </button>
         <Link
-          to={"/update-post/" + data._id + "/" + _.kebabCase(data.title)}
+          to={"/update-post/" + data.key}
           className="btn btn-outline-warning lead text-decoration-none"
         >
           UPDATE

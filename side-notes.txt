@@ -14,12 +14,17 @@ https://www.trustradius.com/reviews/vimeo-2020-06-12-23-08-47
 https://atomiks.github.io/tippyjs/v6/all-props/
 https://joi.dev/
 https://www.npmjs.com/package/limiter
-https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/
 https://www.youtube.com/watch?v=HkNdG7d_LAI&list=PLP91MtCof9kmVVHhgCy7GUJbZEWypC_I-
 https://www.npmjs.com/package/connect-mongo
 https://www.npmjs.com/package/connect-redis
 https://www.tutorialspoint.com/expressjs/expressjs_static_files.htm
 https://www.youtube.com/watch?v=FExZvpVvYxA
+https://aws.amazon.com/cloudfront/media/?nc=sn&loc=6
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html
+https://www.npmjs.com/package/react-player
+https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-controls.html
+https://www.youtube.com/watch?v=mXk0MNjlO7A
+https://www.youtube.com/watch?v=y4Obz26GkCk
 
 Olafur Eliasson
 

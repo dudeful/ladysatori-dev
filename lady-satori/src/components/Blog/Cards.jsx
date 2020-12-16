@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const _ = require("lodash");
 
 function Cards(props) {
   //
@@ -9,9 +8,9 @@ function Cards(props) {
       <div className="home-container row row-cols-1 row-cols-md-3">
         {props.data.slice(1).map((card) => {
           return (
-            <div className="col mb-5" key={card._id}>
+            <div className="col mb-5" key={card.id}>
               <Link
-                to={"/post/" + card._id + "/" + _.kebabCase(card.title)}
+                to={card.key}
                 className="blog-card-link lead text-dark text-decoration-none"
               >
                 <div className="card h-100">

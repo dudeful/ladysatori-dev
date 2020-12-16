@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-const _ = require("lodash");
 
 function BlogHeadline(props) {
   //
@@ -19,7 +18,7 @@ function BlogHeadline(props) {
             {JSON.parse(data.body).blocks[0].text.slice(0, 180) + "..."}
           </p>
           <Link
-            to={"/post/" + data._id + "/" + _.kebabCase(data.title)}
+            to={data.key}
             className="blog-card-link lead text-dark text-decoration-none"
           >
             <button className="btn btn-outline-light btn-block mb-4">

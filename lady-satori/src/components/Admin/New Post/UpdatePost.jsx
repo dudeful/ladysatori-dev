@@ -2,12 +2,11 @@ import axios from "axios";
 import useAxios from "axios-hooks";
 import UpdateDraftEditor from "./UpdateDraftEditor";
 import Error400 from "../../Errors/Error400";
-const _ = require("lodash");
 
 function UpdatePost() {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "http://localhost:5000/posts/post/" + window.location.pathname.slice(13)
+    "https://dizbkwjzdmgp2.cloudfront.net/" + window.location.pathname.slice(13)
   );
 
   //handles loading delay and bad requests (400) errors.
@@ -21,23 +20,24 @@ function UpdatePost() {
     );
   if (error) return <Error400 />;
 
+  console.log(data);
+
   const getPostInputs = (updatedPost) => {
+    const sessionToken = sessionStorage.getItem("auth-token");
     axios
-      .patch(
-        "http://localhost:5000/posts/update-post/" +
-          data._id +
-          "/" +
-          _.kebabCase(data.title),
-        updatedPost
+      .post(
+        "http://localhost:5000/admin/blog/update-post/" + updatedPost.key,
+        updatedPost,
+        {
+          headers: { sessionToken },
+        }
       )
       .then((res) => {
-        console.log(res.data.console);
-        window.location.assign(
-          "http://localhost:3000/post/" +
-            res.data.id +
-            "/" +
-            _.kebabCase(res.data.title)
-        );
+        console.log(res.data.key);
+        window.location.assign("http://localhost:3000/" + updatedPost.key);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

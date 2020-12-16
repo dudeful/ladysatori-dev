@@ -104,7 +104,7 @@ const blogLimiter = rateLimit({
 
 const blogSpeedLimiter = slowDown({
   windowMs: 5 * 60 * 1000,
-  delayAfter: 25,
+  delayAfter: 30,
   delayMs: 300,
 });
 
@@ -115,7 +115,7 @@ const blogPostLimiter = rateLimit({
 
 const blogPostSpeedLimiter = slowDown({
   windowMs: 5 * 60 * 1000,
-  delayAfter: 25,
+  delayAfter: 30,
   delayMs: 300,
 });
 
@@ -126,7 +126,7 @@ const blogLatestLimiter = rateLimit({
 
 const blogLatestSpeedLimiter = slowDown({
   windowMs: 5 * 60 * 1000,
-  delayAfter: 25,
+  delayAfter: 30,
   delayMs: 300,
 });
 

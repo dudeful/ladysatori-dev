@@ -132,6 +132,7 @@ router.route("/google/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
+
           // req.session.token = token;
           // console.log(req.session);
           res.redirect("http://localhost:3000/SocialAuth/" + original_url + "/" + token);

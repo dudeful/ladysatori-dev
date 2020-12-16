@@ -37,7 +37,7 @@
   display: block;
   margin: auto;
   border-radius: 1%;
-  opacity: 85%;
+  opacity: 0.85;
 }
 @media only screen and (max-width: 425px) {
   .home-info-blocks img {
@@ -58,7 +58,7 @@
 }
 
 .home-yoga-style img {
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 /* ---------------about me------------------ */
@@ -104,7 +104,7 @@
 
 .home-QA {
   margin: 9rem 5%;
-  opacity: 90%;
+  opacity: 0.9;
 }
 @media only screen and (max-width: 768px) {
   .home-QA {
@@ -162,12 +162,14 @@
   width: 100%;
   height: auto;
   margin: auto;
+  padding: 0;
   border-radius: 50%;
+  box-shadow: 0px 2px 70px 0px rgb(55, 58, 64, 0.25);
 }
 @media only screen and (max-width: 768px) {
   .home-contact .contact-profile-pic {
     width: 50%;
-    margin-top: 3rem;
+    margin-top: 4rem;
   }
 }
 
