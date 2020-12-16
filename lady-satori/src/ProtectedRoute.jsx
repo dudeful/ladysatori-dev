@@ -16,9 +16,12 @@ const ProtectedRoute = (props) => {
   const sessionToken = sessionStorage.getItem("auth-token");
 
   React.useEffect(() => {
-    Axios.get("http://localhost:5000/auth/isLoggedIn", {
-      headers: { localToken, sessionToken },
-    })
+    Axios.get(
+      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
+      {
+        headers: { localToken, sessionToken },
+      }
+    )
       .then((res) => setAuthStatus(res.data))
       .catch((err) => setAuthError({ data: err, status: err.response.status }));
   }, [localToken, sessionToken]);
@@ -48,9 +51,12 @@ const AdminRoute = (props) => {
   const sessionToken = sessionStorage.getItem("auth-token");
 
   React.useEffect(() => {
-    Axios.get("http://localhost:5000/admin/isLoggedIn", {
-      headers: { sessionToken },
-    })
+    Axios.get(
+      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/isLoggedIn",
+      {
+        headers: { sessionToken },
+      }
+    )
       .then((res) => setAuthStatus(res.data))
       .catch((err) => setAuthError({ data: err, status: err.response.status }));
   }, [sessionToken]);

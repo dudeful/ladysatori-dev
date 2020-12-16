@@ -4,7 +4,7 @@ const UserAdmin = require("../models/userAdminModel");
 const googleUserAdmin = require("../models/googleUserAdminModel");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const CryptoJS = require("crypto-js");
 const verifyAdminToken = require("./verifyAdminToken");
 const rateLimiter = require("../middleware/rateLimiter");
@@ -87,7 +87,7 @@ router.route("/google/redirect").get(
   rateLimiter.oAuth2RedirectSpeedLimiter,
   rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("google-admin", {
-    failureRedirect: "http://localhost:3000/",
+    failureRedirect: "https://main.d3ieky02gu560k.amplifyapp.com/",
   }),
   (req, res) => {
     const user = req.user;
@@ -116,10 +116,10 @@ router.route("/google/redirect").get(
           if (err) throw err;
           // req.session.token = token;
           // console.log(req.session);
-          res.redirect("http://localhost:3000/SocialAuth/" + original_url + "/" + token);
+          res.redirect("https://main.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
-      .catch((err) => res.redirect("http://localhost:3000/error400"));
+      .catch((err) => res.redirect("https://main.d3ieky02gu560k.amplifyapp.com/error400"));
   }
 );
 

@@ -10,3 +10,5 @@ node_modules
 # key-pair cloudfront
 pk-APKAIVYETTVTPD2LLQVQ.pem
 rsa-APKAIVYETTVTPD2LLQVQ.pem
+
+serverless.yml

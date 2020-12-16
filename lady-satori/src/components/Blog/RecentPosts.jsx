@@ -6,7 +6,7 @@ const _ = require("lodash");
 
 function RecentPosts() {
   const [{ data, loading, error }] = useAxios(
-    "http://localhost:5000/posts/latest"
+    "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/posts/latest"
   );
 
   //handles loading delay and bad requests (400) errors.

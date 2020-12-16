@@ -11,7 +11,9 @@ const Test = () => {
   const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
-    Axios.get("http://localhost:5000/admin/aws")
+    Axios.get(
+      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/aws"
+    )
       .then((res) => {
         //
         const postsArray = res.data.map(async (postURL) => {

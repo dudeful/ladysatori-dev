@@ -11,7 +11,9 @@ import Loading from "../Errors/Loading";
 
 function Blog() {
   //gets the cards object on the server which will be rendered on the page.
-  const [{ data, loading, error }] = useAxios("http://localhost:5000/posts/");
+  const [{ data, loading, error }] = useAxios(
+    "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/posts/"
+  );
 
   //handles loading delay and bad requests (400) errors.
   if (loading) return <Loading />;

@@ -77,13 +77,20 @@ const TestPost = () => {
                   <i className="fab fa-whatsapp-square"></i>
                 </a>
               </div>
-              <div className="col-md-6 p-0">
-                <h6 className="author-name">John Doe</h6>
-                <h6 className="publish-date muted mb-auto">
-                  {data.date} - {data.readTime}min de leitura
-                </h6>
+              <div className="col-md-6 row m-0 p-0">
+                <img
+                  className="author-pic col"
+                  src="/images/dwight.jpg"
+                  alt="..."
+                />
+                <div className="blog-post-info col">
+                  <h6 className="author-name">Dwight Schrute</h6>
+                  <h6 className="publish-date muted mb-auto">
+                    {data.date} - {data.readTime}min de leitura
+                  </h6>
+                </div>
               </div>
-              <div className="col-md-6 p-0 social-icons">
+              <div className="col-md-6 social-icons">
                 <a
                   href="https://twitter.com/SadhguruJV"
                   target="_blank"

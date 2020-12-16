@@ -23,7 +23,8 @@ DOMPurify.addHook("afterSanitizeAttributes", function (node) {
 function BlogPost() {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "http://localhost:5000/posts" + window.location.pathname
+    "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/posts" +
+      window.location.pathname
   );
 
   // const [data, setData] = React.useState();
@@ -58,11 +59,17 @@ function BlogPost() {
   const deletePost = () => {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
-      .delete("http://localhost:5000/admin/blog/delete-post/" + data._id, {
-        headers: { sessionToken },
-      })
+      .delete(
+        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/delete-post/" +
+          data._id,
+        {
+          headers: { sessionToken },
+        }
+      )
       .then(() => {
-        window.location.assign("http://localhost:3000/blog");
+        window.location.assign(
+          "https://main.d3ieky02gu560k.amplifyapp.com/blog"
+        );
       });
   };
 

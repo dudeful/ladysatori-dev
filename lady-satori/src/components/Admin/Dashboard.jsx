@@ -27,9 +27,12 @@ const Dashboard = () => {
   const sessionToken = sessionStorage.getItem("auth-token");
 
   React.useEffect(() => {
-    Axios.get("http://localhost:5000/admin/aws/", {
-      headers: { localToken, sessionToken },
-    })
+    Axios.get(
+      "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/aws/",
+      {
+        headers: { localToken, sessionToken },
+      }
+    )
       .then((res) => {
         Axios.get(res.data)
           .then((res) => setData(res.data))

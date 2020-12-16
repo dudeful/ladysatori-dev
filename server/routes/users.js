@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../models/userModel");
 const saltRounds = 12;
 const sgMail = require("@sendgrid/mail");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const rateLimiter = require("../middleware/rateLimiter");
 const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middleware/validator");
@@ -142,8 +142,8 @@ router
                   {
                     to: [{ email: user.email }],
                     dynamic_template_data: {
-                      recovery_link: "http://localhost:3000/reset/" + token,
-                      home_link: "http://localhost:3000/",
+                      recovery_link: "https://main.d3ieky02gu560k.amplifyapp.com/reset/" + token,
+                      home_link: "https://main.d3ieky02gu560k.amplifyapp.com/",
                     },
                   },
                 ],
@@ -248,8 +248,8 @@ router
                 {
                   to: [{ email: user.email }],
                   dynamic_template_data: {
-                    login_page_link: "http://localhost:3000/login",
-                    home_link: "http://localhost:3000/",
+                    login_page_link: "https://main.d3ieky02gu560k.amplifyapp.com/login",
+                    home_link: "https://main.d3ieky02gu560k.amplifyapp.com/",
                   },
                 },
               ],

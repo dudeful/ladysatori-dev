@@ -14,7 +14,7 @@ const _ = require("lodash/kebabCase");
 router
   .route("/dashboard")
   .get(rateLimiter.blogPostSpeedLimiter, rateLimiter.blogPostLimiter, verifyToken, (req, res) => {
-    console.log("hello friend");
+    console.log("hello friend>");
 
     const cfURL = "https://d2x5zciz7allr5.cloudfront.net/";
     const objectKey = "posts/2020/dezembro/1607761348303@this-is-the-largest-image-so-far";
@@ -30,6 +30,8 @@ router
         resolve(url);
       });
     };
+
+    console.log("<hello friend");
 
     signedURL(cfURL, objectKey)
       .then((url) => {

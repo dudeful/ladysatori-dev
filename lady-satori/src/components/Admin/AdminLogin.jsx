@@ -43,9 +43,12 @@ function LoginComponent(props) {
 
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
-      Axios.post("http://localhost:5000/admin/password-reset", {
-        email: resetInput,
-      })
+      Axios.post(
+        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/password-reset",
+        {
+          email: resetInput,
+        }
+      )
         .then((res) => {
           if (res.data.validEmail === false) {
             alert("endereço de email inválido");
@@ -114,7 +117,10 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post("http://localhost:5000/admin/login", User)
+      Axios.post(
+        "https://91mtnc4fs8.execute-api.sa-east-1.amazonaws.com/dev/admin/login",
+        User
+      )
         .then((res) => {
           if (res.data.state === false) {
             setLoginTooltip((prevValue) => {
