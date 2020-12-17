@@ -35,9 +35,7 @@ function UpdatePost() {
       )
       .then((res) => {
         console.log(res.data.key);
-        window.location.assign(
-          "https://main.d3ieky02gu560k.amplifyapp.com/" + updatedPost.key
-        );
+        window.location.assign("http://localhost:3000/" + updatedPost.key);
       })
       .catch((err) => {
         console.log(err);

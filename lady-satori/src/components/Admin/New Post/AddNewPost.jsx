@@ -1,6 +1,5 @@
 import DraftEditor from "./DraftEditor";
 import axios from "axios";
-const _ = require("lodash");
 
 function AddNewPost() {
   //
@@ -24,12 +23,7 @@ function AddNewPost() {
         }
       )
       .then((res) => {
-        window.location.assign(
-          "http://localhost:3000/post/" +
-            res.data.id +
-            "/" +
-            _.kebabCase(res.data.title)
-        );
+        window.location.assign("http://localhost:3000/" + res.data.key);
       })
       .catch((err) => console.log(err));
   };

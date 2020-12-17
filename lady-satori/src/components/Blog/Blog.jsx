@@ -18,8 +18,9 @@ const Blog = () => {
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/aws"
     )
       .then((res) => {
+        console.log(res.data);
         //
-        const postsArray = res.data.map(async (postURL) => {
+        const postsArray = res.data.urls.map(async (postURL) => {
           const res = await Axios.get(postURL);
           return res.data;
         });

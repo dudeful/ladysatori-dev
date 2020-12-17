@@ -15,6 +15,12 @@ router
     //just setting the date format
     const date = new Date().toLocaleString("pt-BR", { month: "long", day: "numeric", year: "numeric" });
 
+    const fullDate = {
+      day: new Date().getDate(),
+      month: new Date().toLocaleString("pt-BT", { month: "long" }),
+      year: new Date().getFullYear(),
+    };
+
     let i = 0;
     const bodyBlocks = req.body.body.blocks;
     const readTime = (totalLength, currentLength) => {
@@ -25,7 +31,7 @@ router
     });
     const roundReadTime = Math.round(i / 130);
 
-    const s3ObjectKey = "posts/" + year + "/" + month + "/" + Date.now() + "@" + _(req.body.title);
+    const s3ObjectKey = "posts/" + fullDate.year + "/" + fullDate.month + "/" + Date.now() + "@" + _(req.body.title);
 
     const newPost = {
       id: crypto.randomBytes(10).toString("hex"),
@@ -54,6 +60,7 @@ router
           console: "Artigo Publicado!",
           id: newPost.id,
           title: newPost.title,
+          key: newPost.key,
         });
       })
       .catch((err) => res.json(err));

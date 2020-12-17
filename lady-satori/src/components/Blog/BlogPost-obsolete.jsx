@@ -30,7 +30,7 @@
 //   // const [data, setData] = React.useState();
 
 //   // axios
-//   //   .get("http://localhost:5000/posts" + window.location.pathname)
+//   //   .get("https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/posts" + window.location.pathname)
 //   //   .then((res) => setData(res.data));
 
 //   //handles loading delay and bad requests (400) errors.

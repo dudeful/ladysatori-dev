@@ -9,7 +9,7 @@ function About() {
   // const sessionToken = sessionStorage.getItem("auth-token");
 
   // const [{ data, loading, error }] = useAxios({
-  //   url: "http://localhost:5000/auth/isLoggedIn",
+  //   url: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
   //   headers: { localToken, sessionToken },
   // });
 

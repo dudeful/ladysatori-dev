@@ -5,7 +5,7 @@ function Cards(props) {
   //
   return (
     <div className="blog-cards">
-      <div className="home-container row row-cols-1 row-cols-md-3">
+      <div className="home-container row row-cols-1 row-cols-lg-3 row-cols-md-2">
         {props.data.slice(1).map((card) => {
           return (
             <div className="col mb-5" key={card.id}>
