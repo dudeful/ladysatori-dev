@@ -9,6 +9,42 @@ const rateLimiter = require("../middleware/rateLimiter");
 const verifyAdminToken = require("./verifyAdminToken");
 const _ = require("lodash/kebabCase");
 
+const imagemin = require("imagemin");
+const imageminJpegtran = require("imagemin-jpegtran");
+const imageminMozjpeg = require("imagemin-mozjpeg");
+const imageminPngquant = require("imagemin-pngquant");
+
+//-------------------TESTS ONLY------------------------
+//-------------------TESTS ONLY------------------------
+
+// router.route("/tests-only").post((req, res) => {
+//   const compressThumbnail = async (img) => {
+//     console.log("Original File Size: " + Math.round(img.length / 1024));
+//     const files = await imagemin.buffer(Buffer.from(img, "binary"), {
+//       plugins: [
+//         imageminJpegtran(),
+//         imageminMozjpeg({
+//           quality: [10],
+//         }),
+//         imageminPngquant({ quality: [0.1, 0.15] }),
+//       ],
+//     });
+//     return Buffer.from(files).toString("base64");
+//   };
+
+//   compressThumbnail(req.body.coverImg)
+//     .then((res) => {
+//       console.log("Compressed File Size: " + Math.round(res.length / 1024));
+//       // console.log(res);
+//     })
+//     .catch((err) => {
+//       if (err) throw err;
+//     });
+// });
+
+//-------------------TESTS ONLY------------------------
+//-------------------TESTS ONLY------------------------
+
 router
   .route("/new-post")
   .post(rateLimiter.addPostSpeedLimiter, rateLimiter.addPostLimiter, verifyAdminToken, (req, res) => {
@@ -44,6 +80,37 @@ router
       readTime: roundReadTime,
     };
 
+    const newThumbnail = {
+      id: newPost.id + "@thumbnail",
+      key: "thumbnails/" + s3ObjectKey,
+      coverImg,
+      tag: req.body.tag,
+      title: req.body.title,
+      body,
+      date: date,
+      readTime: roundReadTime,
+    };
+
+    if (bodyBlocks.length >= 2) {
+      newThumbnail.body = (bodyBlocks[0].text + " " + bodyBlocks[1].text).slice(0, 300);
+    } else {
+      newThumbnail.body = bodyBlocks[0].text.slice(0, 300);
+    }
+
+    const compressThumbnail = async (img) => {
+      console.log("Original File Size: " + Math.round(img.length / 1024));
+      const files = await imagemin.buffer(Buffer.from(img, "binary"), {
+        plugins: [
+          imageminJpegtran(),
+          imageminMozjpeg({
+            quality: [10],
+          }),
+          imageminPngquant({ quality: [0.1, 0.15] }),
+        ],
+      });
+      return Buffer.from(files).toString("base64");
+    };
+
     const params = {
       Body: Buffer.from(JSON.stringify(newPost), "utf-8"),
       Bucket: buckets.blog.name,
@@ -52,18 +119,33 @@ router
 
     s3.putObject(params, (err, data) => {
       if (err) console.log(err, err.stack);
-      //   else console.log(data);
     })
       .promise()
-      .then((data) => {
+      .then(() => {
+        compressThumbnail(req.body.coverImg)
+          .then((res) => {
+            console.log("Compressed File Size: " + Math.round(res.length / 1024));
+            newThumbnail.coverImg = res;
+          })
+          .then(() => {
+            const thumbnailParams = {
+              Body: Buffer.from(JSON.stringify(newThumbnail), "utf-8"),
+              Bucket: buckets.blog.name,
+              Key: "thumbnails/" + s3ObjectKey,
+            };
+
+            s3.putObject(thumbnailParams, (err, data) => {
+              if (err) console.log(err, err.stack);
+            });
+          });
+      })
+      .then(() => {
         res.json({
           console: "Artigo Publicado!",
-          id: newPost.id,
-          title: newPost.title,
           key: newPost.key,
         });
       })
-      .catch((err) => res.json(err));
+      .catch((err) => res.json({ error: true, err }));
   });
 
 router
@@ -92,8 +174,6 @@ router
       updateDate: req.body.updateDate,
       readTime: roundReadTime,
     };
-
-    console.log(updatedPost.key);
 
     const params = {
       Body: Buffer.from(JSON.stringify(updatedPost), "utf-8"),

@@ -3,7 +3,6 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
-import ImageUploading from "react-images-uploading";
 import AvatarEditor from "react-avatar-editor";
 import { PreviewModal } from "./PreviewModal";
 import { PostIncompleteModal } from "./PostIncompleteModal";
@@ -38,11 +37,11 @@ function DraftEditor(props) {
 
   // ----------------- react image uploading -----------------
 
-  const [images, setImages] = React.useState([]);
+  const [previewImage, setPreviewImage] = React.useState();
 
-  const onImageChange = (imageList) => {
-    setImages(imageList);
-  };
+  const [displayCanvas, setDisplayCanvas] = React.useState("none");
+
+  const [image, setImage] = React.useState();
 
   const imageRemove = () => {
     setPostInput((prevValue) => {
@@ -51,6 +50,9 @@ function DraftEditor(props) {
         coverImg: "",
       };
     });
+    setImage("");
+    setDisplayCanvas("none");
+    setPreviewImage("");
   };
 
   // --------------------- handle inputs ---------------------
@@ -85,16 +87,17 @@ function DraftEditor(props) {
 
   const myRef = React.useRef(null);
 
-  const onCanvasSave = () => {
-    const canvas = myRef.current.getImage();
-    var dataURL = canvas.toDataURL();
-    setPostInput((prevValue) => {
-      return {
-        ...prevValue,
-        coverImg: dataURL,
-      };
-    });
-  };
+  // const onCanvasSave = () => {
+  //   const canvas = myRef.current.getImage();
+  //   var dataURL = canvas.toDataURL();
+
+  //   setPostInput((prevValue) => {
+  //     return {
+  //       ...prevValue,
+  //       coverImg: dataURL,
+  //     };
+  //   });
+  // };
 
   // --------------------- check inputs ----------------------
 
@@ -130,78 +133,106 @@ function DraftEditor(props) {
     }
   };
 
+  //--------------------------------------------------------------------
+  //---------------------TESTS ONLY!!-----------------------------------
+
+  const prevImg = () => {
+    if (image) {
+      const canvas = myRef.current.getImage();
+
+      canvas.toBlob(
+        (blob) => {
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            setPreviewImage(reader.result);
+          };
+
+          reader.readAsDataURL(blob);
+        },
+        "image/jpeg",
+        0.6
+      );
+    }
+  };
+
+  const onCanvasSave = () => {
+    const canvas = myRef.current.getImage();
+
+    canvas.toBlob((blob) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setPostInput((prevValue) => {
+          return {
+            ...prevValue,
+            coverImg: reader.result,
+          };
+        });
+      };
+
+      reader.readAsBinaryString(blob);
+    }, "image/jpeg");
+  };
+
+  const imageInput = () => {
+    const selectedFile = document.getElementById("inputGroupFile01").files[0];
+
+    setImage(selectedFile);
+    setDisplayCanvas("initial");
+  };
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+
   return (
     <div className="drafEditor">
       <div className="title-coverImg">
-        <ImageUploading
-          value={images}
-          onChange={onImageChange}
-          dataURLKey="data_url"
-        >
-          {({
-            imageList,
-            onImageUpload,
-            onImageRemove,
-            isDragging,
-            dragProps,
-          }) => (
-            // write your building UI
-
-            <div className="upload__image-wrapper">
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="inputGroupFileAddon01">
-                    Upload
-                  </span>
-                </div>
-                <div className="custom-file">
-                  <button
-                    onClick={onImageUpload}
-                    {...dragProps}
-                    type="file"
-                    className="custom-file-input"
-                    id="inputGroupFile01"
-                    aria-describedby="inputGroupFileAddon01"
-                  />
-                  <label
-                    style={isDragging ? { color: "red" } : undefined}
-                    className="custom-file-label"
-                    htmlFor="inputGroupFile01"
-                  >
-                    {`Click ou Arraste a Imagem Aqui`}
-                  </label>
-                </div>
-              </div>
-              &nbsp;
-              {imageList.map((image, index) => (
-                <div key={index} className="image-item mb-5">
-                  <AvatarEditor
-                    ref={myRef}
-                    image={image["data_url"]}
-                    width={967}
-                    height={204}
-                    color={[255, 255, 255, 0.6]} // RGBA
-                    scale={1}
-                    rotate={0}
-                    onMouseUp={onCanvasSave}
-                    onImageReady={onCanvasSave}
-                  />
-                  <div>
-                    <button
-                      className="btn btn-danger mt-2"
-                      onClick={() => {
-                        onImageRemove(index);
-                        imageRemove();
-                      }}
-                    >
-                      Remover
-                    </button>
-                  </div>
-                </div>
-              ))}
+        <div className="upload__image-wrapper">
+          <div className="input-group mb-2">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="inputGroupFileAddon01">
+                Upload
+              </span>
             </div>
-          )}
-        </ImageUploading>
+            <div className="custom-file">
+              <input
+                onChange={imageInput}
+                type="file"
+                className="custom-file-input"
+                id="inputGroupFile01"
+                aria-describedby="inputGroupFileAddon01"
+              />
+              <label className="custom-file-label" htmlFor="inputGroupFile01">
+                {`Click ou Arraste a Imagem Aqui`}
+              </label>
+            </div>
+          </div>
+          &nbsp;
+          <div className="image-item mb-5" style={{ display: displayCanvas }}>
+            <AvatarEditor
+              ref={myRef}
+              image={image}
+              width={967}
+              height={204}
+              color={[255, 255, 255, 0.6]} // RGBA
+              scale={1}
+              rotate={0}
+              onMouseUp={onCanvasSave}
+              onImageReady={onCanvasSave}
+            />
+            <div>
+              <button
+                className="btn btn-danger mt-4 mb-5"
+                onClick={() => {
+                  imageRemove();
+                }}
+              >
+                Remover
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -304,6 +335,7 @@ function DraftEditor(props) {
         {/* <h4>Underlying HTML</h4>
         <div className="html-view">{getHtml(editorState)}</div> */}
         <button
+          onClick={prevImg}
           className="btn btn-success"
           data-toggle="modal"
           data-target="#previewModal"
@@ -322,7 +354,7 @@ function DraftEditor(props) {
       </div>
       <PreviewModal
         output={{
-          coverImg: postInput.coverImg,
+          coverImg: previewImage,
           tag: postInput.tag,
           title: postInput.title,
           body: DOMPurify.sanitize(getHtml(editorState)),

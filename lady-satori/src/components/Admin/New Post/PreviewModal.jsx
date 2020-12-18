@@ -24,9 +24,10 @@ export const PreviewModal = ({ output }) => (
         <img
           className="preview-coverImg"
           src={
-            output.coverImg === ""
-              ? "https://envothemes.com/envo-magazine-pro/wp-content/uploads/sites/8/2018/04/no-image.jpg"
-              : output.coverImg
+            !output.coverImg
+              ? "https://i.pinimg.com/originals/e9/29/1e/e9291eaddacd460280a34a151dcc5cc4.gif"
+              : // "https://bondjewellery.co.uk/Content/images/preload.gif"
+                output.coverImg
           }
           alt="..."
         />

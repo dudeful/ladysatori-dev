@@ -372,7 +372,7 @@
 #previewModal .modal-headings {
   width: 80%;
   margin: 0 auto 3rem;
-  box-shadow: 0px 10px 10px 1px #c8d5b962;
+  box-shadow: 0px 5px 10px 1px #c8d5b962;
   padding: 0 1.5rem 1rem;
   border-radius: 0 0 4px 4px;
 }
@@ -385,8 +385,10 @@
 }
 
 #previewModal .preview-coverImg {
+  object-fit: cover;
+  object-position: 50%;
   width: 100%;
-  object-fit: contain;
+  height: 13rem;
 }
 
 #previewModal .author-pic {

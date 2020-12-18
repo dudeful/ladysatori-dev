@@ -17,13 +17,14 @@ function AddNewPost() {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/new-post",
+        // "http://localhost:5000/admin/blog/tests-only",
         newPost,
         {
           headers: { sessionToken },
         }
       )
       .then((res) => {
-        window.location.assign("http://localhost:3000/" + res.data.key);
+        // window.location.assign("http://localhost:3000/" + res.data.key);
       })
       .catch((err) => console.log(err));
   };
