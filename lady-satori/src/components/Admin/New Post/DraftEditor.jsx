@@ -102,7 +102,6 @@ function DraftEditor(props) {
   // --------------------- check inputs ----------------------
 
   const checkInputs = () => {
-    console.log("triggered");
     if (
       postInput.coverImg === "" ||
       postInput.tag === "" ||

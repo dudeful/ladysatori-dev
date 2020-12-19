@@ -25,6 +25,8 @@ https://www.npmjs.com/package/react-player
 https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-controls.html
 https://www.youtube.com/watch?v=mXk0MNjlO7A
 https://www.youtube.com/watch?v=y4Obz26GkCk
+https://medium.com/better-programming/the-true-beauty-of-material-ui-d76fa3dc0dd4
+https://medium.com/javascript-in-plain-english/9-extremely-powerful-javascript-hacks-eed8ed11af5
 
 Olafur Eliasson
 

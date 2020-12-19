@@ -10,7 +10,7 @@ function Cards(props) {
           return (
             <div className="col mb-5" key={card.id}>
               <Link
-                to={card.key}
+                to={card.key.slice(10)}
                 className="blog-card-link lead text-dark text-decoration-none"
               >
                 <div className="card h-100">
@@ -26,8 +26,7 @@ function Cards(props) {
                   <div className="card-body">
                     <h4>{card.title}</h4>
                     <p className="card-text">
-                      {JSON.parse(card.body).blocks[0].text.slice(0, 100) +
-                        "..."}
+                      {card.body.slice(0, 100) + "..."}
                     </p>
                   </div>
                   <p className="card-text ml-auto p-3">

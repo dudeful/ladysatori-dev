@@ -14,11 +14,9 @@ function BlogHeadline(props) {
       <div className="headline-container row">
         <div className="col-md-6">
           <p className="headline-title">{data.title}</p>
-          <p className="headline-briefing">
-            {JSON.parse(data.body).blocks[0].text.slice(0, 180) + "..."}
-          </p>
+          <p className="headline-briefing">{data.body.slice(0, 180) + "..."}</p>
           <Link
-            to={"/"}
+            to={data.key.slice(10)}
             className="blog-card-link lead text-dark text-decoration-none"
           >
             <button className="btn btn-outline-light btn-block mb-4">

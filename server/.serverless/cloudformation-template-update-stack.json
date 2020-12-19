@@ -207,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/lady-satori/dev/1608296140835-2020-12-18T12:55:40.835Z/lady-satori.zip"
+          "S3Key": "serverless/lady-satori/dev/1608339802366-2020-12-19T01:03:22.366Z/lady-satori.zip"
         },
         "Handler": "s_app.handler",
         "Runtime": "nodejs12.x",
@@ -225,14 +225,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionMevCyByTo8B9MDiczQTji6kSbkShZJTQSoxEKzX7vyc": {
+    "AppLambdaVersionqVoGqw2gHA0zzT4YNY8mx4I0XPIOf37J5DDa0X5xM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "EuCzwzPZ+rnmbivdIpMVqCHyaV0DU/3MzoCGoWU0iT0="
+        "CodeSha256": "6AUrTxpiNnZvI6gTmD0Dkl6V5uT5XeEBuQJq2rlnnHc="
       }
     },
     "ApiGatewayRestApi": {
@@ -444,7 +444,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1608296122024": {
+    "ApiGatewayDeployment1608339785257": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -605,7 +605,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/lady-satori/dev/1608296140835-2020-12-18T12:55:40.835Z/custom-resources.zip"
+          "S3Key": "serverless/lady-satori/dev/1608339802366-2020-12-19T01:03:22.366Z/custom-resources.zip"
         },
         "FunctionName": "lady-satori-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -661,7 +661,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionMevCyByTo8B9MDiczQTji6kSbkShZJTQSoxEKzX7vyc"
+        "Ref": "AppLambdaVersionqVoGqw2gHA0zzT4YNY8mx4I0XPIOf37J5DDa0X5xM"
       }
     },
     "ServiceEndpoint": {

@@ -41,7 +41,7 @@ const _ = require("lodash/kebabCase");
 //   });
 
 router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (req, res) => {
-  s3.listObjects({ Bucket: buckets.blog.name }, (err, data) => {
+  s3.listObjects({ Bucket: buckets.blog.name, Prefix: "thumbnails/" }, (err, data) => {
     if (err) console.log(err, err.stack);
   })
     .promise()
@@ -60,6 +60,7 @@ router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (re
       let urls = keys.map((objectKey) => {
         return "https://dizbkwjzdmgp2.cloudfront.net/" + objectKey;
       });
+      console.log(urls);
 
       res.json({ urls });
     })
