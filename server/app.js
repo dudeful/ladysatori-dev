@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
 const app = express();
+const rateLimiter = require("./middleware/rateLimiter");
 const port = process.env.PORT || 5000;
 
 require("dotenv").config();
@@ -43,14 +44,16 @@ app.use("/admin", require("./admin/auth"));
 
 app.use("/admin/blog", require("./admin/blog"));
 
-// app.use("/posts", require("./routes/posts"));
-
 app.use("/auth", require("./routes/auth"));
 
 app.use("/users", require("./routes/users"));
 
-app.get("/", (req, res) => {
-  res.send("hello friend");
+app.get("/", rateLimiter.helloFriendSpeedLimiter, rateLimiter.helloFriendLimiter, (req, res) => {
+  const hello = [];
+  for (i = 0; i < 100000; i++) {
+    hello.push("hello friend ");
+  }
+  res.send(hello.join(""));
 });
 
 // app.listen(port, () => {

@@ -122,19 +122,6 @@
   }
 }
 
-.blog-post .main-content img {
-  object-fit: contain;
-  max-width: 100%;
-  display: block;
-  margin: auto;
-}
-
-.blog-post .main-content iframe {
-  width: 80%;
-  display: block;
-  margin: auto;
-}
-
 .blog-post .title {
   margin-top: 3rem;
   margin-bottom: 1.5rem;
@@ -172,6 +159,31 @@
   line-height: 2rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.blog-post .main-content img {
+  object-fit: contain;
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+
+.blog-post .main-content iframe {
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+
+.blog-post .main-content blockquote {
+  padding-left: 7px;
+  border-left: 7px solid rgb(241, 241, 241);
+  line-height: 1.9rem;
+}
+
+.blog-post .main-content pre {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  padding: 1px 10px;
 }
 
 .blog-post .main-content a {

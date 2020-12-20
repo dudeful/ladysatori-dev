@@ -1,6 +1,17 @@
 const rateLimit = require("express-rate-limit");
 const slowDown = require("express-slow-down");
 
+const helloFriendLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: 5,
+});
+
+const helloFriendSpeedLimiter = slowDown({
+  windowMs: 5 * 60 * 1000,
+  delayAfter: 5,
+  delayMs: 300,
+});
+
 // Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
 // see https://expressjs.com/en/guide/behind-proxies.html
 // app.set('trust proxy', 1);
@@ -153,6 +164,8 @@ const addPostSpeedLimiter = slowDown({
 });
 
 module.exports = {
+  helloFriendLimiter,
+  helloFriendSpeedLimiter,
   resetPasswordLimiter,
   resetPasswordSpeedLimiter,
   tokenHashLimiter,

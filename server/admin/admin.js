@@ -60,7 +60,6 @@ router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (re
       let urls = keys.map((objectKey) => {
         return "https://dizbkwjzdmgp2.cloudfront.net/" + objectKey;
       });
-      console.log(urls);
 
       res.json({ urls });
     })

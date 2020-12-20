@@ -25,7 +25,6 @@ function UpdatePost() {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/update-post/" +
-          // "http://localhost:5000/admin/blog/update-post/" +
           updatedPost.key,
         updatedPost,
         {

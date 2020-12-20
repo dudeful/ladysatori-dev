@@ -65,7 +65,6 @@ function UpdateDraftEditor(props) {
   const [postInput, setPostInput] = React.useState({
     id: props.postData.id,
     key: props.postData.key,
-    updateDate: new Date().toLocaleString("pt-BR"),
     date: props.postData.date,
     coverImg: props.postData.coverImg,
     tag: props.postData.tag,

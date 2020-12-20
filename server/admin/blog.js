@@ -110,6 +110,8 @@ router
   .post(rateLimiter.addPostSpeedLimiter, rateLimiter.addPostLimiter, verifyAdminToken, (req, res) => {
     //just setting the date format
 
+    const date = new Date().toLocaleString("pt-BR", { month: "long", day: "numeric", year: "numeric" });
+
     let i = 0;
     const bodyBlocks = req.body.body.blocks;
     const readTime = (totalLength, currentLength) => {
@@ -140,7 +142,7 @@ router
       title: req.body.title,
       body: undefined,
       date: req.body.date,
-      updateDate: req.body.updateDate,
+      updateDate: date,
       readTime: roundReadTime,
     };
 
@@ -161,8 +163,8 @@ router
           InvalidationBatch: {
             CallerReference: Date.now().toString(),
             Paths: {
-              Quantity: 1,
-              Items: ["/" + updatedPost.key],
+              Quantity: 2,
+              Items: ["/" + req.body.key, "/thumbnails/" + req.body.key],
             },
           },
         };

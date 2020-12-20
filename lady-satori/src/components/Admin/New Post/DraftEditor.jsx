@@ -184,24 +184,6 @@ function DraftEditor(props) {
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
 
-  //displaying the iframe element with 16:9 aspesct ratio
-  React.useEffect(() => {
-    if (document.getElementsByTagName("iframe")) {
-      const iframeParentNode = document.getElementsByTagName("iframe");
-
-      const iframeWidth = getComputedStyle(
-        iframeParentNode[0]
-      ).getPropertyValue("width");
-
-      const iframeHeight = iframeWidth.replace("px", "") * 0.5625 + "px";
-
-      Array.from(
-        document.querySelectorAll("iframe"),
-        (e) => (e.style.height = iframeHeight)
-      );
-    }
-  }, []);
-
   return (
     <div className="drafEditor">
       <div className="title-coverImg">

@@ -17,7 +17,6 @@ function AddNewPost() {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/new-post",
-        // "http://localhost:5000/admin/blog/new-post",
         newPost,
         {
           headers: { sessionToken },
