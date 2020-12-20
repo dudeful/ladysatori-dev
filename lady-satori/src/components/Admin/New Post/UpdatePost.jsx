@@ -20,14 +20,12 @@ function UpdatePost() {
     );
   if (error) return <Error400 />;
 
-  console.log(data);
-
   const getPostInputs = (updatedPost) => {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .post(
-        // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/update-post/" +
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/update-post/" +
+          // "http://localhost:5000/admin/blog/update-post/" +
           updatedPost.key,
         updatedPost,
         {
@@ -35,7 +33,6 @@ function UpdatePost() {
         }
       )
       .then((res) => {
-        console.log(res.data.key);
         window.location.assign(
           "https://main.d3ieky02gu560k.amplifyapp.com/" + updatedPost.key
         );

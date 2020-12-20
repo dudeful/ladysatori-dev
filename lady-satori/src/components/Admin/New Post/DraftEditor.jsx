@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import AvatarEditor from "react-avatar-editor";
-import { PreviewModal } from "./PreviewModal";
+import PreviewModal from "./PreviewModal";
 import { PostIncompleteModal } from "./PostIncompleteModal";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
@@ -183,6 +183,24 @@ function DraftEditor(props) {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+
+  //displaying the iframe element with 16:9 aspesct ratio
+  React.useEffect(() => {
+    if (document.getElementsByTagName("iframe")) {
+      const iframeParentNode = document.getElementsByTagName("iframe");
+
+      const iframeWidth = getComputedStyle(
+        iframeParentNode[0]
+      ).getPropertyValue("width");
+
+      const iframeHeight = iframeWidth.replace("px", "") * 0.5625 + "px";
+
+      Array.from(
+        document.querySelectorAll("iframe"),
+        (e) => (e.style.height = iframeHeight)
+      );
+    }
+  }, []);
 
   return (
     <div className="drafEditor">

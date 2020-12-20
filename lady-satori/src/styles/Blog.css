@@ -129,6 +129,12 @@
   margin: auto;
 }
 
+.blog-post .main-content iframe {
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+
 .blog-post .title {
   margin-top: 3rem;
   margin-bottom: 1.5rem;
@@ -272,7 +278,7 @@
   }
 }
 
-/* ----------------------- add new blog --------------------------- */
+/* ----------------------- add/update blog post --------------------------- */
 .draftEditor {
   height: 100vh;
 }
@@ -281,7 +287,17 @@
   margin: 3rem 15% 5rem;
   border-radius: 4px;
   box-shadow: 0px 1px 10px 1px #c8d5b9a2;
-  padding: 1.5rem 1.5rem;
+  padding: 1.5rem;
+}
+@media only screen and (max-width: 993px) {
+  .title-coverImg {
+    margin: 0 10% 5rem;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .title-coverImg {
+    margin: 0 5% 5rem;
+  }
 }
 
 .title-coverImg .image-item canvas {
@@ -295,6 +311,21 @@
   margin: 0 15% 5rem;
   border-radius: 4px;
   box-shadow: 0px 1px 10px 1px #c8d5b9a2;
+}
+@media only screen and (max-width: 993px) {
+  .inner-draftEditor {
+    margin: 0 10% 5rem;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .inner-draftEditor {
+    margin: 0 5% 5rem;
+  }
+}
+@media only screen and (max-width: 541px) {
+  .inner-draftEditor {
+    margin: 3rem 0;
+  }
 }
 
 .inner-draftEditor .draftEditor-toolbar {
@@ -330,6 +361,49 @@
   object-fit: contain;
 }
 
+.rich-editor .DraftEditor-editorContainer iframe {
+  width: 750px;
+  height: 422px;
+  display: block;
+  margin: auto;
+}
+@media only screen and (min-width: 1921px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 1076px;
+    height: 605px;
+  }
+}
+@media only screen and (max-width: 1201px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 673px;
+    height: 379px;
+  }
+}
+@media only screen and (max-width: 1025px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 574px;
+    height: 323px;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 540px;
+    height: 304px;
+  }
+}
+@media only screen and (max-width: 541px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 433px;
+    height: 243px;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .rich-editor .DraftEditor-editorContainer iframe {
+    width: 332px;
+    height: 167px;
+  }
+}
+
 .draft-editor-wrapper {
   border: 1px solid #ccc;
 }
@@ -356,7 +430,7 @@
   max-width: 65%;
   word-break: break-all;
 }
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 769px) {
   #previewModal .modal-dialog {
     min-width: 90%;
     margin: auto;
@@ -462,4 +536,47 @@
   object-fit: contain;
   display: block;
   margin: auto;
+}
+
+#previewModal .modal-body iframe {
+  width: 640px;
+  height: 360px;
+  display: block;
+  margin: auto;
+}
+@media only screen and (min-width: 1921px) {
+  #previewModal .modal-body iframe {
+    width: 799px;
+    height: 449px;
+  }
+}
+@media only screen and (max-width: 1201px) {
+  #previewModal .modal-body iframe {
+    width: 499px;
+    height: 281px;
+  }
+}
+@media only screen and (max-width: 1025px) {
+  #previewModal .modal-body iframe {
+    width: 400px;
+    height: 225px;
+  }
+}
+@media only screen and (max-width: 769px) {
+  #previewModal .modal-body iframe {
+    width: 410px;
+    height: 230px;
+  }
+}
+@media only screen and (max-width: 541px) {
+  #previewModal .modal-body iframe {
+    width: 401px;
+    height: 226px;
+  }
+}
+@media only screen and (max-width: 420px) {
+  #previewModal .modal-body iframe {
+    width: 300px;
+    height: 169px;
+  }
 }

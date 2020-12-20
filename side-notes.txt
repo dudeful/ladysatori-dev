@@ -1,4 +1,7 @@
 oOHjMlZJwGDpa0pt
+https://main.d3ieky02gu560k.amplifyapp.com/
+https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev
+https://web.dev/workbox/
 https://colorhunt.co/palette/202267
 https://react-page.github.io/react-page/#/
 https://github.com/facebook/draft-js
@@ -27,6 +30,7 @@ https://www.youtube.com/watch?v=mXk0MNjlO7A
 https://www.youtube.com/watch?v=y4Obz26GkCk
 https://medium.com/better-programming/the-true-beauty-of-material-ui-d76fa3dc0dd4
 https://medium.com/javascript-in-plain-english/9-extremely-powerful-javascript-hacks-eed8ed11af5
+https://theburningmonk.com/2020/04/hit-the-6mb-lambda-payload-limit-heres-what-you-can-do/
 
 Olafur Eliasson
 

@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import AvatarEditor from "react-avatar-editor";
-import { PreviewModal } from "./PreviewModal";
+import PreviewModal from "./PreviewModal";
 import { PostIncompleteModal } from "./PostIncompleteModal";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
@@ -362,13 +362,15 @@ function UpdateDraftEditor(props) {
           PUBLICAR
         </button>
       </div>
+
       <PreviewModal
-        output={{
-          coverImg: previewImage,
-          tag: postInput.tag,
-          title: postInput.title,
-          body: DOMPurify.sanitize(getHtml(editorState)),
-        }}
+        coverImg={previewImage}
+        tag={postInput.tag}
+        title={postInput.title}
+        body={DOMPurify.sanitize(getHtml(editorState), {
+          ADD_TAGS: ["iframe"],
+          ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],
+        })}
       />
       <PostIncompleteModal />
     </div>

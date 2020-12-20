@@ -34,6 +34,24 @@ const BlogPost = () => {
       .catch((err) => setError({ err }));
   }, []);
 
+  //  displaying the iframe element with 16:9 aspesct ratio
+  React.useEffect(() => {
+    if (document.getElementsByTagName("iframe")[0]) {
+      const iframeElement = document.getElementsByTagName("iframe");
+
+      const iframeWidth = getComputedStyle(iframeElement[0]).getPropertyValue(
+        "width"
+      );
+
+      const iframeHeight = iframeWidth.replace("px", "") * 0.5625 + "px";
+
+      Array.from(
+        document.querySelectorAll("iframe"),
+        (e) => (e.style.height = iframeHeight)
+      );
+    }
+  });
+
   if (error) {
     console.log(error);
     return <Error400 />;
@@ -119,7 +137,10 @@ const BlogPost = () => {
               <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(
-                    draftToHtml(JSON.parse(data.body))
+                    draftToHtml(JSON.parse(data.body)),
+                    {
+                      ADD_TAGS: ["iframe"],
+                    }
                   ),
                 }}
               />
