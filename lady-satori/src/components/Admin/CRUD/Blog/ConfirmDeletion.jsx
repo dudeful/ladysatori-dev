@@ -6,8 +6,8 @@ const ConfirmDeletion = (props) => {
     const sessionToken = sessionStorage.getItem("auth-token");
 
     Axios.delete(
-      // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/delete-post",
-      "http://localhost:5000/admin/blog/delete-post",
+      "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/delete-post",
+      // "http://localhost:5000/admin/blog/delete-post",
       {
         data: { key: props.postKey },
         headers: { sessionToken },
