@@ -41,6 +41,7 @@ const _ = require("lodash/kebabCase");
 //   });
 
 router.route("/").get(rateLimiter.blogSpeedLimiter, rateLimiter.blogLimiter, (req, res) => {
+  console.log("hello friend");
   s3.listObjects({ Bucket: buckets.blog.name, Prefix: "thumbnails/" }, (err, data) => {
     if (err) console.log(err, err.stack);
   })

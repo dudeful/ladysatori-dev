@@ -5,18 +5,19 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Admin from "./components/Admin/Admin";
+import AddNewPost from "./components/Admin/CRUD/Blog/AddNewPost";
+import UpdatePost from "./components/Admin/CRUD/Blog/UpdatePost";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SocialAuth from "./components/SocialAuth";
+import PasswordReset from "./components/Login/PasswordReset";
+import ClassRoom from "./components/ClassRoom";
 import Blog from "./components/Blog/Blog";
 import BlogPost from "./components/Blog/BlogPost";
-import Aulas from "./components/Aulas";
 import Sobre from "./components/Sobre";
-import AddNewPost from "./components/Admin/New Post/AddNewPost";
-import UpdatePost from "./components/Admin/New Post/UpdatePost";
 import Error404 from "./components/Errors/Error404";
 import Error400 from "./components/Errors/Error400";
-import PasswordReset from "./components/Login/PasswordReset";
 import { ProtectedRoute, AdminRoute } from "./ProtectedRoute";
 
 const ScrollToTop = () => {
@@ -35,6 +36,10 @@ function App() {
       <Router>
         <ScrollToTop />
         <Switch>
+          <Route path="/admin" exact>
+            <AdminRoute component={<Admin />} />
+          </Route>
+
           <Route path="/" component={Home} exact />
           <Route path="/reset/:token" component={PasswordReset} exact />
           <Route path="/login" component={Login} exact />
@@ -55,16 +60,16 @@ function App() {
 
           <Route path="/sobre" component={Sobre} exact />
 
-          <Route path="/new-post" exact>
+          <Route path="/admin/new-post" exact>
             <AdminRoute component={<AddNewPost />} />
           </Route>
 
-          <Route path="/update-post/posts/:year/:month/:time_title" exact>
+          <Route path="/admin/update-post/posts/:year/:month/:time_title" exact>
             <AdminRoute component={<UpdatePost />} />
           </Route>
 
           <Route path="/yoga-class" exact>
-            <ProtectedRoute component={<Aulas />} />
+            <ProtectedRoute component={<ClassRoom />} />
           </Route>
 
           <Route path="/error400" component={Error400} exact />

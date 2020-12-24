@@ -1,5 +1,6 @@
 /* 
 #373a40
+#4a4c52
 #68b0ab
 #8fc0a9
 #c8d5b9
@@ -180,12 +181,6 @@
   line-height: 1.9rem;
 }
 
-.blog-post .main-content pre {
-  background-color: rgb(241, 241, 241);
-  border-radius: 3px;
-  padding: 1px 10px;
-}
-
 .blog-post .main-content a {
   word-break: break-all;
 }
@@ -292,7 +287,7 @@
 
 /* ----------------------- add/update blog post --------------------------- */
 .draftEditor {
-  height: 100vh;
+  margin-top: 6rem;
 }
 
 .title-coverImg {
@@ -591,4 +586,10 @@
     width: 300px;
     height: 169px;
   }
+}
+
+#previewModal .modal-body blockquote {
+  padding-left: 7px;
+  border-left: 7px solid rgb(241, 241, 241);
+  line-height: 1.9rem;
 }

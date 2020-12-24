@@ -5,8 +5,10 @@ function Cards(props) {
   //
   return (
     <div className="blog-cards">
-      <div className="home-container row row-cols-1 row-cols-lg-3 row-cols-md-2">
-        {props.data.slice(1).map((card) => {
+      <div className="home-container row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2">
+        {props.data.map((card) => {
+          const imgHeight = Math.floor(Math.random() * 150) + 200;
+          const textLength = 100 - imgHeight;
           return (
             <div className="col mb-5" key={card.id}>
               <Link
@@ -17,7 +19,7 @@ function Cards(props) {
                   <img
                     src={card.coverImg}
                     style={{
-                      minHeight: Math.floor(Math.random() * 150) + 200,
+                      minHeight: imgHeight,
                     }}
                     className="card-img-top"
                     alt="..."
@@ -26,7 +28,7 @@ function Cards(props) {
                   <div className="card-body">
                     <h4>{card.title}</h4>
                     <p className="card-text">
-                      {card.body.slice(0, 100) + "..."}
+                      {card.body.slice(0, textLength) + "..."}
                     </p>
                   </div>
                   <p className="card-text ml-auto p-3">

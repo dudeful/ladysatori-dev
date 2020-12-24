@@ -13,7 +13,8 @@
 .home .card.welcome {
   margin: 4rem auto 7rem;
   padding: 2rem 0;
-  background-color: #c8d5b9ce;
+  background-color: #8fc0a92a;
+  box-shadow: 0px 0px 50px 0px rgb(55, 58, 64, 0.15);
   border: 0;
   border-radius: 0;
 }
@@ -49,7 +50,8 @@
 /* ---------------yoga style----------------- */
 
 .home-yoga-style {
-  background-color: #8fc0a9ad;
+  background-image: linear-gradient(to bottom, #8fc0a92a, white);
+  box-shadow: 0px -40px 40px 0px rgb(55, 58, 64, 0.05);
   margin: 7rem auto;
 }
 
@@ -65,7 +67,8 @@
 
 .home-sensei-profile {
   margin: 9rem 0;
-  background-color: #c8d5b9ce;
+  background-color: #8fc0a92a;
+  box-shadow: 0px 0px 10px 0px rgb(55, 58, 64, 0.15);
 }
 
 .home-sensei-profile .img1 {
@@ -103,13 +106,18 @@
 /* --------------Q&A section----------------- */
 
 .home-QA {
-  margin: 9rem 5%;
+  margin: 5rem 5%;
   opacity: 0.9;
 }
 @media only screen and (max-width: 768px) {
   .home-QA {
-    margin: 9rem 0;
+    margin: 5rem 0;
   }
+}
+
+.home-QA .question,
+.home-QA .answer {
+  padding: 7%;
 }
 
 .home-QA .answer {

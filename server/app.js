@@ -56,8 +56,8 @@ app.get("/", rateLimiter.helloFriendSpeedLimiter, rateLimiter.helloFriendLimiter
   res.send(hello.join(""));
 });
 
-// app.listen(port, () => {
-//   console.log(`OMG! This is the best server I have ever seen! Oh, it is running on Port ${port} BTW.`);
-// });
+app.listen(port, () => {
+  console.log(`OMG! This is the best server I have ever seen! Oh, it is running on Port ${port} BTW.`);
+});
 
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);

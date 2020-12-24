@@ -213,11 +213,143 @@ router
   });
 
 router
-  .route("/delete-post/:id")
+  .route("/delete-post")
   .delete(rateLimiter.addPostSpeedLimiter, rateLimiter.addPostLimiter, verifyAdminToken, (req, res) => {
-    Post.findOneAndDelete({ _id: req.params.id })
-      .then(() => res.json("Artigo Deletado!"))
-      .catch((err) => res.status(400).json("Error: " + err));
+    const params = {
+      Bucket: buckets.blog.name,
+      Delete: {
+        Objects: [
+          {
+            Key: req.body.key,
+          },
+          {
+            Key: "thumbnails/" + req.body.key,
+          },
+        ],
+        Quiet: false,
+      },
+    };
+
+    s3.deleteObjects(params, function (err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    })
+      .promise()
+      .then(() => {
+        const cfParams = {
+          DistributionId: "E2O0NTPYA9ZBTG",
+          InvalidationBatch: {
+            CallerReference: Date.now().toString(),
+            Paths: {
+              Quantity: 2,
+              Items: ["/" + req.body.key, "/thumbnails/" + req.body.key],
+            },
+          },
+        };
+
+        return cfParams;
+      })
+      .then((cfParams) => {
+        cloudFront.createInvalidation(cfParams, function (err, data) {
+          if (err) console.log(err, err.stack);
+          else console.log("Data: " + JSON.stringify(data));
+        });
+      })
+      .then((data) => res.send({ deleted: true, data }))
+      .catch((err) => {
+        res.send({ error: true, err });
+      });
   });
+
+router
+  .route("/deleted-posts")
+  .get(rateLimiter.addPostSpeedLimiter, rateLimiter.addPostLimiter, verifyAdminToken, (req, res) => {
+    s3.listObjectVersions(thumbParams, function (err, data) {
+      if (err) console.log(err, err.stack);
+      // else console.log(data);
+    })
+      .promise()
+      .then((res) => {
+        let markers = res.DeleteMarkers.map((marker) => {
+          let objParam = { Key: marker.Key, VersionId: marker.VersionId };
+          return objParam;
+        });
+
+        return markers;
+      })
+      .then((markers) => {
+        res.send({ markers });
+      });
+  });
+
+// router
+//   .route("/recover-post")
+//   .post(rateLimiter.addPostSpeedLimiter, rateLimiter.addPostLimiter, verifyAdminToken, (req, res) => {
+const postParams = {
+  Bucket: buckets.blog.name,
+  Prefix: "posts/2020/dezembro/1607917890785@pellentesque-in-ipsum-id-orci-porta-dapibus",
+};
+
+const thumbParams = {
+  Bucket: buckets.blog.name,
+  Prefix: "thumbnails/posts/2020/dezembro/1607917890785@pellentesque-in-ipsum-id-orci-porta-dapibus",
+};
+
+s3.listObjectVersions(thumbParams, function (err, data) {
+  if (err) console.log(err, err.stack);
+  // else console.log(data);
+})
+  .promise()
+  .then((res) => {
+    let markers = res.DeleteMarkers.map((marker) => {
+      let objParam = { Key: marker.Key, VersionId: marker.VersionId };
+      return objParam;
+    });
+
+    return markers;
+  })
+  .then((markers) => {
+    const params = {
+      Bucket: buckets.blog.name,
+      Delete: {
+        Objects: markers,
+        Quiet: false,
+      },
+    };
+    s3.deleteObjects(params, function (err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    });
+  })
+  .then(() => {
+    s3.listObjectVersions(postParams, function (err, data) {
+      if (err) console.log(err, err.stack);
+      // else console.log(data);
+    })
+      .promise()
+      .then((res) => {
+        let markers = res.DeleteMarkers.map((marker) => {
+          let objParam = { Key: marker.Key, VersionId: marker.VersionId };
+          return objParam;
+        });
+
+        return markers;
+      })
+      .then((markers) => {
+        const params = {
+          Bucket: buckets.blog.name,
+          Delete: {
+            Objects: markers,
+            Quiet: false,
+          },
+        };
+        s3.deleteObjects(params, function (err, data) {
+          if (err) console.log(err, err.stack);
+          else console.log(data);
+        });
+      });
+  })
+  .catch((err) => res.send({ error: true, err }));
+// });
 
 module.exports = router;

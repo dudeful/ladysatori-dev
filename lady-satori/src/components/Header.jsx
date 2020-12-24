@@ -25,7 +25,7 @@ function Header(props) {
             }
           >
             <Link to={"/"} className="nav-link">
-              Home{" "}
+              Home
             </Link>
           </li>
           <li

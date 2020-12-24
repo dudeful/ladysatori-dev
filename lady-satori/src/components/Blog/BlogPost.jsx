@@ -23,10 +23,6 @@ const BlogPost = () => {
   const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    // Axios.get(
-    //   "https://dizbkwjzdmgp2.cloudfront.net/" +
-    //     "posts/2020/dezembro/1607918058018@lacinia-eget-consectetur-sed-convallis-at-tellus"
-    // )
     Axios.get("https://dizbkwjzdmgp2.cloudfront.net" + window.location.pathname)
       .then((res) => {
         setData(res.data);

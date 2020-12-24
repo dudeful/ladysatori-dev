@@ -6,17 +6,13 @@ import Header from "../Header";
 import BlogHeadline from "../Blog/BlogHeadline";
 import Cards from "../Blog/Cards";
 
-console.log("hey in there!");
-
 const Blog = () => {
   const [data, setData] = React.useState([]);
   const [error, setError] = React.useState(false);
-  console.log("hey out there!");
 
   React.useEffect(() => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/aws"
-      // "http://localhost:5000/admin/aws"
     )
       .then((res) => {
         //
@@ -25,8 +21,8 @@ const Blog = () => {
           return res.data;
         });
 
-        Promise.all(postsArray).then((values) => {
-          setData(values);
+        Promise.all(postsArray).then((urls) => {
+          setData(urls);
         });
       })
       .catch((err) => setError(err));
@@ -43,8 +39,8 @@ const Blog = () => {
         <div className="blogBody">
           <Header current={"blog"} />
 
-          <BlogHeadline data={data} />
-          <Cards data={data} />
+          <BlogHeadline data={data.slice(0)[0]} />
+          <Cards data={data.slice(1)} />
         </div>
       </div>
     );

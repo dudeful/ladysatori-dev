@@ -1,12 +1,11 @@
 const imagemin = require("imagemin");
-const imageminJpegtran = require("imagemin-jpegtran");
 const imageminMozjpeg = require("imagemin-mozjpeg");
 const imageminPngquant = require("imagemin-pngquant");
 
 const compressPostImg = async (img) => {
   console.log("Original File Size: " + Math.round(img.length / 1024));
   const files = await imagemin.buffer(Buffer.from(img, "binary"), {
-    plugins: [imageminJpegtran(), imageminMozjpeg({ quality: [95] }), imageminPngquant({ quality: [0.9, 0.95] })],
+    plugins: [imageminMozjpeg({ quality: [95] }), imageminPngquant({ quality: [0.9, 0.95] })],
   });
   console.log("hello from compressor>buffer");
   return Buffer.from(files).toString("base64");
@@ -15,7 +14,7 @@ const compressPostImg = async (img) => {
 const compressThumbnail = async (img) => {
   console.log("Original File Size: " + Math.round(img.length / 1024));
   const files = await imagemin.buffer(Buffer.from(img, "binary"), {
-    plugins: [imageminJpegtran(), imageminMozjpeg({ quality: [20] }), imageminPngquant({ quality: [0.25, 0.3] })],
+    plugins: [imageminMozjpeg({ quality: [20] }), imageminPngquant({ quality: [0.25, 0.3] })],
   });
   return Buffer.from(files).toString("base64");
 };
