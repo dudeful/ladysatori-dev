@@ -35,7 +35,7 @@ const VerticalNav = (props) => {
               id="admin_DashboardCourse"
             >
               <span>
-                <img src="/images/admin/dashboard.png" alt="..." />
+                <img src="/images/Admin/dashboard.png" alt="..." />
               </span>
               Dashboard - Curso
             </a>
@@ -53,7 +53,7 @@ const VerticalNav = (props) => {
               id="admin_ClassRoom"
             >
               <span>
-                <img src="/images/admin/classes.png" alt="..." />
+                <img src="/images/Admin/classes.png" alt="..." />
               </span>
               Aulas
             </a>
@@ -66,7 +66,7 @@ const VerticalNav = (props) => {
               id="admin_NewClass"
             >
               <span>
-                <img src="/images/admin/new-class.png" alt="..." />
+                <img src="/images/Admin/new-class.png" alt="..." />
               </span>
               Nova Aula
             </a>
@@ -79,7 +79,7 @@ const VerticalNav = (props) => {
               id="admin_DashboardBlog"
             >
               <span>
-                <img src="/images/admin/dashboard.png" alt="..." />
+                <img src="/images/Admin/dashboard.png" alt="..." />
               </span>
               Dashboard - Blog
             </a>
@@ -93,7 +93,7 @@ const VerticalNav = (props) => {
               id="admin_BlogAdmin"
             >
               <span>
-                <img src="/images/admin/blog.png" alt="..." />
+                <img src="/images/Admin/blog.png" alt="..." />
               </span>
               Posts
             </a>
@@ -111,7 +111,7 @@ const VerticalNav = (props) => {
               id="admin_AddNewPost"
             >
               <span>
-                <img src="/images/admin/new-post.png" alt="..." />
+                <img src="/images/Admin/new-post.png" alt="..." />
               </span>
               Novo Post
             </a>
@@ -124,7 +124,7 @@ const VerticalNav = (props) => {
               id="admin_TrashBin"
             >
               <span>
-                <img src="/images/admin/trash-bin.png" alt="..." />
+                <img src="/images/Admin/trash-bin.png" alt="..." />
               </span>
               Lixeira
             </a>
@@ -150,7 +150,7 @@ const HorizontalNav = () => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img src="/images/admin/notifications.png" alt="..." />
+              <img src="/images/Admin/notifications.png" alt="..." />
             </a>
             <div className="navSeparator" />
             <div
@@ -160,7 +160,7 @@ const HorizontalNav = () => {
               <a className="notification dropdown-item" href="#0">
                 <div className="row m-0 p-0">
                   <div className="notificationDivImg col-2 m-0">
-                    <img src="/images/admin/classes.png" alt="..." />
+                    <img src="/images/Admin/classes.png" alt="..." />
                   </div>
                   <div className="col-10 m-auto pr-0 pl-2 pr-0 pl-2">
                     <p className="text-muted mb-2">category #1</p>
@@ -174,7 +174,7 @@ const HorizontalNav = () => {
               <a className="notification dropdown-item" href="#0">
                 <div className="row m-0 p-0">
                   <div className="notificationDivImg col-2 m-0">
-                    <img src="/images/admin/dashboard.png" alt="..." />
+                    <img src="/images/Admin/dashboard.png" alt="..." />
                   </div>
                   <div className="col-10 m-auto pr-0 pl-2">
                     <p className="text-muted mb-2">category #2</p>
@@ -189,7 +189,7 @@ const HorizontalNav = () => {
               <a className="notification dropdown-item" href="#0">
                 <div className="row m-0 p-0">
                   <div className="notificationDivImg col-2 m-0">
-                    <img src="/images/admin/blog.png" alt="..." />
+                    <img src="/images/Admin/blog.png" alt="..." />
                   </div>
                   <div className="col-10 m-auto pr-0 pl-2">
                     <p className="text-muted mb-2">category #3</p>
@@ -204,7 +204,7 @@ const HorizontalNav = () => {
               <a className="notification dropdown-item" href="#0">
                 <div className="row m-0 p-0">
                   <div className="notificationDivImg col-2 m-0">
-                    <img src="/images/admin/dashboard.png" alt="..." />
+                    <img src="/images/Admin/dashboard.png" alt="..." />
                   </div>
                   <div className="col-10 m-auto pr-0 pl-2">
                     <p className="text-muted mb-2">category #4</p>
@@ -263,7 +263,7 @@ const HorizontalNav = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <img src="/images/admin/hamburguer-menu.png" alt="..." />
+          <img src="/images/Admin/hamburguer-menu.png" alt="..." />
         </button>
       </div>
     </div>
