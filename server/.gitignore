@@ -1,0 +1,14 @@
+.env
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+node_modules
+
+# key-pair cloudfront
+pk-APKAIVYETTVTPD2LLQVQ.pem
+rsa-APKAIVYETTVTPD2LLQVQ.pem
+
+serverless.yml

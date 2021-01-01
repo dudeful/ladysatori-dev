@@ -1,0 +1,64 @@
+/* 
+#373a40
+#4a4c52
+#68b0ab
+#8fc0a9
+#c8d5b9
+#faf3dd
+#faf3dd3b
+ */
+
+@font-face {
+  font-family: "testOnly";
+  src: url("../testonly-webfont.woff2") format("woff2"),
+    url("../testonly-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.navbar {
+  margin: auto 5%;
+  width: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+@media only screen and (max-width: 768px) {
+  .navbar {
+    margin: auto 5%;
+  }
+}
+
+.home .navbar-nav .nav-item {
+  margin-left: 1rem;
+}
+
+.navbar-toggler-icon {
+  font-size: 1.5rem;
+}
+
+.navbar-brand {
+  font-family: "testOnly", "Montserrat", sans-serif;
+  font-size: 3.2rem;
+  font-style: italic;
+}
+@media only screen and (max-width: 500px) {
+  .navbar-brand {
+    width: 100%;
+    text-align: center;
+    margin: 5rem 0 0;
+  }
+  .navbar-toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2rem 5%;
+  }
+  #navbarNavDropdown {
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 359px) {
+  .navbar-brand {
+    font-size: 2.6rem;
+  }
+}

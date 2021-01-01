@@ -1,0 +1,16 @@
+{
+  "name": "Lady Satori",
+  "short_name": "LadySatori",
+  "background_color": "#373a4077",
+  "theme_color": "#373a4077",
+  "description": "Uma plataforma online para praticantes de Yoga",
+  "icons": [
+    {
+      "src": "images/yoga.png",
+      "sizes": "400x400",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone"
+}

@@ -1,0 +1,39 @@
+.adminlogin-body {
+  background-color: #373a40ee;
+  height: 100vh;
+  padding-top: 8%;
+}
+
+.adminlogin-container {
+  width: 400px;
+  margin: auto;
+  border-radius: 6px;
+  box-shadow: 0px 2px 70px 0px #000000;
+  background-color: aliceblue;
+}
+@media only screen and (max-width: 768px) {
+  .adminlogin-container {
+    width: 70%px;
+    margin: auto;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .adminlogin-container {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+.adminlogin-container .userInput {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.adminlogin-container .login-social-icons {
+  width: 80%;
+  margin: auto;
+}
+@media only screen and (max-width: 320px) {
+  .adminlogin-container .login-social-icons {
+    width: 100%;
+  }
+}

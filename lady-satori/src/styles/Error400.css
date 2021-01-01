@@ -1,0 +1,69 @@
+.page_400 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: "Montserrat", sans-serif;
+}
+@media only screen and (max-width: 768px) {
+  .contant_box_400 {
+    margin: auto 5%;
+  }
+}
+
+.page_400 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 450px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 85px;
+}
+
+.contant_box_400 h3 {
+  font-size: 32px;
+}
+
+.contant_box_400 p {
+  font-size: 18px;
+  color: rgb(100, 100, 100);
+}
+
+.link_400 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+.contant_box_400 {
+  margin-top: -50px;
+}
+
+@media only screen and (max-width: 411px) {
+  .four_zero_four_bg {
+    height: 400px;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .page_400 {
+    padding: 20px 0;
+  }
+  .contant_box_400 {
+    margin-top: -20px;
+  }
+  .four_zero_four_bg {
+    height: 350px;
+  }
+  .four_zero_four_bg h1 {
+    font-size: 60px;
+  }
+
+  .contant_box_400 h3 {
+    font-size: 25px;
+  }
+}

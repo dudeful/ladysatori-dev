@@ -1,0 +1,399 @@
+.login-container {
+  margin: auto auto 2rem;
+  width: 500px;
+  max-width: 100%;
+  height: 635px;
+  padding: 73px 50px 50px;
+  position: relative;
+}
+@media only screen and (max-width: 600px) {
+  .login-container {
+    overflow-x: hidden;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .login-container {
+    padding: 73px 20px 50px;
+  }
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+}
+
+.login .vertical-left-line {
+  position: absolute;
+  top: 43px;
+  width: 0px;
+  height: 525px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+
+.login .vertical-right-line {
+  position: absolute;
+  top: 0px;
+  right: 50px;
+  width: 0px;
+  height: 607px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+@media only screen and (max-width: 540px) {
+  .login .vertical-right-line {
+    right: 20px;
+  }
+}
+
+.login .horizontal-top-line {
+  position: absolute;
+  left: 63px;
+  width: 70%;
+  height: 0px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+@media only screen and (max-width: 540px) {
+  .login .horizontal-top-line {
+    left: 37px;
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .login .horizontal-top-line {
+    width: 70%;
+  }
+}
+
+.login .horizontal-bottom-line {
+  position: absolute;
+  left: 0px;
+  bottom: 82px;
+  width: 93%;
+  height: 0px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.45);
+}
+@media only screen and (max-width: 540px) {
+  .login .horizontal-bottom-line {
+    left: 6px;
+    width: 95%;
+  }
+}
+
+.register {
+  width: 100%;
+  height: 100%;
+}
+
+.register .vertical-left-line {
+  position: absolute;
+  top: 13px;
+  width: 0px;
+  height: 622px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+
+.register .vertical-right-line {
+  position: absolute;
+  top: 54px;
+  right: 50px;
+  width: 0px;
+  height: 555px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+@media only screen and (max-width: 540px) {
+  .register .vertical-right-line {
+    right: 20px;
+  }
+}
+
+.register .horizontal-top-line {
+  position: absolute;
+  left: 33px;
+  width: 93%;
+  height: 0px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.45);
+}
+@media only screen and (max-width: 540px) {
+  .register .horizontal-top-line {
+    left: 13px;
+    width: 95%;
+  }
+}
+
+.register .horizontal-bottom-line {
+  position: absolute;
+  left: 80px;
+  bottom: 47px;
+  width: 71%;
+  height: 0px;
+  box-shadow: 3px 3px 6px 0px rgb(55, 58, 64, 0.55);
+  border: solid 0.5px rgba(48, 86, 102, 0.4);
+}
+@media only screen and (max-width: 540px) {
+  .register .horizontal-bottom-line {
+    left: 50px;
+    width: 79%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .register .horizontal-bottom-line {
+    width: 75%;
+  }
+}
+
+.vertical-left-line {
+  transition: all 1.2s ease;
+}
+.vertical-right-line {
+  transition: all 1.2s ease;
+}
+.horizontal-bottom-line {
+  transition: all 1.2s ease;
+}
+.horizontal-top-line {
+  transition: all 1.2s ease;
+}
+
+.login-form {
+  width: 100%;
+  height: 100%;
+  padding: 15px 30px;
+}
+
+.login-form .heading {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 28px;
+  font-family: "Yu Gothic";
+  color: rgb(92, 139, 155, 0.85);
+  text-shadow: 3px 3px 6px rgb(55, 58, 64, 0.15);
+}
+
+.login-form .userInput,
+.login-form ::placeholder {
+  width: 100%;
+  margin-top: 30px;
+  text-align: left;
+  font-size: 18px;
+  font-family: "Yu Gothic";
+  color: rgb(92, 139, 155, 0.85);
+  border: none;
+  border-bottom: solid 0.5px rgba(48, 86, 102, 0.35);
+}
+
+.login-form .input-bottom-border {
+  margin: 0;
+  box-shadow: 0px 2px 5px 0px rgb(55, 58, 64, 0.25);
+}
+
+.login-form input:focus {
+  outline: none;
+}
+
+.login-form .userInput {
+  padding-bottom: 0;
+}
+
+.login-form .form-check {
+  margin-top: 20px;
+  position: relative;
+}
+
+.login-form .checkbox {
+  color: rgb(92, 139, 155, 0.85);
+}
+
+.not-registered-link {
+  position: absolute;
+  display: inline;
+  right: 0;
+}
+
+.not-registered-link u {
+  color: rgb(69, 155, 184);
+  font-size: 14px;
+}
+
+.not-registered-link .btn {
+  vertical-align: top;
+}
+
+.login-form .register-button,
+.login-form .login-button {
+  background-color: rgba(92, 139, 155, 0.7);
+  color: white;
+  margin-top: 30px;
+}
+
+.login-form .login-button:hover,
+.login-form .register-button:hover {
+  background-color: rgb(92, 139, 155);
+}
+
+.reset-password {
+  color: rgba(92, 139, 155, 0.6);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.reset-password:focus {
+  outline: 0;
+}
+
+.reset-password:hover {
+  color: rgba(92, 139, 155);
+}
+
+.login-form .row {
+  margin-top: 20px;
+}
+
+.login-form .ou {
+  margin: auto;
+  font-size: 22px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-weight: 100;
+  color: rgb(92, 139, 155, 0.85);
+}
+
+.login-form .row hr {
+  margin: auto;
+}
+
+.login-form .login-social-icons p {
+  font-size: 24px;
+  font-weight: 100;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+  color: rgba(20, 53, 63, 0.5);
+  text-shadow: 4px 3px 5px rgb(55, 58, 64, 0.2);
+}
+
+.login-social-icons a {
+  text-align: left;
+  margin: auto;
+  font-size: 32px;
+  color: rgba(20, 53, 63, 0.5);
+}
+
+@media only screen and (max-width: 540px) {
+  .login-form .login-social-icons a {
+    font-size: 28px;
+  }
+}
+
+.login-block {
+  opacity: 1;
+  transition: all 0.75s ease 0.1s;
+}
+
+.register-block {
+  position: absolute;
+  bottom: 1000px;
+  opacity: 0;
+  transition: all 0.75s ease 0.1s;
+}
+
+.hide-block {
+  position: absolute;
+  bottom: 1000px;
+  opacity: 0;
+}
+
+.show-block {
+  position: initial;
+  opacity: 1;
+}
+
+/* ------------------------password reset----------------------- */
+
+@font-face {
+  font-family: "testOnly";
+  src: url("../testonly-webfont.woff2") format("woff2"),
+    url("../testonly-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.reset-container {
+  width: 70%;
+  margin: 50px auto auto;
+}
+@media only screen and (max-width: 1140px) {
+  .reset-container {
+    width: 100%;
+  }
+}
+
+.reset-form {
+  margin-top: 75px;
+  box-shadow: 0px 2px 70px 0px rgb(55, 58, 64, 0.25);
+  padding: 25px;
+  width: 50%;
+  height: auto;
+  margin: auto;
+}
+@media only screen and (max-width: 768px) {
+  .reset-form {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .reset-form {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .reset-form {
+    width: 100%;
+  }
+}
+.reset-form a.reset-home-link {
+  text-decoration: none;
+}
+
+.reset-form .reset-home-link {
+  font-family: "testOnly", "Montserrat", "sans-serif";
+  font-size: 2rem;
+  text-align: center;
+  color: rgb(55, 58, 64, 0.5);
+  margin: 0;
+}
+
+.reset-form .heading {
+  font-family: "Montserrat";
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 10px 30px;
+}
+@media only screen and (max-width: 768px) {
+  .reset-form .heading {
+    font-size: 1.5rem;
+  }
+}
+
+.reset-form img {
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+
+.reset-input {
+  width: 85%;
+  margin: auto auto 30px;
+  text-align: right;
+}
+
+.reset-input span {
+  font-size: 0.8rem;
+}
