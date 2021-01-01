@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const CryptoJS = require("crypto-js");
 const verifyToken = require("../middleware/verifyToken");
 const rateLimiter = require("../middleware/rateLimiter");
-const ddb = require('../admin/DDB');
+const ddb = require("../admin/DDB");
 
 require("./oauth2");
 
@@ -122,17 +122,16 @@ router.route("/google/redirect").get(
   (req, res) => {
     const user = req.user;
     const original_url = req.query.state;
-    googleUser
-      .findById(user._id)
+    ddb
+      .getUser({ key: { googleID: { S: user.Item.googleID.S } }, table: "users_google" })
       .then((user) => {
         const payload = {
           authMethod: "Google",
-          id: user._id,
-          googleID: user.googleID,
-          fName: user.fName,
-          lName: user.lName,
-          email: user.email,
-          picture: user.picture,
+          googleID: user.Item.googleID.S,
+          fName: user.Item.fName.S,
+          lName: user.Item.lName.S,
+          email: user.Item.email.S,
+          picture: user.Item.picture.S,
         };
 
         // Encrypt
@@ -143,13 +142,13 @@ router.route("/google/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-
-          // req.session.token = token;
-          // console.log(req.session);
           res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
-      .catch((err) => res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400"));
+      .catch((err) => {
+        console.log(err);
+        res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400");
+      });
   }
 );
 
@@ -190,7 +189,6 @@ router.route("/facebook/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-          // res.redirect('https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/' + original_url + '/' + token);
           res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
@@ -239,7 +237,6 @@ router.route("/twitter/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-          // res.redirect('https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/' + original_url + '/' + token);
           res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })

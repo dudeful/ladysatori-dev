@@ -212,7 +212,6 @@ function RegisterFrame(props) {
         <div className="col-7 mt-auto ml-auto mr-0 p-0 row">
           <a
             href={
-              // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-google/" +
               "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-google/" +
               //make all the url path (no matter how many paths) a single string for a single route parameter
               window.location.pathname.replace(/\//g, "@fSlash@")
@@ -222,7 +221,6 @@ function RegisterFrame(props) {
           </a>
           <a
             href={
-              // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-facebook/" +
               "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-facebook/" +
               //make all the url path (no matter how many paths) a single string for a single route parameter
               window.location.pathname.replace(/\//g, "@fSlash@")
@@ -232,7 +230,6 @@ function RegisterFrame(props) {
           </a>
           <a
             href={
-              // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-twitter/" +
               "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/oauth2-twitter/" +
               //make all the url path (no matter how many paths) a single string for a single route parameter
               window.location.pathname.replace(/\//g, "@fSlash@")

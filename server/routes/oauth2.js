@@ -47,7 +47,7 @@ passport.use(
       //options for the Google Strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/google/redirect",
+      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/google/redirect",
       // passReqToCallback: true, // allows us to pass in the req from our route
     },
     (accessToken, refreshToken, profile, done) => {

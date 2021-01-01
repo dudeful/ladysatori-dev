@@ -142,7 +142,6 @@ function LoginComponent(props) {
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
       Axios.post(
-        // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/password-reset",
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/password-reset",
         {
           email: resetInput,
@@ -222,7 +221,6 @@ function LoginComponent(props) {
       });
     } else {
       Axios.post(
-        // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
         User
       )
@@ -428,7 +426,6 @@ function LoginComponent(props) {
       });
     } else {
       Axios.post(
-        // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/checkEmail",
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/checkEmail",
         { email }
       )
@@ -489,7 +486,6 @@ function LoginComponent(props) {
       });
     } else {
       Axios.post(
-        // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/registration",
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/registration",
         newUser
       )
