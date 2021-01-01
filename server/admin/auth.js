@@ -94,7 +94,7 @@ router.route("/google/redirect").get(
   rateLimiter.oAuth2RedirectSpeedLimiter,
   rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("google-admin", {
-    failureRedirect: "https://master.d3ieky02gu560k.amplifyapp.com/",
+    failureRedirect: "https://master.d9cbpby23ue80.amplifyapp.com/",
   }),
   (req, res) => {
     const user = req.user;
@@ -122,13 +122,13 @@ router.route("/google/redirect").get(
           if (err) throw err;
           // req.session.token = token;
           // console.log(req.session);
-          // res.redirect('https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/' + original_url + '/' + token);
-          res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
+          // res.redirect('https://master.d9cbpby23ue80.amplifyapp.com/SocialAuth/' + original_url + '/' + token);
+          res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
       .catch((err) => {
         console.log(err);
-        res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400");
+        res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/error400");
       });
   }
 );

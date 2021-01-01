@@ -117,7 +117,7 @@ router.route("/google/redirect").get(
   rateLimiter.oAuth2RedirectSpeedLimiter,
   rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("google", {
-    failureRedirect: "https://master.d3ieky02gu560k.amplifyapp.com/login",
+    failureRedirect: "https://master.d9cbpby23ue80.amplifyapp.com/login",
   }),
   (req, res) => {
     const user = req.user;
@@ -142,12 +142,12 @@ router.route("/google/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-          res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
+          res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
       .catch((err) => {
         console.log(err);
-        res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400");
+        res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/error400");
       });
   }
 );
@@ -165,7 +165,7 @@ router.route("/facebook/redirect").get(
   rateLimiter.oAuth2RedirectSpeedLimiter,
   rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("facebook", {
-    failureRedirect: "https://master.d3ieky02gu560k.amplifyapp.com/login",
+    failureRedirect: "https://master.d9cbpby23ue80.amplifyapp.com/login",
   }),
   (req, res) => {
     const user = req.user;
@@ -189,12 +189,12 @@ router.route("/facebook/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-          res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
+          res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
       .catch((err) => {
         console.log(err);
-        res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400");
+        res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/error400");
       });
   }
 );
@@ -214,7 +214,7 @@ router.route("/twitter/redirect").get(
   rateLimiter.oAuth2RedirectSpeedLimiter,
   rateLimiter.oAuth2RedirectLimiter,
   passport.authenticate("twitter", {
-    failureRedirect: "https://master.d3ieky02gu560k.amplifyapp.com/login",
+    failureRedirect: "https://master.d9cbpby23ue80.amplifyapp.com/login",
   }),
   (req, res) => {
     const user = req.user;
@@ -237,12 +237,12 @@ router.route("/twitter/redirect").get(
 
         jwt.sign({ ciphertext }, process.env.JWT_SECRET, { expiresIn: "8h" }, (err, token) => {
           if (err) throw err;
-          res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
+          res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/SocialAuth/" + original_url + "/" + token);
         });
       })
       .catch((err) => {
         console.log(err);
-        res.redirect("https://master.d3ieky02gu560k.amplifyapp.com/error400");
+        res.redirect("https://master.d9cbpby23ue80.amplifyapp.com/error400");
       });
   }
 );
