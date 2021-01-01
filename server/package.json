@@ -10,14 +10,12 @@
   "author": "@danubiomuller",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.4.0",
     "async": "^3.2.0",
     "aws-sdk": "^2.816.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
-    "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
@@ -37,5 +35,7 @@
     "password-validator": "^5.1.1",
     "serverless-http": "^2.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^3.1.0"
+  }
 }

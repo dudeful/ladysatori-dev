@@ -1,31 +1,31 @@
-const router = require('express').Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const async = require('async');
-const CryptoJS = require('crypto-js');
-const crypto = require('crypto');
-const ddb = require('../DDB');
-const ses = require('../SES');
+const router = require("express").Router();
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const async = require("async");
+const CryptoJS = require("crypto-js");
+const crypto = require("crypto");
+const ddb = require("./DDB");
+const ses = require("./SES");
 const saltRounds = 12;
 
-router.route('/password-reset').post((req, res, next) => {
+router.route("/password-reset").post((req, res, next) => {
   async.waterfall(
     [
       function (done) {
         crypto.randomBytes(20, function (err, buf) {
-          let token = buf.toString('hex');
+          let token = buf.toString("hex");
           done(err, token);
         });
       },
       function (token, done) {
         ddb
-          .getUser({ key: { email: { S: req.body.email } }, table: 'users_admin_email' })
+          .getUser({ key: { email: { S: req.body.email } }, table: "users_admin_email" })
           .then((user) => {
             if (!user.Item) return res.json({ userExists: false });
 
-            const tokenHash = crypto.createHash('sha512').update(token).digest('hex');
+            const tokenHash = crypto.createHash("sha512").update(token).digest("hex");
 
-            ddb.requestResetToken({ email: req.body.email, tokenHash: tokenHash, table: 'users_admin_email' });
+            ddb.requestResetToken({ email: req.body.email, tokenHash: tokenHash, table: "users_admin_email" });
 
             done(null, token);
           })
@@ -34,9 +34,9 @@ router.route('/password-reset').post((req, res, next) => {
       function (token, done) {
         const data = {
           toAddresses: [req.body.email],
-          templateName: 'PasswordResetToken',
-          home_link: 'https://main.d3ieky02gu560k.amplifyapp.com/',
-          recovery_link: 'https://main.d3ieky02gu560k.amplifyapp.com//admin/reset/' + token + '/' + req.body.email,
+          templateName: "PasswordResetToken",
+          home_link: "https://master.d3ieky02gu560k.amplifyapp.com/",
+          recovery_link: "https://master.d3ieky02gu560k.amplifyapp.com/admin/reset/" + token + "/" + req.body.email,
         };
 
         ses.sendTemplatedEmail(data);
@@ -51,11 +51,11 @@ router.route('/password-reset').post((req, res, next) => {
   );
 });
 
-router.route('/:token/:email').get((req, res) => {
-  const tokenHash = crypto.createHash('sha512').update(req.params.token).digest('hex');
+router.route("/:token/:email").get((req, res) => {
+  const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
 
   ddb
-    .getUser({ key: { email: { S: req.params.email } }, table: 'users_admin_email' })
+    .getUser({ key: { email: { S: req.params.email } }, table: "users_admin_email" })
     .then((user) => {
       if (!user.Item.resetPasswordToken) {
         return res.json({ user: false });
@@ -68,14 +68,14 @@ router.route('/:token/:email').get((req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.route('/:token/:email').patch((req, res) => {
+router.route("/:token/:email").patch((req, res) => {
   async.waterfall(
     [
       function (done) {
-        const tokenHash = crypto.createHash('sha512').update(req.params.token).digest('hex');
+        const tokenHash = crypto.createHash("sha512").update(req.params.token).digest("hex");
 
         const data = {
-          table: 'users_admin_email',
+          table: "users_admin_email",
           email: req.body.user.email,
           newPassword: req.body.newPassword.password,
           resetPasswordToken: tokenHash,
@@ -91,7 +91,7 @@ router.route('/:token/:email').patch((req, res) => {
             .promise()
             .then(() => {
               const payload = {
-                authMethod: 'Email',
+                authMethod: "Email",
                 fName: req.body.user.fName,
                 lName: req.body.user.lName,
                 email: req.body.user.email,
@@ -103,7 +103,7 @@ router.route('/:token/:email').patch((req, res) => {
                 process.env.JWT_ADMIN_PAYLOAD_ENCRYPTION_KEY
               ).toString();
 
-              jwt.sign({ ciphertext }, process.env.JWT_ADMIN_SECRET, { expiresIn: '12h' }, (err, token) => {
+              jwt.sign({ ciphertext }, process.env.JWT_ADMIN_SECRET, { expiresIn: "12h" }, (err, token) => {
                 if (err) throw err;
                 done(err, token);
               });
@@ -114,9 +114,9 @@ router.route('/:token/:email').patch((req, res) => {
       function (token, done) {
         const data = {
           toAddresses: [req.body.user.email],
-          templateName: 'PasswordResetDone',
-          home_link: 'https://main.d3ieky02gu560k.amplifyapp.com/',
-          login_page_link: 'https://main.d3ieky02gu560k.amplifyapp.com/admin',
+          templateName: "PasswordResetDone",
+          home_link: "https://master.d3ieky02gu560k.amplifyapp.com/",
+          login_page_link: "https://master.d3ieky02gu560k.amplifyapp.com/admin",
         };
 
         ses.sendTemplatedEmail(data);

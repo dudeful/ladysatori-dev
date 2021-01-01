@@ -7,8 +7,8 @@ const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middle
 let async = require("async");
 let crypto = require("crypto");
 const CryptoJS = require("crypto-js");
-const ddb = require("./DDB");
-const ses = require("./SES");
+const ddb = require("../admin/DDB");
+const ses = require('../admin/SES');
 
 router.route("/checkEmail").post(rateLimiter.checkEmailSpeedLimiter, rateLimiter.checkEmailLimiter, (req, res) => {
   //check for existing user
@@ -132,8 +132,8 @@ router
             const data = {
               toAddresses: [req.body.email],
               templateName: "PasswordResetToken",
-              home_link: "https://main.d3ieky02gu560k.amplifyapp.com/",
-              recovery_link: "https://main.d3ieky02gu560k.amplifyapp.com//users/reset/" + token + "/" + req.body.email,
+              home_link: "https://master.d3ieky02gu560k.amplifyapp.com/",
+              recovery_link: "https://master.d3ieky02gu560k.amplifyapp.com/users/reset/" + token + "/" + req.body.email,
             };
 
             ses.sendTemplatedEmail(data);
@@ -217,8 +217,8 @@ router
           const data = {
             toAddresses: [req.body.user.email],
             templateName: "PasswordResetDone",
-            home_link: "https://main.d3ieky02gu560k.amplifyapp.com/",
-            login_page_link: "https://main.d3ieky02gu560k.amplifyapp.com/login",
+            home_link: "https://master.d3ieky02gu560k.amplifyapp.com/",
+            login_page_link: "https://master.d3ieky02gu560k.amplifyapp.com/login",
           };
 
           ses.sendTemplatedEmail(data);

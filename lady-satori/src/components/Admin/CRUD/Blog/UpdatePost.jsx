@@ -25,7 +25,7 @@ function UpdatePost(props) {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/blog/update-post/" +
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/update-post/" +
           updatedPost.key,
         updatedPost,
         {
