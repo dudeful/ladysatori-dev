@@ -8,7 +8,7 @@ const verifyToken = require("../middleware/verifyToken");
 const rateLimiter = require("../middleware/rateLimiter");
 const ddb = require("../admin/DDB");
 
-require("./oauth2");
+require("../middleware/oauth2");
 
 router.route("/login").post(rateLimiter.loginSpeedLimiter, rateLimiter.loginLimiter, (req, res) => {
   const { email, password, remember } = req.body;

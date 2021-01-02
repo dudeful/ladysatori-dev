@@ -264,13 +264,20 @@ const HorizontalNav = () => {
                 aria-labelledby="dropdownMenuLink"
               >
                 <a className="dropdown-item" href="#0">
-                  Action
+                  Perfil
                 </a>
                 <a className="dropdown-item" href="#0">
                   Another action
                 </a>
                 <a className="dropdown-item" href="#0">
                   Something else here
+                </a>
+                <hr />
+                <a
+                  className="dropdown-item text-center text-danger p-0"
+                  href="#0"
+                >
+                  logout
                 </a>
               </div>
             </div>

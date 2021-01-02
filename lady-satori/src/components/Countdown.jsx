@@ -40,58 +40,68 @@ const Countdown = (props) => {
           justifyContent: "space-around",
           textAlign: "center",
           paddingTop: "140px",
+          maxWidth: "100vw",
+          margin: "auto",
         }}
         className="row"
       >
-        <CountdownCircleTimer
-          {...timerProps}
-          colors={[["#7E2E84"]]}
-          duration={daysDuration}
-          initialRemainingTime={remainingTime}
-        >
-          {({ elapsedTime }) =>
-            renderTime("dias", getTimeDays(daysDuration - elapsedTime))
-          }
-        </CountdownCircleTimer>
-        <CountdownCircleTimer
-          {...timerProps}
-          colors={[["#D14081"]]}
-          duration={daySeconds}
-          initialRemainingTime={remainingTime % daySeconds}
-          onComplete={(totalElapsedTime) => [
-            remainingTime - totalElapsedTime > hourSeconds,
-          ]}
-        >
-          {({ elapsedTime }) =>
-            renderTime("horas", getTimeHours(daySeconds - elapsedTime))
-          }
-        </CountdownCircleTimer>
-        <CountdownCircleTimer
-          {...timerProps}
-          colors={[["#EF798A"]]}
-          duration={hourSeconds}
-          initialRemainingTime={remainingTime % hourSeconds}
-          onComplete={(totalElapsedTime) => [
-            remainingTime - totalElapsedTime > minuteSeconds,
-          ]}
-        >
-          {({ elapsedTime }) =>
-            renderTime("minutos", getTimeMinutes(hourSeconds - elapsedTime))
-          }
-        </CountdownCircleTimer>
-        <CountdownCircleTimer
-          {...timerProps}
-          colors={[["#218380"]]}
-          duration={minuteSeconds}
-          initialRemainingTime={remainingTime % minuteSeconds}
-          onComplete={(totalElapsedTime) => [
-            remainingTime - totalElapsedTime > 0,
-          ]}
-        >
-          {({ elapsedTime }) =>
-            renderTime("segundos", getTimeSeconds(elapsedTime))
-          }
-        </CountdownCircleTimer>
+        <div className="p-2">
+          <CountdownCircleTimer
+            {...timerProps}
+            colors={[["#7E2E84"]]}
+            duration={daysDuration}
+            initialRemainingTime={remainingTime}
+          >
+            {({ elapsedTime }) =>
+              renderTime("dias", getTimeDays(daysDuration - elapsedTime))
+            }
+          </CountdownCircleTimer>
+        </div>
+        <div className="p-2">
+          <CountdownCircleTimer
+            {...timerProps}
+            colors={[["#D14081"]]}
+            duration={daySeconds}
+            initialRemainingTime={remainingTime % daySeconds}
+            onComplete={(totalElapsedTime) => [
+              remainingTime - totalElapsedTime > hourSeconds,
+            ]}
+          >
+            {({ elapsedTime }) =>
+              renderTime("horas", getTimeHours(daySeconds - elapsedTime))
+            }
+          </CountdownCircleTimer>
+        </div>
+        <div className="p-2">
+          <CountdownCircleTimer
+            {...timerProps}
+            colors={[["#EF798A"]]}
+            duration={hourSeconds}
+            initialRemainingTime={remainingTime % hourSeconds}
+            onComplete={(totalElapsedTime) => [
+              remainingTime - totalElapsedTime > minuteSeconds,
+            ]}
+          >
+            {({ elapsedTime }) =>
+              renderTime("minutos", getTimeMinutes(hourSeconds - elapsedTime))
+            }
+          </CountdownCircleTimer>
+        </div>
+        <div className="p-2">
+          <CountdownCircleTimer
+            {...timerProps}
+            colors={[["#218380"]]}
+            duration={minuteSeconds}
+            initialRemainingTime={remainingTime % minuteSeconds}
+            onComplete={(totalElapsedTime) => [
+              remainingTime - totalElapsedTime > 0,
+            ]}
+          >
+            {({ elapsedTime }) =>
+              renderTime("segundos", getTimeSeconds(elapsedTime))
+            }
+          </CountdownCircleTimer>
+        </div>
       </div>
     </div>
   );

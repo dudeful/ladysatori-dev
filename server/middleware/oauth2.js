@@ -7,34 +7,73 @@ const ddb = require("../admin/DDB");
 passport.serializeUser((user, done) => {
   if (user.Item.googleID) {
     done(null, user.Item.googleID.S);
+    // done(null, "googleID/" + user.Item.googleID.S);
   } else if (user.Item.facebookID) {
     done(null, user.Item.facebookID.S);
+    // done(null, "facebookID/" + user.Item.facebookID.S);
   } else if (user.Item.twitterID) {
     done(null, user.Item.twitterID.S);
+    // done(null, "twitterID/" + user.Item.twitterID.S);
   }
 });
 
-passport.deserializeUser((googleID, done) => {
+// passport.deserializeUser((id, done) => {
+//   const user = id.split("/")[0];
+
+//   if (user === "googleID") {
+//     ddb
+//       .getUser({ key: { googleID: { S: id } }, table: "users_google" })
+//       .then((user) => {
+//         done(null, user);
+//       })
+//       .catch((err) => console.log(err));
+//   } else if (user === "facebookID") {
+//     ddb
+//       .getUser({ key: { facebookID: { S: id } }, table: "users_facebook" })
+//       .then((user) => {
+//         done(null, user);
+//       })
+//       .catch((err) => console.log(err));
+//   } else if (user === "twitterID") {
+//     ddb
+//       .getUser({ key: { twitterID: { S: id } }, table: "users_twitter" })
+//       .then((user) => {
+//         done(null, user);
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// });
+
+passport.deserializeUser((id, done) => {
   ddb
-    .getUser({ key: { googleID: { S: googleID } }, table: "users_google" })
+    .getUser({ key: { googleID: { S: id } }, table: "users_admin_google" })
     .then((user) => {
       done(null, user);
     })
     .catch((err) => console.log(err));
 });
 
-passport.deserializeUser((facebookID, done) => {
+passport.deserializeUser((id, done) => {
   ddb
-    .getUser({ key: { facebookID: { S: facebookID } }, table: "users_facebook" })
+    .getUser({ key: { googleID: { S: id } }, table: "users_google" })
     .then((user) => {
       done(null, user);
     })
     .catch((err) => console.log(err));
 });
 
-passport.deserializeUser((twitterID, done) => {
+passport.deserializeUser((id, done) => {
   ddb
-    .getUser({ key: { twitterID: { S: twitterID } }, table: "users_twitter" })
+    .getUser({ key: { facebookID: { S: id } }, table: "users_facebook" })
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((err) => console.log(err));
+});
+
+passport.deserializeUser((id, done) => {
+  ddb
+    .getUser({ key: { twitterID: { S: id } }, table: "users_twitter" })
     .then((user) => {
       done(null, user);
     })
@@ -161,6 +200,57 @@ passport.use(
                 createdAt: { S: new Date(Date.now()).toLocaleString() },
               },
               condition: "attribute_not_exists(twitterID)",
+            };
+
+            ddb
+              .createUser(newUser)
+              .then(() => {
+                return done(null, newUser);
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  )
+);
+
+//----------------------OAUTH2--ADMIN--------------------------
+
+passport.use(
+  "google-admin",
+  new GoogleStrategy(
+    {
+      //options for the Google Strategy
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/google/redirect",
+    },
+    (accessToken, refreshToken, profile, done) => {
+      //Check existing user
+      ddb
+        .getUser({ key: { googleID: { S: profile.id } }, table: "users_admin_google" })
+        .then((user) => {
+          if (user.Item) {
+            //User already exists
+            return done(null, user);
+          } else {
+            //User does not exists, therefore create user
+            const newUser = {
+              table: "users_admin_google",
+              Item: {
+                googleID: { S: profile.id },
+                isAdmin: { BOOL: true },
+                username: { S: profile.displayName },
+                email: { S: profile._json.email },
+                emailVerified: { BOOL: profile._json.email_verified },
+                fName: { S: profile._json.given_name },
+                lName: { S: profile._json.family_name },
+                locale: { S: profile._json.locale },
+                picture: { S: profile._json.picture },
+                createdAt: { S: new Date(Date.now()).toLocaleString() },
+              },
+              condition: "attribute_not_exists(googleID)",
             };
 
             ddb

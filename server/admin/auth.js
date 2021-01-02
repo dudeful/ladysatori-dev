@@ -8,7 +8,7 @@ const verifyAdminToken = require("./verifyAdminToken");
 const rateLimiter = require("../middleware/rateLimiter");
 const ddb = require("./DDB");
 
-require("./oauth2");
+require("../middleware/oauth2");
 
 //-------------------------STANDARD LOGIN-------------------------------------
 router.route("/login").post(rateLimiter.loginSpeedLimiter, rateLimiter.loginLimiter, (req, res) => {

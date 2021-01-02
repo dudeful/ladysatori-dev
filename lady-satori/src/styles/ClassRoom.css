@@ -1,0 +1,110 @@
+.classroom-profile .navbar-brand {
+  font-family: "testOnly", "Montserrat", sans-serif;
+  font-size: 2.2rem;
+  line-height: 0;
+  margin-right: auto;
+  margin-top: 18px;
+  color: #373a40;
+  font-style: italic;
+}
+
+@media only screen and (max-width: 500px) {
+  .classroom-profile .navbar-brand {
+    margin-bottom: 2rem;
+  }
+}
+
+.h-navbar-lg .classroom-profile {
+  background-color: #68b0ab;
+  box-shadow: 10px 1px 15px 2px rgba(128, 128, 128, 0.4);
+  border-bottom: none;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.h-navbar-lg .classroom-profile a {
+  padding: 9px;
+}
+
+.h-navbar-lg .classroom-profile .profile-pic {
+  border-radius: 50%;
+  height: 45px;
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .h-navbar-lg .classroom-profile {
+    justify-content: flex-start;
+    box-shadow: 0px 0px 20px 2px rgba(128, 128, 128, 0.4);
+  }
+}
+@media only screen and (max-width: 500px) {
+  .h-navbar-lg .classroom-profile {
+    padding: 10px 10px;
+  }
+  .h-navbar-lg .classroom-profile .profile-pic {
+    height: 40px;
+    margin: auto 0;
+  }
+}
+
+.h-navbar-lg .classroom-profile .dropdown-notifications {
+  width: 400px;
+  padding: 0;
+  box-shadow: 0px 0px 50px 0px rgba(128, 128, 128, 0.35);
+}
+@media only screen and (max-width: 500px) {
+  .h-navbar-lg .classroom-profile .dropdown-notifications {
+    width: 97%;
+  }
+}
+
+.h-navbar-lg .classroom-profile .notification.dropdown-item {
+  padding: 1rem 1.5rem;
+}
+
+.h-navbar-lg .classroom-profile .notification {
+  margin: auto 0;
+}
+
+.h-navbar-lg .classroom-profile .notification img {
+  height: 35px;
+}
+
+.h-navbar-lg .classroom-profile .notification .text-muted {
+  font-size: 0.9rem;
+}
+
+.h-navbar-lg .classroom-profile .notification .text-dark {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.h-navbar-lg .classroom-profile .notificationDivImg {
+  max-height: 40px;
+  max-width: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #dfe3ec65;
+  box-shadow: 0px 0px 5px 0px rgba(128, 128, 128, 0.6) inset;
+}
+
+.h-navbar-lg .classroom-profile .notificationDivImg img {
+  height: 20px;
+  display: block;
+  margin: 25% auto;
+}
+
+.h-navbar-lg .classroom-profile .navSeparator {
+  height: 75%;
+  border-left: 2px solid #61646d73;
+  margin: auto 26px auto 20px;
+}
+@media only screen and (max-width: 541px) {
+  .h-navbar-lg .classroom-profile .navSeparator {
+    margin: auto 15px auto 10px;
+    height: 30%;
+  }
+}
