@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useRef } from "react";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
@@ -20,9 +20,7 @@ const getHtml = (editorState) =>
 
 function DraftEditor(props) {
   //
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
-  );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
@@ -37,11 +35,11 @@ function DraftEditor(props) {
 
   // ----------------- react image uploading -----------------
 
-  const [previewImage, setPreviewImage] = React.useState();
+  const [previewImage, setPreviewImage] = useState();
 
-  const [displayCanvas, setDisplayCanvas] = React.useState("none");
+  const [displayCanvas, setDisplayCanvas] = useState("none");
 
-  const [image, setImage] = React.useState();
+  const [image, setImage] = useState();
 
   const imageRemove = () => {
     setPostInput((prevValue) => {
@@ -57,7 +55,7 @@ function DraftEditor(props) {
 
   // --------------------- handle inputs ---------------------
 
-  const [postInput, setPostInput] = React.useState({
+  const [postInput, setPostInput] = useState({
     coverImg: "",
     tag: "",
     title: "",
@@ -85,7 +83,7 @@ function DraftEditor(props) {
   });
   // --------------------- get canvas ------------------------
 
-  const myRef = React.useRef(null);
+  const myRef = useRef(null);
 
   // const onCanvasSave = () => {
   //   const canvas = myRef.current.getImage();
@@ -121,7 +119,7 @@ function DraftEditor(props) {
 
   // ------------------- submit post ------------------
 
-  const [emptyModal, setEmptyModal] = React.useState("modal");
+  const [emptyModal, setEmptyModal] = useState("modal");
 
   const submitPost = () => {
     if (checkInputs() === true) {

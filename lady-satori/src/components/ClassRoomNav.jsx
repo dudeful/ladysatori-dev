@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 import("../styles/ClassRoom.css");
 
 const ClassRoomNav = () => {
+  const logout = () => {
+    sessionStorage.removeItem("auth-token");
+    localStorage.removeItem("auth-token");
+    window.location.assign("/");
+  };
+
   return (
     <div>
       <div className="h-navbar-lg">
@@ -106,12 +112,13 @@ const ClassRoomNav = () => {
                 <a className="dropdown-item" href="#0">
                   Master Classes
                 </a>
-                <hr />
+                <hr className="mb-1" />
                 <a
+                  onClick={() => logout()}
                   className="dropdown-item text-center text-danger p-0"
                   href="#0"
                 >
-                  logout
+                  sair
                 </a>
               </div>
             </div>

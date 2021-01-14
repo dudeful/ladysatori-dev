@@ -2,12 +2,12 @@ import axios from "axios";
 import useAxios from "axios-hooks";
 import UpdateDraftEditor from "./UpdateDraftEditor";
 import Error400 from "../../../Errors/Error400";
-import BlogAdmin from "../../BlogAdmin";
+import Course from "../../Course";
 
-function UpdatePost(props) {
+function UpdateLesson(props) {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "https://dizbkwjzdmgp2.cloudfront.net/" + props.props.key
+    "https://d1or0rfi63vb4e.cloudfront.net/" + props.props.key
   );
 
   //handles loading delay and bad requests (400) errors.
@@ -21,13 +21,12 @@ function UpdatePost(props) {
     );
   if (error) return <Error400 />;
 
-  const getPostInputs = (updatedPost) => {
+  const getInputs = (briefing) => {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/update-post/" +
-          updatedPost.key,
-        updatedPost,
+        "http://localhost:5000/course/update-lesson/" + props.props.key,
+        briefing,
         {
           headers: { sessionToken },
         }
@@ -41,19 +40,17 @@ function UpdatePost(props) {
             "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
           );
         } else {
-          props.updateComponent({ component: BlogAdmin });
+          props.updateComponent({ component: Course });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="updatePost">
-      <UpdateDraftEditor getPostInputs={getPostInputs} postData={data} />
+      <UpdateDraftEditor getInputs={getInputs} postData={data} />
     </div>
   );
 }
 
-export default UpdatePost;
+export default UpdateLesson;

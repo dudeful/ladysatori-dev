@@ -1,0 +1,40 @@
+.home-footer {
+  height: auto;
+  background-color: #c8d5b9;
+}
+
+.home-footer .brand {
+  font-family: "testOnly", "Nothing You Could Do", cursive;
+  font-size: 3rem;
+  text-align: center;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.home-footer .footer-container {
+  margin: auto 5%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+}
+
+.home-footer .social-icons {
+  text-align: right;
+}
+@media only screen and (max-width: 768px) {
+  .home-footer .social-icons {
+    text-align: center;
+    margin: 2rem auto;
+  }
+}
+
+.home-footer .social-icons a {
+  color: #464646;
+  font-size: 1.5rem;
+  margin: auto 2rem;
+}
+@media only screen and (max-width: 768px) {
+  .home-footer .social-icons a {
+    margin: auto 1.5rem;
+  }
+}

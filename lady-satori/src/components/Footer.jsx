@@ -4,7 +4,7 @@ function Footer() {
       <p className="brand">lady Satori</p>
       <div className="footer-container row">
         <div className="col-md-6">
-          <p className="font-weight-bold">contact@ladysatori.com</p>
+          <p className="font-weight-bold">contato@ladysatori.com.br</p>
           <p>
             1600 Pennsylvania Avenue NW,
             <br /> Washington, DC
@@ -43,7 +43,7 @@ function Footer() {
           </a>
         </div>
         <br />
-        <p className="m-auto">&copy; 2020 Lady Satori</p>
+        <p className="m-auto">&copy; 2021 Lady Satori</p>
       </div>
     </div>
   );

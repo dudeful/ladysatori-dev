@@ -33,7 +33,9 @@
 }
 
 .navbar-toggler-icon {
-  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  font-size: 1.35rem;
 }
 
 .navbar-brand {

@@ -29,7 +29,6 @@ function AddNewPost(props) {
           alert(
             "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
           );
-          window.location.reload();
         } else {
           props.updateComponent({ component: BlogAdmin });
         }

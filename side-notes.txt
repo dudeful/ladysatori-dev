@@ -1,4 +1,5 @@
 oOHjMlZJwGDpa0pt
+https://advancedweb.hu/how-to-use-s3-post-signed-urls/
 https://master.d9cbpby23ue80.amplifyapp.com/
 https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev
 https://material-ui.com/components/material-icons/
@@ -16,7 +17,22 @@ https://reactrouter.com/web/api/Redirect
 https://www.glo.com/
 https://urbanyogissg.com/
 https://www.trustradius.com/reviews/vimeo-2020-06-12-23-08-47
-https://atomiks.github.io/tippyjs/v6/all-props/
+https://atomiks.github.io/tippyjs/v6/al
+
+
+
+
+
+
+      const x = urls.find((x) => x.lesson === '1607934082659@nulla-porttitor-accumsan-tincidunt').url;
+
+      const x = urls.filter((lesson) => lesson.module === 'dezembro');
+
+      console.log(x);
+
+      let res = urls.map((x) => x.module);
+      let uniq = (res) => [...new Set(res)];
+      console.log(uniq(res));l-props/
 https://joi.dev/
 https://www.npmjs.com/package/limiter
 https://www.youtube.com/watch?v=HkNdG7d_LAI&list=PLP91MtCof9kmVVHhgCy7GUJbZEWypC_I-
@@ -45,3 +61,18 @@ https://www.youtube.com/watch?v=o3eR0X91Ogs&t=336s
 https://www.bbc.com/portuguese/vert-cap-37563764
 
 https://www.bbc.com/portuguese/geral-54903838
+
+
+
+
+
+
+      const x = urls.find((x) => x.lesson === '1607934082659@nulla-porttitor-accumsan-tincidunt').url;
+
+      const x = urls.filter((lesson) => lesson.module === 'dezembro');
+
+      console.log(x);
+
+      let res = urls.map((x) => x.module);
+      let uniq = (res) => [...new Set(res)];
+      console.log(uniq(res));

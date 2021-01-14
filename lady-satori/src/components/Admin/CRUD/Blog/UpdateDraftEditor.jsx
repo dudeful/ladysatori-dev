@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useRef } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
@@ -21,7 +21,7 @@ const getHtml = (editorState) =>
 function UpdateDraftEditor(props) {
   //
 
-  const [editorState, setEditorState] = React.useState(
+  const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
       convertFromRaw(JSON.parse(props.postData.body))
     )
@@ -40,13 +40,11 @@ function UpdateDraftEditor(props) {
 
   // ----------------- react image uploading -----------------
 
-  const [previewImage, setPreviewImage] = React.useState(
-    props.postData.coverImg
-  );
+  const [previewImage, setPreviewImage] = useState(props.postData.coverImg);
 
-  const [displayCanvas, setDisplayCanvas] = React.useState("initial");
+  const [displayCanvas, setDisplayCanvas] = useState("initial");
 
-  const [image, setImage] = React.useState(props.postData.coverImg);
+  const [image, setImage] = useState(props.postData.coverImg);
 
   const imageRemove = () => {
     setPostInput((prevValue) => {
@@ -62,7 +60,7 @@ function UpdateDraftEditor(props) {
 
   // --------------------- handle inputs ---------------------
 
-  const [postInput, setPostInput] = React.useState({
+  const [postInput, setPostInput] = useState({
     key: props.postData.key,
     date: props.postData.date,
     coverImg: props.postData.coverImg,
@@ -95,7 +93,7 @@ function UpdateDraftEditor(props) {
 
   // --------------------- get canvas ------------------------
 
-  const myRef = React.useRef(null);
+  const myRef = useRef(null);
 
   // const onCanvasSave = () => {
   //   const canvas = myRef.current.getImage();
@@ -130,7 +128,7 @@ function UpdateDraftEditor(props) {
 
   // ------------------- submit post ------------------
 
-  const [emptyModal, setEmptyModal] = React.useState("modal");
+  const [emptyModal, setEmptyModal] = useState("modal");
 
   const submitPost = () => {
     if (checkInputs() === true) {

@@ -15,7 +15,11 @@ function Header(props) {
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span className="navbar-toggler-icon"></span>
+        <img
+          className="navbar-toggler-icon"
+          src="/images/ClassRoom/hamburguer-menu.png"
+          alt="..."
+        />
       </button>
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav ml-auto">

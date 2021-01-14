@@ -5,6 +5,7 @@ import "./styles/Blog.css";
 import "./styles/Aulas.css";
 import "./styles/Sobre.css";
 import "./styles/Header.css";
+import "./styles/Footer.css";
 import "../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 ReactDOM.render(

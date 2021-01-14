@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import AddNewPost from "./CRUD/Blog/AddNewPost";
-import ClassRoom from "../ClassRoom";
+import Course from "./Course";
 import BlogAdmin from "./BlogAdmin";
 import DashboardCourse from "./DashboardCourse";
 import DashboardBlog from "./DashboardBlog";
 import TrashBin from "./TrashBin";
-import NewClass from "./CRUD/Classes/NewClass";
+import AddNewLesson from "./CRUD/Course/AddNewLesson";
 
 const VerticalNav = (props) => {
   useEffect(() => {
@@ -38,7 +38,11 @@ const VerticalNav = (props) => {
               }
               className="nav-link active"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
               id="admin_DashboardCourse"
@@ -51,33 +55,41 @@ const VerticalNav = (props) => {
             <a
               onClick={() =>
                 props.updateComponent({
-                  component: ClassRoom,
+                  component: Course,
                 })
               }
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
-              id="admin_ClassRoom"
+              id="admin_Course"
             >
               <span>
                 <img src="/images/Admin/classes.png" alt="..." />
               </span>
-              Aulas
+              Curso
             </a>
             <a
               onClick={() =>
                 props.updateComponent({
-                  component: NewClass,
+                  component: AddNewLesson,
                 })
               }
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
-              id="admin_NewClass"
+              id="admin_AddNewLesson"
             >
               <span>
                 <img src="/images/Admin/new-class.png" alt="..." />
@@ -92,7 +104,11 @@ const VerticalNav = (props) => {
               }
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
               id="admin_DashboardBlog"
@@ -106,7 +122,11 @@ const VerticalNav = (props) => {
               onClick={() => props.updateComponent({ component: BlogAdmin })}
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
               id="admin_BlogAdmin"
@@ -124,7 +144,11 @@ const VerticalNav = (props) => {
               }
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
               id="admin_AddNewPost"
@@ -142,7 +166,11 @@ const VerticalNav = (props) => {
               }
               className="nav-link"
               href="#0"
-              data-toggle="tab"
+              // data-toggle="tab"
+              data-toggle="collapse"
+              data-target="#navbarVNavDropdown"
+              aria-controls="navbarVNavDropdown"
+              aria-expanded="false"
               role="tab"
               aria-selected="true"
               id="admin_TrashBin"
@@ -160,6 +188,12 @@ const VerticalNav = (props) => {
 };
 
 const HorizontalNav = () => {
+  const logout = () => {
+    sessionStorage.removeItem("auth-token");
+    localStorage.removeItem("auth-token");
+    window.location.assign("/");
+  };
+
   return (
     <div>
       <div className="h-navbar-lg">
@@ -272,12 +306,13 @@ const HorizontalNav = () => {
                 <a className="dropdown-item" href="#0">
                   Something else here
                 </a>
-                <hr />
+                <hr className="mb-1" />
                 <a
+                  onClick={() => logout()}
                   className="dropdown-item text-center text-danger p-0"
                   href="#0"
                 >
-                  logout
+                  sair
                 </a>
               </div>
             </div>
