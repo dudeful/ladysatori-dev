@@ -98,10 +98,10 @@ const DraftEditor = (props) => {
             <input
               onChange={videoLesson}
               type="file"
-              multiple=""
+              multiple
               directory=""
               webkitdirectory=""
-              // mozdirectory=""
+              mozdirectory=""
               className="custom-file-input"
               id="inputGroupFile02"
               aria-describedby="inputGroupFileAddon02"

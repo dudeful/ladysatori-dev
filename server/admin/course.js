@@ -7,6 +7,24 @@ const verifyAdminToken = require("./verifyAdminToken");
 // const crypto = require("crypto");
 require("dotenv").config();
 
+router.route("/").post((req, res) => {
+  console.log(req.body);
+  const params = {
+    Bucket: "lady-satori-course",
+    Fields: {
+      key: "videos/" + req.body.key,
+    },
+  };
+  s3.createPresignedPost(params, (err, data) => {
+    if (err) {
+      console.error("Presigning post data encountered an error", err);
+    } else {
+      console.log(data);
+      res.json(data);
+    }
+  });
+});
+
 router.route("/getPresignedPost").post(verifyAdminToken, (req, res) => {
   // const randomKey = crypto.randomBytes(16).toString("hex");
 
