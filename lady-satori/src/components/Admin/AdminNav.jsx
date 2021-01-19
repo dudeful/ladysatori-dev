@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import AddNewPost from "./CRUD/Blog/AddNewPost";
 import Course from "./Course";
 import BlogAdmin from "./BlogAdmin";
@@ -8,16 +7,6 @@ import TrashBin from "./TrashBin";
 import AddNewLesson from "./CRUD/Course/AddNewLesson";
 
 const VerticalNav = (props) => {
-  useEffect(() => {
-    const elementId = document.getElementById(
-      "admin_" + props.component.component.name
-    );
-    if (elementId) {
-      document.getElementsByClassName("active")[0].classList.remove("active");
-      elementId.classList.add("active");
-    }
-  }, [props.component]);
-
   return (
     <div className="navbar-expand-md">
       <div className="collapse navbar-collapse" id="navbarVNavDropdown">
@@ -36,7 +25,7 @@ const VerticalNav = (props) => {
                   component: DashboardCourse,
                 })
               }
-              className="nav-link active"
+              className="v-nav-tab nav-link active"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -58,7 +47,7 @@ const VerticalNav = (props) => {
                   component: Course,
                 })
               }
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -80,7 +69,7 @@ const VerticalNav = (props) => {
                   component: AddNewLesson,
                 })
               }
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -102,7 +91,7 @@ const VerticalNav = (props) => {
                   component: DashboardBlog,
                 })
               }
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -120,7 +109,7 @@ const VerticalNav = (props) => {
             </a>
             <a
               onClick={() => props.updateComponent({ component: BlogAdmin })}
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -142,7 +131,7 @@ const VerticalNav = (props) => {
                   component: AddNewPost,
                 })
               }
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
@@ -164,7 +153,7 @@ const VerticalNav = (props) => {
                   component: TrashBin,
                 })
               }
-              className="nav-link"
+              className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
               data-toggle="collapse"
