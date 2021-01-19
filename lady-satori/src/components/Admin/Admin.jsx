@@ -13,14 +13,11 @@ const Admin = () => {
     setComponent({ component: params.component, props: params.props });
 
     //---------------- add class 'active' to current component -----------------
-    const activeTab = document.getElementById("admin_" + params.component.name);
-    console.log("out");
-    console.log(activeTab);
-    if (activeTab) {
-      console.log("in");
-      document.getElementsByClassName("active")[0].classList.remove("active");
-      activeTab.classList.add("active");
-    }
+
+    document.getElementsByClassName("active")[0].classList.remove("active");
+    document
+      .getElementById("admin_" + params.component.name)
+      .classList.add("active");
   };
 
   return (
