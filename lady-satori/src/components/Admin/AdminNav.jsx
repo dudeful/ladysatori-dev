@@ -23,6 +23,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: DashboardCourse,
+                  id: "admin_DashboardCourse",
                 })
               }
               className="v-nav-tab nav-link active"
@@ -45,6 +46,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: Course,
+                  id: "admin_Course",
                 })
               }
               className="v-nav-tab nav-link"
@@ -67,6 +69,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: AddNewLesson,
+                  id: "admin_AddNewLesson",
                 })
               }
               className="v-nav-tab nav-link"
@@ -89,6 +92,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: DashboardBlog,
+                  id: "admin_DashboardBlog",
                 })
               }
               className="v-nav-tab nav-link"
@@ -108,7 +112,12 @@ const VerticalNav = (props) => {
               Dashboard - Blog
             </a>
             <a
-              onClick={() => props.updateComponent({ component: BlogAdmin })}
+              onClick={() =>
+                props.updateComponent({
+                  component: BlogAdmin,
+                  id: "admin_BlogAdmin",
+                })
+              }
               className="v-nav-tab nav-link"
               href="#0"
               // data-toggle="tab"
@@ -129,6 +138,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: AddNewPost,
+                  id: "admin_AddNewPost",
                 })
               }
               className="v-nav-tab nav-link"
@@ -151,6 +161,7 @@ const VerticalNav = (props) => {
               onClick={() =>
                 props.updateComponent({
                   component: TrashBin,
+                  id: "admin_TrashBin",
                 })
               }
               className="v-nav-tab nav-link"
