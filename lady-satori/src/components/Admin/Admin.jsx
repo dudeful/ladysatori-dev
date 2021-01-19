@@ -15,6 +15,7 @@ const Admin = () => {
     //---------------- add class 'active' to current component -----------------
     const activeTab = document.getElementById("admin_" + params.component.name);
     console.log("out");
+    console.log(activeTab);
     if (activeTab) {
       console.log("in");
       document.getElementsByClassName("active")[0].classList.remove("active");
