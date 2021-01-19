@@ -14,7 +14,7 @@ const Course = () => {
       <ReactPlayer
         light={true}
         controls
-        url="https://dcp2jmsc5uert.cloudfront.net/videos/lesson_1/mvi_0201.m3u8"
+        url="https://dcp2jmsc5uert.cloudfront.net/videos/drama_da_cebola__curta_1_1/drama_da_cebola__curta_1_1.m3u8"
       />
     </div>
   );

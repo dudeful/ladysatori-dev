@@ -23,6 +23,12 @@ const DraftEditor = (props) => {
   // --------------------- handle inputs ---------------------
   const [briefing, setBriefing] = useState("");
   const [video, setVideo] = useState("");
+  const [complements, setComplements] = useState({
+    complement_1: {
+      title: "",
+      link: "",
+    },
+  });
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
@@ -45,17 +51,93 @@ const DraftEditor = (props) => {
     }
   };
 
-  // --------------------- confirm alert ---------------------
+  ///////////////////--- DEAL WITH COMPLEMENTS ---/////////////////////
+  const titleComplementHandler = (e) => {
+    const { name, value } = e.target;
+    const link = document.getElementById("link_" + name).value;
 
-  window.addEventListener("beforeunload", (event) => {
-    // Cancel the event as stated by the standard.
-    event.preventDefault();
-    // Older browsers supported custom message
-    event.returnValue = false;
-  });
+    setComplements((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: { title: value, link: link },
+      };
+    });
+  };
+
+  const linkComplementHandler = (e) => {
+    const { name, value } = e.target;
+    const title = document.getElementById("title_" + name).value;
+
+    setComplements((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: { title: title, link: value },
+      };
+    });
+  };
+
+  //---------------------- add input -------------------------
+  const addInput = () => {
+    const i =
+      document.getElementsByClassName("complements-inputs-child").length + 1;
+    const inputs = document.getElementById("complements-inputs");
+
+    //......................... add 'complement' object .........................
+    setComplements((prevValue) => {
+      const key = "complement_" + i;
+      return {
+        ...prevValue,
+        [key]: { title: "", link: "" },
+      };
+    });
+
+    //........................ clone and append node ...........................
+    const node = document.getElementsByClassName("complements-inputs-child")[0];
+    const newNode = node.cloneNode(true);
+    newNode.classList.add("complement_" + i);
+    inputs.appendChild(newNode);
+
+    //.............. transform 'add' button into 'delete' buttom ................
+    const lastBtn = inputs.getElementsByClassName("btn")[i - 1];
+    lastBtn.classList.add("btn-outline-danger");
+    lastBtn.getElementsByClassName("fas")[0].classList.remove("fa-plus-circle");
+    lastBtn.getElementsByClassName("fas")[0].classList.add("fa-minus-circle");
+    lastBtn.onclick = (e) => removeInput(e);
+
+    //....................... setup input fields .........................
+    const title_input = inputs.getElementsByClassName("form-control-title")[
+      i - 1
+    ];
+    const link_input = inputs.getElementsByClassName("form-control-link")[
+      i - 1
+    ];
+
+    title_input.value = "";
+    link_input.value = "";
+    title_input.id = "title_complement_" + i;
+    link_input.id = "link_complement_" + i;
+    title_input.name = "complement_" + i;
+    link_input.name = "complement_" + i;
+    title_input.onchange = (e) => titleComplementHandler(e);
+    link_input.onchange = (e) => linkComplementHandler(e);
+  };
+
+  //---------------------- remove input ----------------------
+  const removeInput = (e) => {
+    const parentNode = e.currentTarget.parentNode.parentNode;
+    const parentClass = parentNode.classList[parentNode.classList.length - 1];
+    parentNode.classList.add("d-none");
+
+    setComplements((prevValue) => {
+      return {
+        ...prevValue,
+        [parentClass]: undefined,
+      };
+    });
+  };
+  ////////////////////////////////////////////////////////////////
 
   // --------------------- check inputs ----------------------
-
   const checkInputs = () => {
     if (briefing === "" || video === "") {
       return false;
@@ -77,17 +159,31 @@ const DraftEditor = (props) => {
   const submit = () => {
     if (checkInputs() === true) {
       setEmptyModal("");
-      props.getInputs({ briefing: briefing, video: video });
+      props.getInputs({
+        briefing: briefing,
+        complements: complements,
+        video: video,
+      });
     } else {
       setEmptyModal("modal");
     }
   };
+
+  // --------------------- confirm alert ---------------------
+
+  window.addEventListener("beforeunload", (event) => {
+    // Cancel the event as stated by the standard.
+    event.preventDefault();
+    // Older browsers supported custom message
+    event.returnValue = false;
+  });
 
   //-------------------- return ---------------------
 
   return (
     <div className="draftEditor">
       <div className="video-lesson-input">
+        <p>vídeo</p>
         <div className="input-group">
           <div className="input-group-prepend">
             <span className="input-group-text" id="inputGroupFileAddon02">
@@ -115,6 +211,43 @@ const DraftEditor = (props) => {
           id="input_file_name"
           className="d-none mt-3 font-italic text-info"
         />
+      </div>
+      <div className="complements">
+        <p>complementos</p>
+        <div id="complements-inputs" className="p-0 complements-inputs">
+          <div className="complements-inputs-child input-group input-group-sm mb-2 row m-0">
+            <input
+              onChange={(e) => titleComplementHandler(e)}
+              name="complement_1"
+              value={complements.complement_1.title}
+              id="title_complement_1"
+              type="text"
+              className="form-control form-control-title col-4"
+              aria-label="complement-title"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="título"
+            />
+            <input
+              onChange={(e) => linkComplementHandler(e)}
+              name="complement_1"
+              value={complements.complement_1.link}
+              id="link_complement_1"
+              type="text"
+              className="form-control form-control-link col-sm-7 col-6"
+              aria-label="complement-link"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="link"
+            />
+            <div className="input-group-append col-sm-1 col-2 p-0">
+              <button
+                onClick={addInput}
+                className="btn btn-sm btn-outline-info"
+              >
+                <i className="fas fa-plus-circle m-0 p-0"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       &nbsp;
       <div className="inner-draftEditor">
