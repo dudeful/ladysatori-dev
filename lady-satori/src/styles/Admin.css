@@ -270,17 +270,18 @@
 
 /* ----------------------- course ----------------------- */
 
-.video-lesson-input {
+.video-lesson-input,
+.lesson_keys {
   box-shadow: 0px 0px 10px 1px #c8d5b962;
+  margin: 8rem auto 3rem;
   padding: 25px 30px;
   width: 55%;
-  margin: 8rem auto 3rem;
   border-radius: 4px;
 }
 
 .complements {
   box-shadow: 0px 0px 10px 1px #c8d5b962;
-  margin: 0rem auto 3rem;
+  margin: 0rem auto;
   padding: 25px 30px;
   width: 55%;
   border-radius: 4px;

@@ -1,16 +1,26 @@
-import { useState } from "react";
-import DraftEditor from "./DraftEditor";
+import { useState, useEffect } from "react";
+import NewLesson from "./NewLesson";
 import axios from "axios";
 import Course from "../../Course";
 import Loading from "../../../Errors/Loading";
 
 function AddNewLesson(props) {
   //
+  const [existingModules, setExistingModules] = useState("");
+  const [existingLessons, setExistingLessons] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/course/get-modules").then((res) => {
+      console.log(res.data);
+      setExistingModules(res.data.modules);
+      setExistingLessons(res.data.lessons);
+    });
+  }, []);
+
   const [loading, setLoading] = useState(false);
 
   const getInputs = (inputs) => {
     const sessionToken = sessionStorage.getItem("auth-token");
-    const key = { key: "module_2/lesson_1" };
 
     const batchPost = new Promise((resolve, reject) => {
       setLoading(true);
@@ -47,15 +57,21 @@ function AddNewLesson(props) {
 
     batchPost
       .then(() => {
+        const resources = {
+          nModules: existingModules.modules.length,
+          nLessons: existingModules.lessons.length,
+          key: inputs.key,
+          briefing: inputs.briefing,
+          complements: inputs.complements,
+        };
+
+        return resources;
+      })
+      .then((resources) => {
         axios
-          .post(
-            "http://localhost:5000/course/briefing",
-            {
-              briefing: inputs.briefing,
-              key: key.key,
-            },
-            { headers: { sessionToken } }
-          )
+          .post("http://localhost:5000/course/resources", resources, {
+            headers: { sessionToken },
+          })
           .then((res) => {
             if (res.data.error) {
               console.log(res.data);
@@ -73,7 +89,11 @@ function AddNewLesson(props) {
   } else {
     return (
       <div className="addNewPost">
-        <DraftEditor getInputs={getInputs} />
+        <NewLesson
+          existingModules={existingModules}
+          existingLessons={existingLessons}
+          getInputs={getInputs}
+        />
       </div>
     );
   }

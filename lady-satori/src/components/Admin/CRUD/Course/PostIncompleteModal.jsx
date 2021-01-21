@@ -1,4 +1,4 @@
-export const PostIncompleteModal = () => (
+export const PostIncompleteModal = (props) => (
   <div
     className="modal fade"
     id="postIncompleteLessonModal"
@@ -10,7 +10,7 @@ export const PostIncompleteModal = () => (
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title text-danger" id="exampleLessonModalLabel">
-            Existem campos vazios!
+            {props.msg.title}
           </h5>
           <button
             type="button"
@@ -21,12 +21,7 @@ export const PostIncompleteModal = () => (
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div className="modal-body">
-          Parece que você esqueceu de preencher alguma coisa{" "}
-          <span role="img" aria-label="detective-emoji">
-            &#129488;
-          </span>
-        </div>
+        <div className="modal-body">{props.msg.body}</div>
         <div className="modal-footer">
           <button
             type="button"

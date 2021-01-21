@@ -128,14 +128,14 @@ function UpdateDraftEditor(props) {
 
   // ------------------- submit post ------------------
 
-  const [emptyModal, setEmptyModal] = useState("modal");
+  const [validationModal, setValidationModal] = useState("modal");
 
   const submitPost = () => {
     if (checkInputs() === true) {
-      setEmptyModal("");
+      setValidationModal("");
       props.getPostInputs(postInput);
     } else {
-      setEmptyModal("modal");
+      setValidationModal("modal");
     }
   };
 
@@ -351,7 +351,7 @@ function UpdateDraftEditor(props) {
         <button
           onClick={submitPost}
           type="button"
-          data-toggle={emptyModal}
+          data-toggle={validationModal}
           data-target="#postIncompleteModal"
           className="btn btn-outline-success ml-3"
         >
