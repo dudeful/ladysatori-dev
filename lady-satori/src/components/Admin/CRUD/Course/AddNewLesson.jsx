@@ -6,61 +6,97 @@ import Loading from "../../../Errors/Loading";
 
 function AddNewLesson(props) {
   //
-  const [existingModules, setExistingModules] = useState("");
-  const [existingLessons, setExistingLessons] = useState("");
+  const [loading, setLoading] = useState(false);
+  //
+  const [existingModules, setExistingModules] = useState([]);
+  const [existingLessons, setExistingLessons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/course/get-modules").then((res) => {
-      console.log(res.data);
-      setExistingModules(res.data.modules);
-      setExistingLessons(res.data.lessons);
-    });
+    axios
+      .get("http://localhost:5000/course/get-modules")
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setExistingModules(res.data.modules);
+          setExistingLessons(res.data.lessons);
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
-
-  const [loading, setLoading] = useState(false);
 
   const getInputs = (inputs) => {
     const sessionToken = sessionStorage.getItem("auth-token");
 
     const batchPost = new Promise((resolve, reject) => {
-      setLoading(true);
       let i = 0;
-      Array.from(inputs.video).forEach((segment) => {
-        resolve(
-          axios
-            .post("http://localhost:5000/course", {
-              key: segment.webkitRelativePath,
-            })
-            .then((res) => {
-              let formData = new FormData();
-              Object.entries(res.data.fields).forEach(([k, v]) => {
-                formData.append(k, v);
-              });
-              formData.append("file", segment);
-              return { formData: formData, url: res.data.url };
-            })
-            .then(async (data) => {
-              await fetch(data.url, {
-                method: "POST",
-                body: data.formData,
-              }).then(() => {
-                i++;
-                if (i === inputs.video.length) {
-                  props.updateComponent({ component: Course });
-                }
-              });
-            })
-            .catch((err) => console.log(err))
-        );
-      });
+
+      axios
+        .get("http://localhost:5000/admin/auth/isLoggedIn", {
+          headers: { sessionToken },
+        })
+        .then((res) => {
+          if (res.data.isLoggedIn === false || res.data.isTokenOk === false) {
+            alert("você precisa estar logado para realizar esta operação");
+          } else if (res.data.error === true) {
+            alert(
+              "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
+            );
+          } else {
+            setLoading(true);
+
+            Array.from(inputs.video).forEach((segment) => {
+              resolve(
+                axios
+                  .post("http://localhost:5000/course/video", {
+                    keys: {
+                      module_id: inputs.module_id,
+                      lesson_id: inputs.lesson_id,
+                      module_name: inputs.key.module,
+                      lesson_name: inputs.key.lesson,
+                      video: segment.webkitRelativePath,
+                    },
+                  })
+                  .then((res) => {
+                    let formData = new FormData();
+                    Object.entries(res.data.fields).forEach(([k, v]) => {
+                      formData.append(k, v);
+                    });
+                    formData.append("file", segment);
+                    return { formData: formData, url: res.data.url };
+                  })
+                  .then(async (data) => {
+                    await fetch(data.url, {
+                      method: "POST",
+                      body: data.formData,
+                    }).then(() => {
+                      i++;
+                      if (i === inputs.video.length) {
+                        props.updateComponent({
+                          component: Course,
+                          id: "admin_Course",
+                        });
+                      }
+                    });
+                  })
+                  .catch((err) => console.log(err))
+              );
+            });
+          }
+        })
+        .catch((err) => console.log(err));
     });
 
     batchPost
       .then(() => {
         const resources = {
-          nModules: existingModules.modules.length,
-          nLessons: existingModules.lessons.length,
-          key: inputs.key,
+          existingModules: existingModules,
+          existingLessons: existingLessons,
+          keys: {
+            module_id: inputs.module_id,
+            lesson_id: inputs.lesson_id,
+            module_name: inputs.key.module,
+            lesson_name: inputs.key.lesson,
+          },
           briefing: inputs.briefing,
           complements: inputs.complements,
         };
@@ -75,6 +111,11 @@ function AddNewLesson(props) {
           .then((res) => {
             if (res.data.error) {
               console.log(res.data);
+              if (res.data.msg === "lesson name is duplicate") {
+                alert(
+                  "Uma aula com este nome já existe, por favor escolha outro nome"
+                );
+              }
             } else if (res.data.success) {
               console.log(res.data);
             }

@@ -6,6 +6,8 @@ import BriefingDraftEditor from "./BriefingDraftEditor";
 
 const NewLesson = (props) => {
   const [key, setKey] = useState({ module: "", lesson: "" });
+  const [lessonID, setLessonID] = useState(null);
+  const [moduleID, setModuleID] = useState(null);
   const [newModuleWarning, setNewModuleWarning] = useState(false);
   const [lessonExists, setLessonExists] = useState(false);
   const [video, setVideo] = useState("");
@@ -25,7 +27,9 @@ const NewLesson = (props) => {
       briefing.blocks.length === 1 &&
       briefing.blocks[0].text === "" &&
       briefing.blocks[1].text === "" &&
-      briefing.blocks[2].text === ""
+      briefing.blocks[2].text === "" &&
+      briefing.blocks[3].text === "" &&
+      briefing.blocks[4].text === ""
     ) {
       return false;
     } else if (key.module === "" || key.lesson === "") {
@@ -44,18 +48,28 @@ const NewLesson = (props) => {
         .toLowerCase()
         .replaceAll(" ", "_");
 
-      const module = props.existingModules.filter(
-        (module) =>
-          module.name.toLowerCase() ===
-          key.module.trim().toLowerCase().replaceAll(" ", "_")
-      );
+      const module = () => {
+        if (props.existingModules[0]) {
+          const module = props.existingModules.filter(
+            (module) =>
+              module.name.toLowerCase() ===
+              key.module.trim().toLowerCase().replaceAll(" ", "_")
+          );
+          return module;
+        } else {
+          return false;
+        }
+      };
 
-      if (module[0]) {
+      if (module()[0]) {
         setNewModuleWarning(false);
 
         const lessons = props.existingLessons.filter(
-          (lesson) => lesson.module === module[0].id
+          (lesson) => lesson.module === module()[0].id
         );
+
+        setModuleID(module()[0].id);
+        setLessonID(lessons.length + 1);
 
         const existingLessonsNames = lessons.map((l) => {
           return l.lesson.toLowerCase();
@@ -69,16 +83,13 @@ const NewLesson = (props) => {
       } else {
         setNewModuleWarning(true);
         setLessonExists(false);
+        setModuleID("module_" + (props.existingModules.length + 1));
+        setLessonID(1);
       }
     }
     moduleKeyHandler_Blur();
     lessonKeyHandler_Blur();
   };
-
-  const [validationModal, setValidationModal] = useState({
-    active: "",
-    msg: { title: "", body: "" },
-  });
 
   const fillModal = {
     duplicateName: {
@@ -110,7 +121,9 @@ const NewLesson = (props) => {
         ),
       },
     },
+    allGood: { active: "", msg: { title: "", body: "" } },
   };
+  const [validationModal, setValidationModal] = useState(fillModal.emptyFields);
 
   //---------------------- INPUT HANDLERS ---------------------
 
@@ -169,9 +182,11 @@ const NewLesson = (props) => {
   // ------------------- submit ---------------------
   const submit = () => {
     if (checkInputs() === true) {
-      setValidationModal("");
+      setValidationModal(fillModal.allGood);
       props.getInputs({
         key: key,
+        module_id: moduleID,
+        lesson_id: "lesson_" + lessonID,
         briefing: briefing,
         complements: complements,
         video: video,
@@ -201,12 +216,6 @@ const NewLesson = (props) => {
   //---------------- RETURN ----------------
   return (
     <div>
-      <button
-        className="btn btn-sm btn-warning mt-5 pt-5 ml-5"
-        onClick={() => console.log(key)}
-      >
-        click me
-      </button>
       <div className="lesson_keys">
         <div className="input-group">
           <div className="input-group-prepend">

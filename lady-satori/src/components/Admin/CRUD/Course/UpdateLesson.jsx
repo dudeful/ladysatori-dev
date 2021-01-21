@@ -40,7 +40,7 @@ function UpdateLesson(props) {
             "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
           );
         } else {
-          props.updateComponent({ component: Course });
+          props.updateComponent({ component: Course, id: "admin_Course" });
         }
       })
       .catch((err) => console.log(err));

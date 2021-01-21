@@ -118,7 +118,11 @@ function UpdateDraftEditor(props) {
       return false;
     } else if (
       postInput.body.blocks.length === 1 &&
-      postInput.body.blocks[0].text === ""
+      postInput.body.blocks[0].text === "" &&
+      postInput.body.blocks[1].text === "" &&
+      postInput.body.blocks[2].text === "" &&
+      postInput.body.blocks[3].text === "" &&
+      postInput.body.blocks[4].text === ""
     ) {
       return false;
     } else {

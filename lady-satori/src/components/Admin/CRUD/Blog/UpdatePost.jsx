@@ -41,7 +41,10 @@ function UpdatePost(props) {
             "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
           );
         } else {
-          props.updateComponent({ component: BlogAdmin });
+          props.updateComponent({
+            component: BlogAdmin,
+            id: "admin_BlogAdmin",
+          });
         }
       })
       .catch((err) => {

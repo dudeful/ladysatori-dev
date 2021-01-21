@@ -16,6 +16,7 @@ function CardsAdmin(props) {
                   onClick={() =>
                     props.updateComponent({
                       component: UpdatePost,
+                      id: "admin_BlogAdmin",
                       props: { key: card.key.slice(11) },
                     })
                   }
