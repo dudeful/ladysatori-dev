@@ -35,8 +35,8 @@ const QuestionInput = (props) => {
     } else {
       axios
         .post(
-          // 'https://lf2j6ejxq7.execute-api.sa-east-1.amazonaws.com/test/course/resources/submit-question',
-          "http://localhost:5000/course/resources/submit-question",
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/resources/submit-question",
+          // "http://localhost:5000/course/resources/submit-question",
           { question: question, prefix: props.prefix },
           {
             headers: { Authorization: authToken() },

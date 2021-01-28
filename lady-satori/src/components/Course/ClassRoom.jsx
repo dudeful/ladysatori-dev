@@ -18,8 +18,8 @@ const ClassRoom = () => {
   useEffect(() => {
     axios
       .get(
-        // "https://lf2j6ejxq7.execute-api.sa-east-1.amazonaws.com/test/course/videos/get-keys"
-        "http://localhost:5000/course/videos/get-keys"
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/videos/get-keys"
+        // "http://localhost:5000/course/videos/get-keys"
       )
       .then((res) => {
         let modulesKeys = res.data.keys.map((key) => {
@@ -85,8 +85,8 @@ const ClassRoom = () => {
   const fetchQuestions = (prefix) => {
     axios
       .get(
-        // "https://lf2j6ejxq7.execute-api.sa-east-1.amazonaws.com/test/course/resources/questions",
-        "http://localhost:5000/course/resources/questions",
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/resources/questions",
+        // "http://localhost:5000/course/resources/questions",
         {
           params: { prefix: prefix },
         }
@@ -120,8 +120,8 @@ const ClassRoom = () => {
   const currentLesson = (prefix) => {
     axios
       .get(
-        // "https://lf2j6ejxq7.execute-api.sa-east-1.amazonaws.com/test/course/videos/get-video-url",
-        "http://localhost:5000/course/videos/get-video-url",
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/videos/get-video-url",
+        // "http://localhost:5000/course/videos/get-video-url",
         {
           params: { prefix: prefix },
         }

@@ -25,7 +25,8 @@ function UpdateLesson(props) {
     const sessionToken = sessionStorage.getItem("auth-token");
     axios
       .post(
-        "http://localhost:5000/course/update-lesson/" + props.props.key,
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/update-lesson/" +
+          props.props.key,
         briefing,
         {
           headers: { sessionToken },

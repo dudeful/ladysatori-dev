@@ -13,7 +13,9 @@ function AddNewLesson(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/course/get-modules")
+      .get(
+        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/get-modules"
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data) {
@@ -31,9 +33,12 @@ function AddNewLesson(props) {
       let i = 0;
 
       axios
-        .get("http://localhost:5000/admin/auth/isLoggedIn", {
-          headers: { sessionToken },
-        })
+        .get(
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/isLoggedIn",
+          {
+            headers: { sessionToken },
+          }
+        )
         .then((res) => {
           if (res.data.isLoggedIn === false || res.data.isTokenOk === false) {
             alert("você precisa estar logado para realizar esta operação");
@@ -47,15 +52,18 @@ function AddNewLesson(props) {
             Array.from(inputs.video).forEach((segment) => {
               resolve(
                 axios
-                  .post("http://localhost:5000/course/video", {
-                    keys: {
-                      module_id: inputs.module_id,
-                      lesson_id: inputs.lesson_id,
-                      module_name: inputs.key.module,
-                      lesson_name: inputs.key.lesson,
-                      video: segment.webkitRelativePath,
-                    },
-                  })
+                  .post(
+                    "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/video",
+                    {
+                      keys: {
+                        module_id: inputs.module_id,
+                        lesson_id: inputs.lesson_id,
+                        module_name: inputs.key.module,
+                        lesson_name: inputs.key.lesson,
+                        video: segment.webkitRelativePath,
+                      },
+                    }
+                  )
                   .then((res) => {
                     let formData = new FormData();
                     Object.entries(res.data.fields).forEach(([k, v]) => {
