@@ -12,12 +12,16 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import SocialAuth from "./components/SocialAuth";
 import PasswordReset from "./components/Login/PasswordReset";
-import ClassRoom from "./components/ClassRoom";
 import Blog from "./components/Blog/Blog";
 import BlogPost from "./components/Blog/BlogPost";
 import Sobre from "./components/Sobre";
 import Error404 from "./components/Errors/Error404";
 import Error400 from "./components/Errors/Error400";
+import YogaClasses from "./components/YogaClasses";
+import ClassRoom from "./components/Course/ClassRoom";
+import MasterClasses from "./components/MasterClasses/MasterClasses";
+import LiveClasses from "./components/LiveClasses/LiveClasses";
+import UserProfile from "./components/User/UserProfile";
 import { ProtectedRoute, AdminRoute } from "./ProtectedRoute";
 
 const ScrollToTop = () => {
@@ -72,8 +76,18 @@ function App() {
             <AdminRoute component={<UpdatePost />} />
           </Route>
 
-          <Route path="/yoga-class" exact>
+          <Route path="/treinamento" component={YogaClasses} exact />
+          <Route path="/curso-completo" exact>
             <ProtectedRoute component={<ClassRoom />} />
+          </Route>
+          <Route path="/aulas-ao-vivo" exact>
+            <ProtectedRoute component={<LiveClasses />} />
+          </Route>
+          <Route path="/master-classes" exact>
+            <ProtectedRoute component={<MasterClasses />} />
+          </Route>
+          <Route path="/perfil-usuario" exact>
+            <ProtectedRoute component={<UserProfile />} />
           </Route>
 
           <Route path="/error400" component={Error400} exact />

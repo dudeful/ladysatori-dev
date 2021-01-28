@@ -1,6 +1,6 @@
 import "../../styles/Login.css";
 import "tippy.js/dist/tippy.css";
-import "tippy.js/themes/material.css";
+// import "tippy.js/themes/material.css";
 import "tippy.js/themes/light.css";
 import React from "react";
 import Axios from "axios";
@@ -222,6 +222,7 @@ function LoginComponent(props) {
     } else {
       Axios.post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
+        // "http://localhost:5000/auth/login",
         User
       )
         .then((res) => {

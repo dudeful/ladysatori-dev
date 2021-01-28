@@ -89,7 +89,8 @@ function LoginFrame(props) {
             className="text-decoration-none"
             href={
               // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/oauth2-google/" +
-              "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/oauth2-google/" +
+              // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/oauth2-google/" +
+              "http://localhost:5000/admin/auth/oauth2-google/" +
               //make all the url path (no matter how many paths) a single string for a single route parameter
               window.location.pathname.replace(/\//g, "@fSlash@")
             }

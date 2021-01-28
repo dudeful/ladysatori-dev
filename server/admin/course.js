@@ -97,7 +97,6 @@ router.route("/get-modules").get((req, res) => {
   })
     .promise()
     .then((data) => {
-      console.log(data);
       if (data.Contents[0]) {
         let modules = data.Contents.map((obj) => {
           return { id: obj.Key.split("/")[2], name: obj.Key.split("/")[3] };

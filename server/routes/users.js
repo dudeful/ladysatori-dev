@@ -7,6 +7,7 @@ const { validate, validateOnlyEmail, validateOnlyPassword } = require("../middle
 let async = require("async");
 let crypto = require("crypto");
 const CryptoJS = require("crypto-js");
+const { v4: uuidv4 } = require("uuid");
 const ddb = require("../admin/DDB");
 const ses = require("../admin/SES");
 
@@ -34,9 +35,12 @@ router.route("/registration").post(rateLimiter.loginSpeedLimiter, rateLimiter.lo
     .then((user) => {
       if (user.Item) return res.json({ exists: true });
 
+      const id = uuidv4({ msecs: Date.now() });
+
       const newUser = {
         table: "users_email",
         Item: {
+          id: { S: id },
           email: {
             S: req.body.email,
           },
@@ -74,6 +78,7 @@ router.route("/registration").post(rateLimiter.loginSpeedLimiter, rateLimiter.lo
               fName: req.body.fName,
               lName: req.body.lName,
               email: req.body.email,
+              id: id,
             };
 
             // Encrypt
@@ -160,7 +165,9 @@ router
         if (!user.Item.resetPasswordToken) {
           return res.json({ user: false });
         } else if (user.Item.resetPasswordToken.S === tokenHash && user.Item.resetPasswordExpires.N > Date.now()) {
-          return res.json({ user: { fName: user.Item.fName.S, lName: user.Item.lName.S, email: req.params.email } });
+          return res.json({
+            user: { fName: user.Item.fName.S, lName: user.Item.lName.S, email: req.params.email, id: user.Item.id.S },
+          });
         } else {
           return res.json({ user: false });
         }
@@ -197,6 +204,7 @@ router
                   fName: req.body.user.fName,
                   lName: req.body.user.lName,
                   email: req.body.user.email,
+                  id: req.body.user.id,
                 };
 
                 // Encrypt

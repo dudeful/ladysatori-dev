@@ -1,0 +1,274 @@
+.v-navbar {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 65px;
+  z-index: 100;
+  background-color: white;
+  font-size: 0.9rem;
+  box-shadow: 4px 0px 15px 0px rgba(128, 128, 128, 0.2);
+  overflow-y: scroll;
+  padding-bottom: 100px;
+}
+@media only screen and (max-width: 1200px) {
+  .v-navbar {
+    width: 25%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .v-navbar {
+    width: 100%;
+    position: initial;
+  }
+}
+
+.v-navbar::-webkit-scrollbar {
+  display: none;
+}
+
+.v-navbar img {
+  height: 1.35rem;
+  max-width: 1.35rem;
+  margin-right: 1rem;
+}
+
+.v-navbar .nav-link {
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  color: #373a409a;
+  font-size: 1rem;
+}
+
+.v-navbar .nav-link:hover {
+  background-color: #373a400c;
+  border-left: 7px solid #68b0ab;
+  color: #68b0ab;
+}
+
+.v-navbar .active {
+  background-color: #373a400c;
+  border-left: 7px solid #68b0ab;
+  color: #68b0ab;
+  font-weight: 600;
+}
+
+.v-navbar .navLesson .nav-link {
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.v-navbar .navLesson .nav-link:hover {
+  background-color: #373a400c;
+  border-left: 7px solid #8fc0a9;
+  color: #8fc0a9;
+}
+
+.v-navbar .navLesson .active {
+  background-color: #373a400c;
+  border-left: 7px solid #8fc0a9;
+  color: #8fc0a9;
+  font-weight: 400;
+}
+
+.v-navbar .dropdownNavArrow {
+  height: 0.75rem;
+  max-width: auto;
+  opacity: 0.5;
+  transform: rotate(180deg);
+  transition: all 300ms ease;
+}
+
+.v-navbar .nav-link.navArrowTransition .navArrowTransition {
+  transform: rotate(270deg);
+}
+
+@media (max-width: 767px) {
+  .class_room_nav .navbar-collapse {
+    background-color: white;
+    position: fixed;
+    left: 0;
+    top: 132px;
+    padding-bottom: 80px;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+  }
+
+  .class_room_nav .navbar-collapse.collapsing {
+    left: -100%;
+    transition: left 0ms ease;
+  }
+
+  #navbarVNavDropdown {
+    transition: left 300ms ease;
+  }
+}
+
+.h-navbar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+}
+
+.hamburguer-menu img {
+  height: 2rem;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+}
+
+.hamburguer-menu {
+  width: auto;
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  .hamburguer-menu {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    right: 20px;
+    top: 82px;
+    z-index: 102;
+  }
+  .hamburguer-menu img {
+    height: 1.75rem;
+  }
+  .hamburguer-menu button:focus {
+    outline: 0;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .hamburguer-menu {
+    right: 10px;
+  }
+}
+
+/* -------------------------------------------------- */
+
+.classroom-profile .navbar-brand {
+  font-family: 'testOnly', 'Montserrat', sans-serif;
+  font-size: 2.2rem;
+  line-height: 0;
+  margin-right: auto;
+  margin-top: 18px;
+  color: #373a40;
+  font-style: italic;
+}
+
+@media only screen and (max-width: 769px) {
+  .classroom-profile .navbar-brand {
+    margin-bottom: 2rem;
+    width: 100%;
+    text-align: center;
+  }
+  .classroom-profile .navbar-toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2rem 5%;
+  }
+}
+
+.h-navbar .classroom-profile {
+  background-color: #68b0ab;
+  box-shadow: 10px 1px 15px 2px rgba(128, 128, 128, 0.4);
+  border-bottom: none;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.h-navbar .classroom-profile a {
+  padding: 9px;
+}
+
+.h-navbar .classroom-profile .profile-pic {
+  border-radius: 50%;
+  height: 45px;
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width: 769px) {
+  .h-navbar .classroom-profile {
+    justify-content: flex-start;
+    box-shadow: 0px 0px 20px 2px rgba(128, 128, 128, 0.4);
+  }
+}
+@media only screen and (max-width: 769px) {
+  .h-navbar .classroom-profile {
+    padding: 10px 10px;
+  }
+  .h-navbar .classroom-profile .profile-pic {
+    height: 40px;
+    margin: auto 0;
+  }
+}
+
+.h-navbar .classroom-profile .dropdown-notifications {
+  width: 400px;
+  padding: 0;
+  box-shadow: 0px 0px 50px 0px rgba(128, 128, 128, 0.35);
+}
+@media only screen and (max-width: 500px) {
+  .h-navbar .classroom-profile .dropdown-notifications {
+    width: 97%;
+  }
+}
+
+.h-navbar .classroom-profile .notification.dropdown-item {
+  padding: 1rem 1.5rem;
+}
+
+.h-navbar .classroom-profile .notification {
+  margin: auto 0 auto 15px;
+}
+@media only screen and (max-width: 500px) {
+  .h-navbar .classroom-profile .notification {
+    margin: auto 0 auto 5px;
+  }
+}
+
+.h-navbar .classroom-profile .notification img {
+  height: 35px;
+}
+
+.h-navbar .classroom-profile .notification .text-muted {
+  font-size: 0.9rem;
+}
+
+.h-navbar .classroom-profile .notification .text-dark {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.h-navbar .classroom-profile .notificationDivImg {
+  max-height: 40px;
+  max-width: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #dfe3ec65;
+  box-shadow: 0px 0px 5px 0px rgba(128, 128, 128, 0.6) inset;
+}
+
+.h-navbar .classroom-profile .notificationDivImg img {
+  height: 20px;
+  display: block;
+  margin: 25% auto;
+}
+
+.h-navbar .classroom-profile .navSeparator {
+  height: 75%;
+  border-left: 2px solid #61646d73;
+  margin: auto 26px auto 20px;
+}
+@media only screen and (max-width: 769px) {
+  .h-navbar .classroom-profile .navSeparator {
+    margin: auto 15px auto 10px;
+    height: 30%;
+  }
+}

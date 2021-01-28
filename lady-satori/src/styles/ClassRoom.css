@@ -108,3 +108,21 @@
     height: 30%;
   }
 }
+
+.course_body {
+  width: 80%;
+  height: auto;
+  margin: 65px 0 auto 20%;
+}
+@media only screen and (max-width: 1200px) {
+  .course_body {
+    width: 75%;
+    margin: 65px 0 auto 25%;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .course_body {
+    margin: 132px 0 auto 0;
+    width: 100%;
+  }
+}

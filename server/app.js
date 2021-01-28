@@ -25,18 +25,14 @@ app.use(passport.session());
 
 // requiring and using routes
 app.use("/admin/aws", require("./admin/admin"));
-
 app.use("/admin/reset", require("./admin/passwordReset"));
-
 app.use("/admin/auth", require("./admin/auth"));
-
 app.use("/course", require("./admin/course"));
-
 app.use("/blog", require("./admin/blog"));
-
 app.use("/auth", require("./routes/auth"));
-
 app.use("/users", require("./routes/users"));
+app.use("/course/resources", require("./course/resources"));
+app.use("/course/videos", require("./course/videos"));
 
 app.get("/", rateLimiter.helloFriendSpeedLimiter, rateLimiter.helloFriendLimiter, (req, res) => {
   const hello = [];

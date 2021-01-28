@@ -33,6 +33,7 @@ router.route("/login").post(rateLimiter.loginSpeedLimiter, rateLimiter.loginLimi
           fName: user.Item.fName.S,
           lName: user.Item.lName.S,
           email: user.Item.email.S,
+          id: user.Item.id.S,
         };
 
         // Encrypt
@@ -57,9 +58,9 @@ router
   .route("/isLoggedIn")
   .get(rateLimiter.isLoggedInSpeedLimiter, rateLimiter.isLoggedInLimiter, verifyToken, (req, res) => {
     const decoded = req.user.payload;
-    if (decoded.googleID) {
+    if (decoded.authMethod === "Google") {
       ddb
-        .getUser({ key: { googleID: { S: decoded.googleID } }, table: "users_google" })
+        .getUser({ key: { googleID: { S: decoded.id } }, table: "users_google" })
         .then((user) => {
           if (!user.Item) {
             res.json({ isLoggedIn: false });
@@ -68,9 +69,9 @@ router
           }
         })
         .catch((err) => console.log(err));
-    } else if (decoded.facebookID) {
+    } else if (decoded.authMethod === "Facebook") {
       ddb
-        .getUser({ key: { facebookID: { S: decoded.facebookID } }, table: "users_facebook" })
+        .getUser({ key: { facebookID: { S: decoded.id } }, table: "users_facebook" })
         .then((user) => {
           if (!user.Item) {
             res.json({ isLoggedIn: false });
@@ -79,9 +80,9 @@ router
           }
         })
         .catch((err) => console.log(err));
-    } else if (decoded.twitterID) {
+    } else if (decoded.authMethod === "Twitter") {
       ddb
-        .getUser({ key: { twitterID: { S: decoded.twitterID } }, table: "users_twitter" })
+        .getUser({ key: { twitterID: { S: decoded.id } }, table: "users_twitter" })
         .then((user) => {
           if (!user.Item) {
             res.json({ isLoggedIn: false });
@@ -127,7 +128,7 @@ router.route("/google/redirect").get(
       .then((user) => {
         const payload = {
           authMethod: "Google",
-          googleID: user.Item.googleID.S,
+          id: user.Item.googleID.S,
           fName: user.Item.fName.S,
           lName: user.Item.lName.S,
           email: user.Item.email.S,
@@ -175,7 +176,7 @@ router.route("/facebook/redirect").get(
       .then((user) => {
         const payload = {
           authMethod: "Facebook",
-          facebookID: user.Item.facebookID.S,
+          id: user.Item.facebookID.S,
           username: user.Item.username.S,
           email: user.Item.email.S,
           picture: user.Item.picture.S,
@@ -224,7 +225,7 @@ router.route("/twitter/redirect").get(
       .then((user) => {
         const payload = {
           authMethod: "Twitter",
-          twitterID: user.Item.twitterID.S,
+          id: user.Item.twitterID.S,
           username: user.Item.username.S,
           picture: user.Item.picture.S,
         };
