@@ -3,7 +3,7 @@ import "tippy.js/dist/tippy.css";
 // import "tippy.js/themes/material.css";
 import "tippy.js/themes/light.css";
 import React from "react";
-import Axios from "axios";
+import axios from "axios";
 // import Error400 from "../Errors/Error400";
 import LoginFrame from "./LoginFrame";
 import RegisterFrame from "./RegisterFrame";
@@ -11,7 +11,7 @@ import emailValidator from "email-validator";
 import passwordValidator from "password-validator";
 import passwordBlacklist from "./passwordBlacklist";
 
-function LoginComponent(props) {
+function LoginComponent() {
   const [resetTooltip, setResetTooltip] = React.useState({
     notRegistered: false,
     invalid: false,
@@ -141,12 +141,14 @@ function LoginComponent(props) {
 
   const passwordReset = () => {
     if (emailValidator.validate(resetInput)) {
-      Axios.post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/password-reset",
-        {
-          email: resetInput,
-        }
-      )
+      axios
+        .post(
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/password-reset",
+          // "http://localhost:5000/users/password-reset",
+          {
+            email: resetInput,
+          }
+        )
         .then((res) => {
           if (res.data.validEmail === false) {
             alert("endereço de email inválido");
@@ -220,11 +222,12 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
-        // "http://localhost:5000/auth/login",
-        User
-      )
+      axios
+        .post(
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/login",
+          // "http://localhost:5000/auth/login",
+          User
+        )
         .then((res) => {
           if (res.data.state === false) {
             setLoginTooltip((prevValue) => {
@@ -245,11 +248,14 @@ function LoginComponent(props) {
           } else {
             if (loginCheckbox) {
               localStorage.setItem("auth-token", res.data.token);
+              sessionStorage.setItem("user_id", res.data.user_id);
               sessionStorage.removeItem("auth-token");
               console.log("you're logged");
               window.location.reload();
+              sessionStorage.setItem("user_id", res.data.user_id);
             } else {
               sessionStorage.setItem("auth-token", res.data.token);
+              sessionStorage.setItem("user_id", res.data.user_id);
               localStorage.removeItem("auth-token");
               console.log("you're logged");
               window.location.reload();
@@ -426,10 +432,12 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/checkEmail",
-        { email }
-      )
+      axios
+        .post(
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/checkEmail",
+          // "http://localhost:5000/users/checkEmail",
+          { email }
+        )
         .then((res) => {
           if (res.data.userExists === true) {
             setRegisterTooltip((prevValue) => {
@@ -486,10 +494,12 @@ function LoginComponent(props) {
         };
       });
     } else {
-      Axios.post(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/registration",
-        newUser
-      )
+      axios
+        .post(
+          "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users/registration",
+          // "http://localhost:5000/users/registration",
+          newUser
+        )
         .then((res) => {
           //
           //checks if the email is already registered
@@ -517,7 +527,7 @@ function LoginComponent(props) {
               alert("endereço de email inválido");
               setTimeout(() => {
                 window.location.reload();
-              }, 5000);
+              }, 5500);
 
               //check if the password fits the requirements
             } else if (res.data.validation.passwordError[0]) {
@@ -576,13 +586,15 @@ function LoginComponent(props) {
             //if any issue has been found, sets a cookie on local-storage
           } else {
             if (registerCheckbox) {
-              sessionStorage.removeItem("auth-token");
               localStorage.setItem("auth-token", res.data.token);
+              sessionStorage.setItem("user_id", res.data.user_id);
+              sessionStorage.removeItem("auth-token");
               console.log("you're logged");
               window.location.reload();
             } else {
-              localStorage.removeItem("auth-token");
               sessionStorage.setItem("auth-token", res.data.token);
+              sessionStorage.setItem("user_id", res.data.user_id);
+              localStorage.removeItem("auth-token");
               console.log("you're logged");
               window.location.reload();
             }

@@ -26,6 +26,7 @@ function UpdatePost(props) {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/update-post/" +
+          // "http://localhost:5000/blog/update-post/" + ///////////////////////////////////
           updatedPost.key,
         updatedPost,
         {

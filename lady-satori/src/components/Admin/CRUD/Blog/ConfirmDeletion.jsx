@@ -7,6 +7,7 @@ const ConfirmDeletion = (props) => {
 
     Axios.delete(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/delete-post",
+      // "http://localhost:5000/blog/delete-post",
       {
         data: { key: props.postKey },
         headers: { Authorization: sessionToken },

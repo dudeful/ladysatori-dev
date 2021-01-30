@@ -16,6 +16,7 @@ function AddNewPost(props) {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/new-post",
+        // "http://localhost:5000/blog/new-post",
         newPost,
         {
           headers: { Authorization: sessionToken },

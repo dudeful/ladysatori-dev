@@ -15,6 +15,7 @@ function AddNewLesson(props) {
     axios
       .get(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/get-modules"
+        // "http://localhost:5000/course/get-modules"
       )
       .then((res) => {
         console.log(res.data);
@@ -35,6 +36,7 @@ function AddNewLesson(props) {
       axios
         .get(
           "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/isLoggedIn",
+          // "http://localhost:5000/admin/auth/isLoggedIn",
           {
             headers: { Authorization: sessionToken },
           }
@@ -54,6 +56,7 @@ function AddNewLesson(props) {
                 axios
                   .post(
                     "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/video",
+                    // "http://localhost:5000/course/video",
                     {
                       keys: {
                         module_id: inputs.module_id,
@@ -113,9 +116,14 @@ function AddNewLesson(props) {
       })
       .then((resources) => {
         axios
-          .post("http://localhost:5000/course/resources", resources, {
-            headers: { Authorization: sessionToken },
-          })
+          .post(
+            "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/resources",
+            // "http://localhost:5000/course/resources",
+            resources,
+            {
+              headers: { Authorization: sessionToken },
+            }
+          )
           .then((res) => {
             if (res.data.error) {
               console.log(res.data);

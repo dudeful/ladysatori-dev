@@ -53,7 +53,7 @@ function App() {
           <Route path="/login" component={Login} exact />
 
           <Route
-            path="/SocialAuth/:original_url/:auth_token"
+            path="/SocialAuth/:original_url/:user_id/:auth_token"
             component={SocialAuth}
             exact
           />

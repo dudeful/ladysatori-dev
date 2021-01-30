@@ -23,6 +23,7 @@ const ProtectedRoute = (props) => {
   React.useEffect(() => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
+      // "http://localhost:5000/auth/isLoggedIn",
       {
         headers: { Authorization: authToken() },
       }
@@ -56,6 +57,7 @@ const AdminRoute = (props) => {
   React.useEffect(() => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/isLoggedIn",
+      // "http://localhost:5000/admin/auth/isLoggedIn",
       {
         headers: { Authorization: sessionToken },
       }

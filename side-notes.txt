@@ -1,6 +1,6 @@
 oOHjMlZJwGDpa0pt
 https://advancedweb.hu/how-to-use-s3-post-signed-urls/
-https://master.d9cbpby23ue80.amplifyapp.com/
+https://ladysatori.dudeful.com/
 https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev
 https://material-ui.com/components/material-icons/
 https://wistia.com/series/one-ten-one-hundred

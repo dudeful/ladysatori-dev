@@ -10,7 +10,7 @@ const DashboardBlog = () => {
         <br />
         <i>esta seção ficará pronta em:</i>
       </div>
-      <Countdown endTime={Date.UTC(2021, 1, 10, 12, 0, 0, 0)} />
+      <Countdown endTime={Date.UTC(2021, 1, 15, 12, 0, 0, 0)} />
     </div>
   );
 };

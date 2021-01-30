@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const HorizontalNav = () => {
   const logout = () => {
     sessionStorage.removeItem("auth-token");
+    sessionStorage.removeItem("user_id");
     localStorage.removeItem("auth-token");
     window.location.assign("/");
   };

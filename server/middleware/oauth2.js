@@ -87,6 +87,7 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/google/redirect",
+      // callbackURL: "http://localhost:5000/auth/google/redirect",
       // passReqToCallback: true, // allows us to pass in the req from our route
     },
     (accessToken, refreshToken, profile, done) => {

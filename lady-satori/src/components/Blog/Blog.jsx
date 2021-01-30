@@ -13,6 +13,7 @@ const Blog = () => {
   React.useEffect(() => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/aws"
+      // "http://localhost:5000/amin/aws"
     )
       .then((res) => {
         //

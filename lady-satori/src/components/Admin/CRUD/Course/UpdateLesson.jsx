@@ -7,7 +7,7 @@ import Course from "../../Course";
 function UpdateLesson(props) {
   //use the url path to get the article object which will be rendered.
   const [{ data, loading, error }] = useAxios(
-    "https://d1or0rfi63vb4e.cloudfront.net/" + props.props.key
+    "https://dcp2jmsc5uert.cloudfront.net/" + props.props.key
   );
 
   //handles loading delay and bad requests (400) errors.
@@ -26,6 +26,7 @@ function UpdateLesson(props) {
     axios
       .post(
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/update-lesson/" +
+          // "http://localhost:5000/course/update-lesson/" + ///////////////////////////////////
           props.props.key,
         briefing,
         {

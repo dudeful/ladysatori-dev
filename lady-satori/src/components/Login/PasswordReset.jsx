@@ -25,8 +25,8 @@ const PasswordReset = () => {
 
   //get the user object on the server
   const [{ data, loading, error }] = useAxios(
-    // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users" +
     "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev" +
+      // "http://localhost:5000/" + ///////////////////////////////////
       window.location.pathname
   );
 
@@ -204,8 +204,8 @@ const PasswordReset = () => {
     } else {
       axios
         .patch(
-          // "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/users" +
           "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev" +
+            // "http://localhost:5000/" + //////////////////////////////////
             window.location.pathname,
           resetData
         )
