@@ -10,19 +10,26 @@ const ProtectedRoute = (props) => {
   const [authStatus, setAuthStatus] = React.useState("");
   const [authError, setAuthError] = React.useState({ data: "", status: "" });
 
-  const localToken = localStorage.getItem("auth-token");
-  const sessionToken = sessionStorage.getItem("auth-token");
+  const authToken = () => {
+    if (localStorage.getItem("auth-token")) {
+      return localStorage.getItem("auth-token");
+    } else if (sessionStorage.getItem("auth-token")) {
+      return sessionStorage.getItem("auth-token");
+    } else {
+      return false;
+    }
+  };
 
   React.useEffect(() => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/auth/isLoggedIn",
       {
-        headers: { localToken, sessionToken },
+        headers: { Authorization: authToken() },
       }
     )
       .then((res) => setAuthStatus(res.data))
       .catch((err) => setAuthError({ data: err, status: err.response.status }));
-  }, [localToken, sessionToken]);
+  }, []);
 
   if (authStatus.isLoggedIn === true) {
     return props.component;
@@ -50,7 +57,7 @@ const AdminRoute = (props) => {
     Axios.get(
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/isLoggedIn",
       {
-        headers: { sessionToken },
+        headers: { Authorization: sessionToken },
       }
     )
       .then((res) => setAuthStatus(res.data))

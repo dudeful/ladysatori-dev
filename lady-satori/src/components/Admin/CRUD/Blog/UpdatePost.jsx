@@ -29,7 +29,7 @@ function UpdatePost(props) {
           updatedPost.key,
         updatedPost,
         {
-          headers: { sessionToken },
+          headers: { Authorization: sessionToken },
         }
       )
       .then((res) => {

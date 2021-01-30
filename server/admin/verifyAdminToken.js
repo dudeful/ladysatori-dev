@@ -5,8 +5,13 @@ function verifyAdminToken(req, res, next) {
   //
   let sessionToken;
 
-  if (req.headers.sessiontoken != "null" && req.headers.sessiontoken != "undefined") {
-    sessionToken = req.headers.sessiontoken;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization != "null" &&
+    req.headers.authorization != "undefined" &&
+    req.headers.authorization != "false"
+  ) {
+    sessionToken = req.headers.authorization;
   } else {
     sessionToken = false;
   }

@@ -9,7 +9,7 @@ const ConfirmDeletion = (props) => {
       "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/delete-post",
       {
         data: { key: props.postKey },
-        headers: { sessionToken },
+        headers: { Authorization: sessionToken },
       }
     )
       .then((res) => {

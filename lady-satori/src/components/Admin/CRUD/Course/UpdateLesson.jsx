@@ -29,7 +29,7 @@ function UpdateLesson(props) {
           props.props.key,
         briefing,
         {
-          headers: { sessionToken },
+          headers: { Authorization: sessionToken },
         }
       )
       .then((res) => {

@@ -18,7 +18,7 @@ function AddNewPost(props) {
         "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/blog/new-post",
         newPost,
         {
-          headers: { sessionToken },
+          headers: { Authorization: sessionToken },
         }
       )
       .then((res) => {

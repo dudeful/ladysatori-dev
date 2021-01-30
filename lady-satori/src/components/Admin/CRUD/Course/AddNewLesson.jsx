@@ -36,7 +36,7 @@ function AddNewLesson(props) {
         .get(
           "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/admin/auth/isLoggedIn",
           {
-            headers: { sessionToken },
+            headers: { Authorization: sessionToken },
           }
         )
         .then((res) => {
@@ -114,7 +114,7 @@ function AddNewLesson(props) {
       .then((resources) => {
         axios
           .post("http://localhost:5000/course/resources", resources, {
-            headers: { sessionToken },
+            headers: { Authorization: sessionToken },
           })
           .then((res) => {
             if (res.data.error) {
