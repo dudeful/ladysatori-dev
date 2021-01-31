@@ -1,9 +1,9 @@
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/material.css";
 import "tippy.js/themes/light.css";
+import Tippy from "@tippyjs/react";
 import DOMPurify from "dompurify";
 import draftToHtml from "draftjs-to-html";
-import Tippy from "@tippyjs/react";
 import date from "./DateCalculator";
 import QuestionInput from "./QuestionInput";
 import UpdateQuestion from "./UpdateQuestion";
@@ -191,7 +191,6 @@ const LessonResourcesNav = (props) => {
           {props.resources.questions && !props.intro ? (
             props.resources.questions.map((question) => {
               const color = colors[Math.floor(Math.random() * 29)];
-              console.log(question);
               return (
                 <div
                   key={question.question_id}
@@ -218,18 +217,38 @@ const LessonResourcesNav = (props) => {
                       </span>
                     )}
                     <Tippy
+                      allowHTML={true}
+                      hideOnClick={false}
                       disabled={question.answer ? false : true}
                       theme="light"
+                      className="tippy_answer"
                       content={
-                        <div className="lesson_resources_picture row p-2 m-0">
-                          <img
-                            className="col-2 p-0 m-0"
-                            src={question.answer ? question.answer.picture : ""}
-                            alt="..."
-                          />
-                          <div className="col-10 ml-auto pl-2 text-dark">
-                            {question.answer ? question.answer.body : ""}
-                          </div>
+                        <div>
+                          {question.answer ? (
+                            <div className="p-2">
+                              <div className="lesson_resources_picture row m-0 mb-3">
+                                <img
+                                  className="col-2 p-0 m-0"
+                                  src={
+                                    question.answer.picture
+                                      ? question.answer.picture
+                                      : "/images/profile-pic.png"
+                                  }
+                                  alt="..."
+                                />
+                                <div className="question_answer_body col-10 ml-auto pl-3">
+                                  {question.answer.body}
+                                </div>
+                              </div>
+                              <div className="text-muted text-right">
+                                <i>
+                                  respondido {date(question.answer.answeredAt)}
+                                </i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       }
                     >
@@ -238,14 +257,14 @@ const LessonResourcesNav = (props) => {
                       </div>
                     </Tippy>
                   </div>
-                  <div className="col-sm-11 col-10 ml-auto pl-2 pr-2">
+                  <div className="col-sm-11 col-10 user_question">
                     <div className="lesson_resources_question_title row p-0 m-0">
-                      <span className="col-10 p-0">
+                      <span className="col-9 col-sm-10 p-0">
                         {question.question.title}
                       </span>
                       {question.user_id ===
                       sessionStorage.getItem("user_id") ? (
-                        <div className="col-2 row p-0 m-0">
+                        <div className="col-3 col-sm-2 row p-0 m-0">
                           <button
                             onClick={() =>
                               document
@@ -254,15 +273,34 @@ const LessonResourcesNav = (props) => {
                             }
                             className="btn text-warning col-6 p-0 mt-0"
                           >
-                            <small>edit</small>
+                            <small>editar</small>
                           </button>
                           <button
                             onClick={() => deleteQuestion(question)}
                             className="btn text-danger col-6 p-0 mt-0"
                           >
-                            <small>delete</small>
+                            <small>deletar</small>
                           </button>
                         </div>
+                      ) : (
+                        ""
+                      )}
+                      {props.adminPanel ? (
+                        <button
+                          onClick={() => props.answerQuestion(question)}
+                          data-toggle="modal"
+                          data-target="#answerQuestionModal"
+                          className={
+                            "btn p-0 col-3 col-sm-2 " +
+                            (question.answer ? "text-muted" : "text-success")
+                          }
+                        >
+                          <small>
+                            <u>
+                              <b>{question.answer ? "editar" : "responder"}</b>
+                            </u>
+                          </small>
+                        </button>
                       ) : (
                         ""
                       )}

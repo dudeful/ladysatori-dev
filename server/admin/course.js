@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const S3 = require("aws-sdk/clients/s3");
 const s3 = new S3({ apiVersion: "2006-03-01" });
+const CF = require("aws-sdk/clients/cloudfront");
+const cloudFront = new CF();
 const rateLimiter = require("../middleware/rateLimiter");
 const verifyAdminToken = require("./verifyAdminToken");
 const existingKey = require("../middleware/existingKey");
@@ -129,5 +131,110 @@ router.route("/get-modules").get((req, res) => {
       console.log(err);
     });
 });
+
+router
+  .route("/resources/submit-answer")
+  .post(rateLimiter.answerQuestionSpeedLimiter, rateLimiter.answerQuestionLimiter, verifyAdminToken, (req, res) => {
+    if (!req.body.answer) {
+      res.json({ error: true, reason: "There is no answer in the body request" });
+    } else {
+      const question = {
+        question_id: req.body.question.question_id,
+        user_id: req.body.question.user_id,
+        date: req.body.question.date,
+        lastUpdated: req.body.question.lastUpdated,
+        fName: req.body.question.fName,
+        lName: req.body.question.lName,
+        picture: req.body.question.picture,
+        question: req.body.question.question,
+        answer: {
+          body: req.body.answer,
+          answeredAt: new Date().toISOString(),
+          picture: req.user.payload.picture,
+        },
+        key: req.body.question.key,
+      };
+
+      const params = {
+        Body: Buffer.from(JSON.stringify(question), "utf-8"),
+        Bucket: "lady-satori-course",
+        Key: req.body.question.key,
+      };
+
+      s3.putObject(params)
+        .promise()
+        .then(() => {
+          const params = {
+            DistributionId: "E2Q2T23GVGA6GN",
+            InvalidationBatch: {
+              CallerReference: Date.now().toString(),
+              Paths: {
+                Quantity: 1,
+                Items: ["/" + req.body.question.key],
+              },
+            },
+          };
+
+          cloudFront.createInvalidation(params, (err, data) => {
+            if (err) console.log(err, err.stack);
+            else console.log("Data: " + JSON.stringify(data));
+          });
+        })
+        .then((data) => res.json({ data, success: true }))
+        .catch((err) => {
+          console.log(err);
+          res.json({ err, success: false });
+        });
+    }
+  });
+
+router
+  .route("/resources/delete-answer")
+  .post(rateLimiter.answerQuestionSpeedLimiter, rateLimiter.answerQuestionLimiter, verifyAdminToken, (req, res) => {
+    if (req.body.deleteAnswer) {
+      const question = {
+        question_id: req.body.question.question_id,
+        user_id: req.body.question.user_id,
+        date: req.body.question.date,
+        lastUpdated: req.body.question.lastUpdated,
+        fName: req.body.question.fName,
+        lName: req.body.question.lName,
+        picture: req.body.question.picture,
+        question: req.body.question.question,
+        key: req.body.question.key,
+      };
+
+      const params = {
+        Body: Buffer.from(JSON.stringify(question), "utf-8"),
+        Bucket: "lady-satori-course",
+        Key: req.body.question.key,
+      };
+
+      s3.putObject(params)
+        .promise()
+        .then(() => {
+          const params = {
+            DistributionId: "E2Q2T23GVGA6GN",
+            InvalidationBatch: {
+              CallerReference: Date.now().toString(),
+              Paths: {
+                Quantity: 1,
+                Items: ["/" + req.body.question.key],
+              },
+            },
+          };
+
+          cloudFront.createInvalidation(params, (err, data) => {
+            if (err) console.log(err, err.stack);
+            else console.log("Data: " + JSON.stringify(data));
+          });
+        })
+        .then((data) => res.json({ data, success: true }))
+        .catch((err) => {
+          console.log(err);
+          res.json({ err, success: false });
+        });
+    }
+  });
 
 module.exports = router;

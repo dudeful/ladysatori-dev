@@ -190,7 +190,9 @@ const VerticalNav = (props) => {
 const HorizontalNav = () => {
   const logout = () => {
     sessionStorage.removeItem("auth-token");
+    sessionStorage.removeItem("user_id");
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("user_id");
     window.location.assign("/");
   };
 

@@ -6,6 +6,7 @@ const HorizontalNav = () => {
     sessionStorage.removeItem("auth-token");
     sessionStorage.removeItem("user_id");
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("user_id");
     window.location.assign("/");
   };
 
@@ -131,8 +132,8 @@ const HorizontalNav = () => {
           className="navbar-toggler border-0 m-0 pr-2 pl-2"
           type="button"
           data-toggle="collapse"
-          data-target="#navbarVNavDropdown"
-          aria-controls="navbarVNavDropdown"
+          data-target="#navbarVNavDropdown_course"
+          aria-controls="navbarVNavDropdown_course"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >

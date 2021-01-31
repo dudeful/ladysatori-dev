@@ -94,6 +94,22 @@
   margin-top: 12px;
 }
 
+.tippy_answer {
+  min-width: 450px;
+}
+
+@media only screen and (max-width: 575px) {
+  .tippy_answer {
+    min-width: 95vw;
+  }
+}
+
+.question_answer_body {
+  font-size: 16px;
+  line-height: 20px;
+  color: #373a40;
+}
+
 .answered .lesson_resources_picture .fas-icon {
   color: #ec6565cb;
 }
@@ -104,10 +120,15 @@
   margin: auto;
   height: 45px;
   max-width: 45px;
+  width: 45px;
   border-radius: 50%;
   text-align: center;
   line-height: 45px;
   box-shadow: 0px 0px 12px 0px rgba(128, 128, 128, 0.25);
+}
+
+.user_question {
+  padding: 0 10px;
 }
 
 .lesson_resources_question_title {

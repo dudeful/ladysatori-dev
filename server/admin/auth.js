@@ -124,7 +124,7 @@ router.route("/google/redirect").get(
           // req.session.token = token;
           // console.log(req.session);
           // res.redirect('https://ladysatori.dudeful.com/SocialAuth/' + original_url + '/' + token);
-          res.redirect("https://ladysatori.dudeful.com/SocialAuth/" + original_url + "/" + token);
+          res.redirect("https://ladysatori.dudeful.com/SocialAuth/" + original_url + "/" + payload.id + "/" + token);
         });
       })
       .catch((err) => {

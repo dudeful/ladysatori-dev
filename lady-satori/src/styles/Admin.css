@@ -329,6 +329,28 @@
   }
 }
 
+.course-admin .v-navbar {
+  width: 16.66%;
+  left: 16.65%;
+  background-color: #373a402d;
+}
+@media only screen and (max-width: 1200px) {
+  .course-admin .v-navbar {
+    width: 18.75%;
+    left: 25%;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .course-admin .user_question {
+    padding-left: 30px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .course-admin .user_question {
+    padding-left: 10px;
+  }
+}
+
 /* ----------------------- modal ------------------------ */
 
 .modal {

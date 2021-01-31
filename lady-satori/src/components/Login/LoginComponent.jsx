@@ -247,16 +247,17 @@ function LoginComponent() {
             console.log("wrong password");
           } else {
             if (loginCheckbox) {
-              localStorage.setItem("auth-token", res.data.token);
-              sessionStorage.setItem("user_id", res.data.user_id);
               sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user_id");
+              localStorage.setItem("auth-token", res.data.token);
+              localStorage.setItem("user_id", res.data.user_id);
               console.log("you're logged");
               window.location.reload();
-              sessionStorage.setItem("user_id", res.data.user_id);
             } else {
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user_id");
               sessionStorage.setItem("auth-token", res.data.token);
               sessionStorage.setItem("user_id", res.data.user_id);
-              localStorage.removeItem("auth-token");
               console.log("you're logged");
               window.location.reload();
             }

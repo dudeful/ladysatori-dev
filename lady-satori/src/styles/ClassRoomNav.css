@@ -101,7 +101,7 @@
     transition: left 0ms ease;
   }
 
-  #navbarVNavDropdown {
+  #navbarVNavDropdown_course {
     transition: left 300ms ease;
   }
 }
@@ -150,7 +150,7 @@
 /* -------------------------------------------------- */
 
 .classroom-profile .navbar-brand {
-  font-family: 'testOnly', 'Montserrat', sans-serif;
+  font-family: "testOnly", "Montserrat", sans-serif;
   font-size: 2.2rem;
   line-height: 0;
   margin-right: auto;

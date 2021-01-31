@@ -174,6 +174,17 @@ const addLessonSpeedLimiter = slowDown({
   delayMs: 300,
 });
 
+const answerQuestionLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: 20,
+});
+
+const answerQuestionSpeedLimiter = slowDown({
+  windowMs: 5 * 60 * 1000,
+  delayAfter: 10,
+  delayMs: 300,
+});
+
 module.exports = {
   helloFriendLimiter,
   helloFriendSpeedLimiter,
@@ -205,4 +216,6 @@ module.exports = {
   addPostSpeedLimiter,
   addLessonLimiter,
   addLessonSpeedLimiter,
+  answerQuestionLimiter,
+  answerQuestionSpeedLimiter,
 };

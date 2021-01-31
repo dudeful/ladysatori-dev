@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Tippy from "@tippyjs/react";
+// import Loading from "../../Errors/Loading";
 
 const UpdateQuestion = (props) => {
   const [question, setQuestion] = useState({
@@ -63,6 +64,9 @@ const UpdateQuestion = (props) => {
             document
               .getElementById(props.question.question_id + "_edit")
               .classList.toggle("d-none");
+            alert(
+              "As alterações podem levar alguns segundos para serem propagadas"
+            );
             props.fetchQuestions(props.prefix);
           }
         })

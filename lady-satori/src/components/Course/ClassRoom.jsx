@@ -4,8 +4,9 @@ import axios from "axios";
 import Loading from "../Errors/Loading";
 import ClassRoomNav from "./Nav/ClassRoomNav";
 import Lesson from "./Lesson";
+import AnswerQuestion from "../Admin/AnswerQuestion";
 
-const ClassRoom = () => {
+const ClassRoom = (props) => {
   const [lessonURL, setLessonURL] = useState({
     intro: "d-none",
     active: "active",
@@ -166,24 +167,37 @@ const ClassRoom = () => {
       .catch((err) => console.log(err));
   };
 
+  const [question, setQuestion] = useState("");
+
+  const answerQuestion = (question) => {
+    setQuestion(question);
+  };
+
   if (!modules || !lessons || !resources) {
     return <Loading />;
   } else
     return (
       <div>
         <ClassRoomNav
+          adminPanel={props.adminPanel}
           lessons={lessons}
           currentLesson={currentLesson}
           modules={modules}
         />
         <div className="course_body">
           <Lesson
+            adminPanel={props.adminPanel}
+            answerQuestion={answerQuestion}
             lessonURL={lessonURL}
             resources={resources}
             fetchQuestions={fetchQuestions}
           />
-          <div className="text-center"></div>
         </div>
+        <AnswerQuestion
+          prefix={resources.prefix}
+          fetchQuestions={fetchQuestions}
+          question={question}
+        />
       </div>
     );
 };
