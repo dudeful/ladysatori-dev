@@ -191,6 +191,7 @@ const LessonResourcesNav = (props) => {
           {props.resources.questions && !props.intro ? (
             props.resources.questions.map((question) => {
               const color = colors[Math.floor(Math.random() * 29)];
+              console.log(question);
               return (
                 <div
                   key={question.question_id}
@@ -279,9 +280,20 @@ const LessonResourcesNav = (props) => {
                     <br />
                     <div className="lesson_resources_details">
                       <span className="text-info">
-                        {question.fName + " " + question.lName} &#xB7;{" "}
+                        {question.fName + " " + question.lName}
                       </span>
-                      <span className="text-muted">{date(question.date)}</span>
+                      <span className="text-dark"> &#xB7; </span>
+                      <span className="text-muted">
+                        {date(question.date)}
+                      </span>{" "}
+                      {question.lastUpdated ? (
+                        <span className="text-muted">
+                          <span className="text-dark">&#xB7; </span>
+                          <u>editado {date(question.lastUpdated)}</u>
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <hr />
                   </div>
