@@ -4,6 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import PreviewModal from "../PreviewModal";
+import { PostIncompleteModal } from "../PostIncompleteModal";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
   // set all elements owning target to target=_blank
@@ -19,7 +20,7 @@ const getHtml = (editorState) =>
 const DraftEditor = (props) => {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
-      convertFromRaw(JSON.parse(props.resources.briefing.body))
+      convertFromRaw(JSON.parse(props.resources.about.body))
     )
   );
 
@@ -28,7 +29,7 @@ const DraftEditor = (props) => {
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
 
-    props.setBriefing(convertToRaw(editorState.getCurrentContent()));
+    props.setAbout(convertToRaw(editorState.getCurrentContent()));
   };
 
   // --------------------- confirm alert ---------------------
@@ -50,7 +51,7 @@ const DraftEditor = (props) => {
           className="mb-0 p-1 rounded-top text-dark"
           style={{ backgroundColor: "#68b0ab" }}
         >
-          Briefing
+          Sobre
         </h2>
         <Editor
           editorState={editorState}
@@ -58,7 +59,7 @@ const DraftEditor = (props) => {
           editorClassName="demo-editor"
           toolbarClassName="draftEditor-toolbar rounded-0"
           onEditorStateChange={onEditorStateChange}
-          placeholder="Toda boa aula começa com um bom briefing..."
+          placeholder="É sempre bom saber sobre o curso que se está prestes a fazer, não é?"
           toolbar={{
             options: [
               "inline",
@@ -120,15 +121,25 @@ const DraftEditor = (props) => {
         <button
           className="btn btn-info"
           data-toggle="modal"
-          data-target="#briefingPreview"
+          data-target="#aboutPreview"
         >
-          Preview <b>Briefing</b>
+          Preview <b>Sobre</b>
+        </button>
+        <button
+          onClick={props.submit}
+          type="button"
+          data-toggle={props.validationModal.active}
+          data-target="#postIncompleteLessonModal"
+          className="btn btn-outline-warning ml-3"
+        >
+          PUBLICAR
         </button>
       </div>
       <PreviewModal
-        id={"briefingPreview"}
+        id={"aboutPreview"}
         body={DOMPurify.sanitize(getHtml(editorState))}
       />
+      <PostIncompleteModal msg={props.validationModal.msg} />
     </div>
   );
 };

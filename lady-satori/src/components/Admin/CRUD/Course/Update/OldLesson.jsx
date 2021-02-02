@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import Loading from "../../../../Errors/Loading";
 import OldLessonResources from "./OldLessonResources";
 import BriefingDraftEditor from "./BriefingDraftEditor";
+import AboutDraftEditor from "./AboutDraftEditor";
 
 const OldLesson = (props) => {
   const [loading, setLoading] = useState(true);
   const [video, setVideo] = useState("");
   const [briefing, setBriefing] = useState("");
+  const [about, setAbout] = useState("");
   const [complements, setComplements] = useState("");
 
   useEffect(() => {
@@ -30,6 +32,10 @@ const OldLesson = (props) => {
   // --------------------- VALIDATION ----------------------
   const checkInputs = () => {
     if (briefing === "") {
+      setValidationModal(fillModal.emptyBriefing);
+      return false;
+    } else if (about === "") {
+      setValidationModal(fillModal.emptyAbout);
       return false;
     } else if (
       briefing.blocks.length === 1 &&
@@ -39,6 +45,17 @@ const OldLesson = (props) => {
       briefing.blocks[3].text === "" &&
       briefing.blocks[4].text === ""
     ) {
+      setValidationModal(fillModal.emptyBriefing);
+      return false;
+    } else if (
+      about.blocks.length === 1 &&
+      about.blocks[0].text === "" &&
+      about.blocks[1].text === "" &&
+      about.blocks[2].text === "" &&
+      about.blocks[3].text === "" &&
+      about.blocks[4].text === ""
+    ) {
+      setValidationModal(fillModal.emptyAbout);
       return false;
     } else {
       return true;
@@ -46,20 +63,29 @@ const OldLesson = (props) => {
   };
 
   const fillModal = {
-    emptyFields: {
+    emptyBriefing: {
       active: "modal",
       msg: {
         title: "Existem campos vazios!",
         body: (
           <span>
-            Parece que você esqueceu de preencher o Briefing &#129488;
+            Parece que você esqueceu de preencher o 'Briefing' &#129488;
           </span>
+        ),
+      },
+    },
+    emptyAbout: {
+      active: "modal",
+      msg: {
+        title: "Existem campos vazios!",
+        body: (
+          <span>Parece que você esqueceu de preencher o 'Sobre' &#129488;</span>
         ),
       },
     },
     allGood: { active: "", msg: { title: "", body: "" } },
   };
-  const [validationModal, setValidationModal] = useState(fillModal.emptyFields);
+  const [validationModal, setValidationModal] = useState(fillModal.allGood);
 
   // ------------------- submit ---------------------
   const submit = () => {
@@ -67,11 +93,10 @@ const OldLesson = (props) => {
       setValidationModal(fillModal.allGood);
       props.getInputs({
         briefing: briefing,
+        about: about,
         complements: complements,
         video: video,
       });
-    } else {
-      setValidationModal(fillModal.emptyFields);
     }
   };
 
@@ -136,8 +161,13 @@ const OldLesson = (props) => {
         <BriefingDraftEditor
           resources={props.resources}
           setBriefing={setBriefing}
+        />
+
+        <AboutDraftEditor
+          resources={props.resources}
+          setAbout={setAbout}
           validationModal={validationModal}
-          submit={() => submit()}
+          submit={submit}
         />
       </div>
     );

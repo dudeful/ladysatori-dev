@@ -4,7 +4,7 @@ const PreviewModal = (props) => {
   return (
     <div
       className="modal fade"
-      id="previewModalLesson"
+      id={props.id}
       tabIndex="-1"
       role="dialog"
       aria-hidden="true"
