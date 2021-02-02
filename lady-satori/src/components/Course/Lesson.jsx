@@ -1,7 +1,7 @@
 import "../../styles/Lesson.css";
 import { useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
-import LessonResourcesNav from "./Nav/LessonResourcesNav";
+import LessonResourcesNav from "./Nav/Resources/LessonResourcesNav";
 
 const Lesson = (props) => {
   const player = useRef();

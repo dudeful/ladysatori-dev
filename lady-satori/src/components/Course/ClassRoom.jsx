@@ -12,7 +12,7 @@ const ClassRoom = (props) => {
     active: "active",
     video: "https://www.youtube.com/watch?v=4Myyq6BcKHs",
   });
-  const [resources, setResources] = useState({ about: "hello friend" });
+  const [resources, setResources] = useState("");
   const [lessons, setLessons] = useState("");
   const [modules, setModules] = useState("");
 
@@ -80,6 +80,19 @@ const ClassRoom = (props) => {
           });
         });
       })
+      .then(() => {
+        axios
+          .get("https://dcp2jmsc5uert.cloudfront.net/resources/about")
+          .then((res) => {
+            setResources((prev) => {
+              return {
+                ...prev,
+                about: res.data,
+              };
+            });
+          })
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -115,7 +128,8 @@ const ClassRoom = (props) => {
             };
           });
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const currentLesson = (prefix) => {
@@ -164,11 +178,23 @@ const ClassRoom = (props) => {
           })
           .catch((err) => console.log(err));
       })
+      .then(() => {
+        Array.from(document.getElementsByClassName("inactivate_tab")).forEach(
+          (el) => {
+            el.classList.remove("active");
+            el.classList.remove("show");
+          }
+        );
+
+        document.getElementById("briefing-tab").classList.add("active");
+        const briefing = document.getElementById("briefing");
+        briefing.classList.add("show");
+        briefing.classList.add("active");
+      })
       .catch((err) => console.log(err));
   };
 
   const [question, setQuestion] = useState("");
-
   const answerQuestion = (question) => {
     setQuestion(question);
   };
