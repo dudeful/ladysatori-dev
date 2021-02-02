@@ -1,5 +1,3 @@
-import { indexOf } from "lodash";
-
 const OldLessonResources = (props) => {
   ///////////////////--- DEAL WITH COMPLEMENTS ---/////////////////////
   const titleComplementHandler = (e) => {
@@ -93,7 +91,7 @@ const OldLessonResources = (props) => {
         <div id="complements-inputs" className="p-0 complements-inputs">
           {props.resources.complements.body.map((complement) => {
             const index =
-              indexOf(props.resources.complements.body, complement) + 1;
+              props.resources.complements.body.indexOf(complement) + 1;
             return (
               <div
                 key={complement.title + complement.link}

@@ -133,11 +133,12 @@ const OldLesson = (props) => {
           resources={props.resources}
         />
 
-        {/* <BriefingDraftEditor
-        setBriefing={setBriefing}
-        validationModal={validationModal}
-        submit={() => submit()}
-      /> */}
+        <BriefingDraftEditor
+          resources={props.resources}
+          setBriefing={setBriefing}
+          validationModal={validationModal}
+          submit={() => submit()}
+        />
       </div>
     );
   }

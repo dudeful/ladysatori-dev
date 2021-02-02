@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
@@ -18,7 +18,11 @@ const getHtml = (editorState) =>
   draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
 const DraftEditor = (props) => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      convertFromRaw(JSON.parse(props.resources.briefing.body))
+    )
+  );
 
   // --------------------- handle inputs ---------------------
 
