@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
-import PreviewModal from "./PreviewModal";
-import { PostIncompleteModal } from "./PostIncompleteModal";
+import PreviewModal from "../PreviewModal";
+import { PostIncompleteModal } from "../PostIncompleteModal";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
   // set all elements owning target to target=_blank
@@ -17,85 +17,30 @@ DOMPurify.addHook("afterSanitizeAttributes", function (node) {
 const getHtml = (editorState) =>
   draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-function UpdateDraftEditor(props) {
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(
-      convertFromRaw(JSON.parse(props.postData.body))
-    )
-  );
+const DraftEditor = (props) => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   // --------------------- handle inputs ---------------------
+
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
 
-    setBriefing(convertToRaw(editorState.getCurrentContent()));
+    props.setBriefing(convertToRaw(editorState.getCurrentContent()));
   };
-
-  const [briefing, setBriefing] = useState(JSON.parse(props.postData.body));
-
-  const videoLesson = () => {};
 
   // --------------------- confirm alert ---------------------
 
-  function beforeUnload(event) {
+  window.addEventListener("beforeunload", (event) => {
     // Cancel the event as stated by the standard.
     event.preventDefault();
     // Older browsers supported custom message
     event.returnValue = false;
-  }
+  });
 
-  window.addEventListener("beforeunload", beforeUnload);
-
-  // --------------------- check inputs ----------------------
-
-  const checkInputs = () => {
-    if (briefing === "") {
-      return false;
-    } else if (
-      briefing.blocks.length === 1 &&
-      briefing.blocks[0].text === "" &&
-      briefing.blocks[1].text === ""
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  // ------------------- submit --------------------
-
-  const [validationModal, setValidationModal] = useState("modal");
-
-  const submit = () => {
-    if (checkInputs() === true) {
-      setValidationModal("");
-      props.getInputs(briefing);
-    } else {
-      setValidationModal("modal");
-    }
-  };
+  //-------------------- return ---------------------
 
   return (
-    <div className="draftEditor">
-      <div className="input-group mb-2">
-        <div className="input-group-prepend">
-          <span className="input-group-text" id="inputGroupFileAddon03">
-            Upload
-          </span>
-        </div>
-        <div className="custom-file">
-          <input
-            onChange={videoLesson}
-            type="file"
-            className="custom-file-input"
-            id="inputGroupFile03"
-            aria-describedby="inputGroupFileAddon03"
-          />
-          <label className="custom-file-label" htmlFor="inputGroupFile03">
-            {`Click ou Arraste o Video Aqui`}
-          </label>
-        </div>
-      </div>
+    <div className="draftEditor mt-5">
       &nbsp;
       <div className="inner-draftEditor">
         <Editor
@@ -162,32 +107,28 @@ function UpdateDraftEditor(props) {
           }}
         />
       </div>
-      <div className="text-center">
+      <div className="text-center mb-5 pb-5">
         <button
           className="btn btn-success"
           data-toggle="modal"
           data-target="#previewModalLesson"
         >
-          Preview Post
+          Preview Briefing
         </button>
         <button
-          onClick={submit}
+          onClick={props.submit}
           type="button"
-          data-toggle={validationModal}
-          data-target="#postIncompleteModal"
+          data-toggle={props.validationModal.active}
+          data-target="#postIncompleteLessonModal"
           className="btn btn-outline-success ml-3"
         >
           PUBLICAR
         </button>
       </div>
-      <PreviewModal
-        body={DOMPurify.sanitize(getHtml(editorState), {
-          ADD_TAGS: ["iframe"],
-        })}
-      />
-      <PostIncompleteModal />
+      <PreviewModal body={DOMPurify.sanitize(getHtml(editorState))} />
+      <PostIncompleteModal msg={props.validationModal.msg} />
     </div>
   );
-}
+};
 
-export default UpdateDraftEditor;
+export default DraftEditor;

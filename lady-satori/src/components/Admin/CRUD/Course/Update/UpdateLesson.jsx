@@ -1,31 +1,12 @@
-import { useState, useEffect } from "react";
-import NewLesson from "./NewLesson";
+import { useState } from "react";
+import OldLesson from "../Update/OldLesson";
 import axios from "axios";
-import Course from "../../Course";
-import Loading from "../../../Errors/Loading";
+import Course from "../../../Course";
+import Loading from "../../../../Errors/Loading";
 
-function AddNewLesson(props) {
+function UpdateLesson(props) {
   //
   const [loading, setLoading] = useState(false);
-  //
-  const [existingModules, setExistingModules] = useState([]);
-  const [existingLessons, setExistingLessons] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://v7y5dtabh9.execute-api.sa-east-1.amazonaws.com/dev/course/get-modules"
-        // "http://localhost:5000/course/get-modules"
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          setExistingModules(res.data.modules);
-          setExistingLessons(res.data.lessons);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const getInputs = (inputs) => {
     const sessionToken = sessionStorage.getItem("auth-token");
@@ -48,10 +29,9 @@ function AddNewLesson(props) {
             alert(
               "Oops! Parece que tivemos um erro com seu pedido, por favor tente novamente"
             );
-          } else {
-            setLoading(true);
-
+          } else if (inputs.video) {
             Array.from(inputs.video).forEach((segment) => {
+              setLoading(true);
               resolve(
                 axios
                   .post(
@@ -59,10 +39,7 @@ function AddNewLesson(props) {
                     // "http://localhost:5000/course/video",
                     {
                       keys: {
-                        module_id: inputs.module_id,
-                        lesson_id: inputs.lesson_id,
-                        module_name: inputs.key.module,
-                        lesson_name: inputs.key.lesson,
+                        prefix: props.props.resources.prefix,
                         video: segment.webkitRelativePath,
                       },
                     }
@@ -100,14 +77,7 @@ function AddNewLesson(props) {
     batchPost
       .then(() => {
         const resources = {
-          existingModules: existingModules,
-          existingLessons: existingLessons,
-          keys: {
-            module_id: inputs.module_id,
-            lesson_id: inputs.lesson_id,
-            module_name: inputs.key.module,
-            lesson_name: inputs.key.lesson,
-          },
+          prefix: props.props.resources.prefix,
           briefing: inputs.briefing,
           complements: inputs.complements,
         };
@@ -146,14 +116,10 @@ function AddNewLesson(props) {
   } else {
     return (
       <div className="addNewPost">
-        <NewLesson
-          existingModules={existingModules}
-          existingLessons={existingLessons}
-          getInputs={getInputs}
-        />
+        <OldLesson getInputs={getInputs} resources={props.props.resources} />
       </div>
     );
   }
 }
 
-export default AddNewLesson;
+export default UpdateLesson;

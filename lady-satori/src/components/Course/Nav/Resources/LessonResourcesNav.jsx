@@ -83,6 +83,15 @@ const LessonResourcesNav = (props) => {
             Sobre o Curso
           </a>
         </li>
+
+        <div className={!props.adminPanel ? "d-none" : "ml-auto"}>
+          <button
+            onClick={() => props.editLesson(props.resources)}
+            className="btn btn-warning btn-sm mt-1 mb-1"
+          >
+            <b>editar</b>
+          </button>
+        </div>
       </ul>
       <div className="tab-content" id="myTabContent">
         <Briefing resources={props.resources} />

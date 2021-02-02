@@ -4,7 +4,7 @@ import BlogAdmin from "./BlogAdmin";
 import DashboardCourse from "./DashboardCourse";
 import DashboardBlog from "./DashboardBlog";
 import TrashBin from "./TrashBin";
-import AddNewLesson from "./CRUD/Course/AddNewLesson";
+import AddNewLesson from "./CRUD/Course/Create/AddNewLesson";
 
 const VerticalNav = (props) => {
   return (

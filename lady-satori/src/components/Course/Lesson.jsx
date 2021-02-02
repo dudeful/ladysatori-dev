@@ -28,6 +28,7 @@ const Lesson = (props) => {
       </div>
       <div className="lesson_resources">
         <LessonResourcesNav
+          editLesson={props.editLesson}
           adminPanel={props.adminPanel}
           answerQuestion={props.answerQuestion}
           intro={props.lessonURL.intro}

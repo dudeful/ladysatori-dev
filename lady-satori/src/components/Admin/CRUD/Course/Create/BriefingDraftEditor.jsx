@@ -3,8 +3,8 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
-import PreviewModal from "./PreviewModal";
-import { PostIncompleteModal } from "./PostIncompleteModal";
+import PreviewModal from "../PreviewModal";
+import { PostIncompleteModal } from "../PostIncompleteModal";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
   // set all elements owning target to target=_blank

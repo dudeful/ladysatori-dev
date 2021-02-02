@@ -212,6 +212,7 @@ const ClassRoom = (props) => {
         />
         <div className="course_body">
           <Lesson
+            editLesson={props.editLesson}
             adminPanel={props.adminPanel}
             answerQuestion={answerQuestion}
             lessonURL={lessonURL}
