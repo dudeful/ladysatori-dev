@@ -120,8 +120,8 @@ const OldLesson = (props) => {
   } else {
     //---------------- RETURN ----------------
     return (
-      <div>
-        <div className="video-lesson-input mt-0">
+      <div className="mt-5 pt-5">
+        <div className="video-lesson-input mt-5">
           <p>vídeo</p>
           <div className="input-group">
             <div className="input-group-prepend">

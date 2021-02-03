@@ -14,7 +14,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 105;
   background-color: white;
   font-size: 0.9rem;
   box-shadow: 4px 0px 15px 0px rgba(128, 128, 128, 0.2);
@@ -74,7 +74,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 101;
+    z-index: 105;
   }
 
   .admin .navbar-collapse.collapsing {
@@ -91,7 +91,7 @@
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 99;
+  z-index: 102;
   width: 100%;
 }
 
@@ -196,18 +196,19 @@
   margin: 0;
 }
 
-.admin .hamburguer-menu {
-  width: 50%;
+.admin .hamburguer-menu,
+.course-admin .arrow-menu {
+  width: fit-content;
   display: none;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   .admin .hamburguer-menu {
     display: flex;
     justify-content: flex-end;
     position: fixed;
     right: 30px;
     top: 15px;
-    z-index: 102;
+    z-index: 105;
   }
   .admin .hamburguer-menu img {
     height: 1.75rem;
@@ -219,6 +220,43 @@
 @media only screen and (max-width: 500px) {
   .admin .hamburguer-menu {
     right: 10px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .course-admin .arrow-menu {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    width: 40px;
+    left: 22px;
+    top: 75px;
+    z-index: 104;
+    transition: left 500ms ease;
+  }
+  .course-admin .arrow-menu img {
+    height: 2.1rem;
+    transform: rotate(180deg);
+    transition: all 600ms ease;
+  }
+  .course-admin .arrow-menu.transition_rotation img {
+    transform: rotate(360deg);
+    transition: all 600ms ease;
+  }
+  .course-admin .transition_rotation.arrow-menu {
+    transition: left 750ms ease;
+    left: 90%;
+  }
+  .course-admin .arrow-menu button:focus {
+    outline: 0;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .course-admin .arrow-menu {
+    left: 3px;
+  }
+  .course-admin .transition_rotation.arrow-menu {
+    left: 87%;
   }
 }
 
@@ -348,6 +386,9 @@
 @media only screen and (max-width: 768px) {
   .course-admin .user_question {
     padding-left: 10px;
+  }
+  .course-admin .v-navbar {
+    width: 100%;
   }
 }
 

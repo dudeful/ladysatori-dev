@@ -210,7 +210,10 @@ const ClassRoom = (props) => {
           currentLesson={currentLesson}
           modules={modules}
         />
-        <div className="course_body">
+        <div
+          className="course_body"
+          style={props.adminPanel ? { marginTop: "64px" } : {}}
+        >
           <Lesson
             editLesson={props.editLesson}
             adminPanel={props.adminPanel}

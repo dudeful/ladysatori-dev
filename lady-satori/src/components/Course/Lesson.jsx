@@ -26,9 +26,18 @@ const Lesson = (props) => {
           light={props.lessonURL.thumbnail}
         />
       </div>
+
+      <div className={!props.adminPanel ? "d-none" : "m-2 text-right"}>
+        <button
+          onClick={() => props.editLesson(props.resources)}
+          className="btn btn-warning btn-sm"
+        >
+          <b>editar</b>
+        </button>
+      </div>
+
       <div className="lesson_resources">
         <LessonResourcesNav
-          editLesson={props.editLesson}
           adminPanel={props.adminPanel}
           answerQuestion={props.answerQuestion}
           intro={props.lessonURL.intro}

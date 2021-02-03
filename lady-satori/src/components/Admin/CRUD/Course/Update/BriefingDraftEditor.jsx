@@ -116,7 +116,7 @@ const DraftEditor = (props) => {
           }}
         />
       </div>
-      <div className="text-center mb-5 pb-5">
+      <div className="text-center">
         <button
           className="btn btn-info"
           data-toggle="modal"

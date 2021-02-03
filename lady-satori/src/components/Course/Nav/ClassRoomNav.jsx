@@ -9,6 +9,7 @@ const ClassRoomNav = (props) => {
         <HorizontalNav />
       </div>
       <VerticalNav
+        adminPanel={props.adminPanel}
         currentLesson={props.currentLesson}
         modules={props.modules}
         lessons={props.lessons}

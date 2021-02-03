@@ -20,6 +20,12 @@ const VerticalNav = (props) => {
     document.getElementById(moduleID).classList.toggle("navArrowTransition");
     activeModule(moduleID);
 
+    if (props.adminPanel) {
+      document
+        .getElementById("menu_course_admin_img")
+        .parentNode.parentNode.classList.toggle("transition_rotation");
+    }
+
     const elementId = document.getElementById(lesson.id);
     if (elementId) {
       Array.from(document.getElementsByClassName("lesson")).forEach((el) =>
@@ -34,8 +40,9 @@ const VerticalNav = (props) => {
     <div className="class_room_nav">
       <div className="navbar-expand-md">
         <div
-          className="collapse navbar-collapse"
+          className="collapse navbar-collapse navbarVNavDropdown_course"
           id="navbarVNavDropdown_course"
+          style={props.adminPanel ? { top: "64px" } : {}}
         >
           <div className="v-navbar">
             <hr className="mt-0" />

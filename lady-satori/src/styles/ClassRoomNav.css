@@ -85,7 +85,7 @@
 }
 
 @media (max-width: 767px) {
-  .class_room_nav .navbar-collapse {
+  .class_room_nav .navbar-collapse.navbarVNavDropdown_course {
     background-color: white;
     position: fixed;
     left: 0;
